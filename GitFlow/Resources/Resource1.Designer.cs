@@ -115,6 +115,141 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloads a complete copy of an existing remote repository, including all files and history, to your machine. Syncs your new local repository to the remote cloned repository \r\n.
+        /// </summary>
+        internal static string ButtonDescriptionClone {
+            get {
+                return ResourceManager.GetString("ButtonDescriptionClone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A commit saves a snapshot of your changes locally, and a push uploads those saved changes to a remote server.\r\nMUST save before this to ensure all changes are pushed \r\n.
+        /// </summary>
+        internal static string ButtonDescriptionCommitPush {
+            get {
+                return ResourceManager.GetString("ButtonDescriptionCommitPush", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turns a folder on your computer into a Git repository to start tracking file changes.\r\nMust be connected to a remote repository \r\n.
+        /// </summary>
+        internal static string ButtonDescriptionInit {
+            get {
+                return ResourceManager.GetString("ButtonDescriptionInit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Integrates the completed work from current branch into the primary main branch of the project.\r\n\r\n.
+        /// </summary>
+        internal static string ButtonDescriptionMergeMain {
+            get {
+                return ResourceManager.GetString("ButtonDescriptionMergeMain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Links your local repository to a remote one on a server, enabling you to sync changes..
+        /// </summary>
+        internal static string ButtonDescriptionOpenRepo {
+            get {
+                return ResourceManager.GetString("ButtonDescriptionOpenRepo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Latest Changes: Downloads and merges the newest updates from the shared project into your local copy. Be sure to close and reopen your project for changes to be present..
+        /// </summary>
+        internal static string ButtonDescriptionPull {
+            get {
+                return ResourceManager.GetString("ButtonDescriptionPull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switches your current working context to a different line of development within the repository.\r\nOpen and close project to see changes \r\n.
+        /// </summary>
+        internal static string ButtonDescriptionSelectBranch {
+            get {
+                return ResourceManager.GetString("ButtonDescriptionSelectBranch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clone Repository.
+        /// </summary>
+        internal static string ButtonLabelClone {
+            get {
+                return ResourceManager.GetString("ButtonLabelClone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commit/Push.
+        /// </summary>
+        internal static string ButtonLabelCommitPush {
+            get {
+                return ResourceManager.GetString("ButtonLabelCommitPush", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initialize Repository.
+        /// </summary>
+        internal static string ButtonLabelInit {
+            get {
+                return ResourceManager.GetString("ButtonLabelInit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Merge to Main.
+        /// </summary>
+        internal static string ButtonLabelMergeMain {
+            get {
+                return ResourceManager.GetString("ButtonLabelMergeMain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect Repository.
+        /// </summary>
+        internal static string ButtonLabelOpenRepo {
+            get {
+                return ResourceManager.GetString("ButtonLabelOpenRepo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pull.
+        /// </summary>
+        internal static string ButtonLabelPull {
+            get {
+                return ResourceManager.GetString("ButtonLabelPull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Branch.
+        /// </summary>
+        internal static string ButtonLabelSelectBranch {
+            get {
+                return ResourceManager.GetString("ButtonLabelSelectBranch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version Control.
+        /// </summary>
+        internal static string CatagoryNameVC {
+            get {
+                return ResourceManager.GetString("CatagoryNameVC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An Error occured while trying to check out the branch due to merge conflics. Make sure you have commited and pushed all changes before selecting a new branch..
         /// </summary>
         internal static string CheckoutWithUncommitedChanges {
@@ -205,6 +340,15 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Git Actions.
+        /// </summary>
+        internal static string GroupNameActions {
+            get {
+                return ResourceManager.GetString("GroupNameActions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Success! Initialized Repository and Overrode Remote Repository.
         /// </summary>
         internal static string InitAndOverride {
@@ -286,6 +430,24 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There were conflicts when pulling remote to local repository. Would you like to overwrite you local project with remote?.
+        /// </summary>
+        internal static string PullForcePromptAfterFailSafePull {
+            get {
+                return ResourceManager.GetString("PullForcePromptAfterFailSafePull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success! Pull was successful..
+        /// </summary>
+        internal static string PullForceSuccess {
+            get {
+                return ResourceManager.GetString("PullForceSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to communicate with provided URL.
         /// </summary>
         internal static string RemoteRetrival {
@@ -300,6 +462,15 @@ namespace GitFlow.Resources {
         internal static string RepoOpenedSuccess {
             get {
                 return ResourceManager.GetString("RepoOpenedSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GitFlow.
+        /// </summary>
+        internal static string TabName {
+            get {
+                return ResourceManager.GetString("TabName", resourceCulture);
             }
         }
     }

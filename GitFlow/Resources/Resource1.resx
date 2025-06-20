@@ -137,6 +137,9 @@
   <data name="BuildFolderDescription" xml:space="preserve">
     <value>This is a folder that can be used to save builds and is tracked by Git. You can 'save as' projects as spfx into this folder with different names and they will be saved alongside the rest of the repository remotely.</value>
   </data>
+  <data name="CatagoryNameVC" xml:space="preserve">
+    <value>Version Control</value>
+  </data>
   <data name="CheckoutWithUncommitedChanges" xml:space="preserve">
     <value>An Error occured while trying to check out the branch due to merge conflics. Make sure you have commited and pushed all changes before selecting a new branch.</value>
     <comment>this is becasue it cant track what you did but is still in the disc so it will try to take these to the selected branch causing a merge conflict</comment>
@@ -167,6 +170,9 @@
   </data>
   <data name="GitSafePullErrorDuringSafePush" xml:space="preserve">
     <value>There was an error in attempting a safe pull during the safe push, indicating there may be conflicts with the remote repository or credential errors, please resolve them before pushing changes.</value>
+  </data>
+  <data name="GroupNameActions" xml:space="preserve">
+    <value>Git Actions</value>
   </data>
   <data name="InitAndOverride" xml:space="preserve">
     <value>Success! Initialized Repository and Overrode Remote Repository</value>
@@ -200,11 +206,62 @@
   <data name="MustHaveRepoInstanceMerge" xml:space="preserve">
     <value>You must first initialize a repository before you can merge to main.</value>
   </data>
+  <data name="ButtonLabelPull" xml:space="preserve">
+    <value>Pull</value>
+  </data>
+  <data name="ButtonDescriptionPull" xml:space="preserve">
+    <value>Get Latest Changes: Downloads and merges the newest updates from the shared project into your local copy. Be sure to close and reopen your project for changes to be present.</value>
+  </data>
   <data name="RemoteRetrival" xml:space="preserve">
     <value>Unable to communicate with provided URL</value>
     <comment>404 Error</comment>
   </data>
   <data name="RepoOpenedSuccess" xml:space="preserve">
     <value>Repository Opened</value>
+  </data>
+  <data name="TabName" xml:space="preserve">
+    <value>GitFlow</value>
+  </data>
+  <data name="ButtonLabelInit" xml:space="preserve">
+    <value>Initialize Repository</value>
+  </data>
+  <data name="ButtonLabelClone" xml:space="preserve">
+    <value>Clone Repository</value>
+  </data>
+  <data name="ButtonDescriptionInit" xml:space="preserve">
+    <value>Turns a folder on your computer into a Git repository to start tracking file changes.\r\nMust be connected to a remote repository \r\n</value>
+  </data>
+  <data name="ButtonDescriptionClone" xml:space="preserve">
+    <value>Downloads a complete copy of an existing remote repository, including all files and history, to your machine. Syncs your new local repository to the remote cloned repository \r\n</value>
+  </data>
+  <data name="ButtonLabelOpenRepo" xml:space="preserve">
+    <value>Connect Repository</value>
+  </data>
+  <data name="ButtonDescriptionOpenRepo" xml:space="preserve">
+    <value>Links your local repository to a remote one on a server, enabling you to sync changes.</value>
+  </data>
+  <data name="ButtonLabelSelectBranch" xml:space="preserve">
+    <value>Select Branch</value>
+  </data>
+  <data name="ButtonDescriptionSelectBranch" xml:space="preserve">
+    <value>Switches your current working context to a different line of development within the repository.\r\nOpen and close project to see changes \r\n</value>
+  </data>
+  <data name="ButtonLabelMergeMain" xml:space="preserve">
+    <value>Merge to Main</value>
+  </data>
+  <data name="ButtonDescriptionMergeMain" xml:space="preserve">
+    <value>Integrates the completed work from current branch into the primary main branch of the project.\r\n\r\n</value>
+  </data>
+  <data name="ButtonLabelCommitPush" xml:space="preserve">
+    <value>Commit/Push</value>
+  </data>
+  <data name="ButtonDescriptionCommitPush" xml:space="preserve">
+    <value>A commit saves a snapshot of your changes locally, and a push uploads those saved changes to a remote server.\r\nMUST save before this to ensure all changes are pushed \r\n</value>
+  </data>
+  <data name="PullForcePromptAfterFailSafePull" xml:space="preserve">
+    <value>There were conflicts when pulling remote to local repository. Would you like to overwrite you local project with remote?</value>
+  </data>
+  <data name="PullForceSuccess" xml:space="preserve">
+    <value>Success! Pull was successful.</value>
   </data>
 </root>

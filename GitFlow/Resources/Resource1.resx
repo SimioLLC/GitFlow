@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AlreadyUpToDate" xml:space="preserve">
+    <value>The local repository was already up to date with remote.</value>
+    <comment>Info</comment>
+  </data>
+  <data name="AuthenticationError" xml:space="preserve">
+    <value>Error Contecting to remote - Check PAT and URL</value>
+    <comment>403 Error</comment>
+  </data>
+  <data name="AuthenticationErrorInit" xml:space="preserve">
+    <value>Error Connecting to remote - Check PAT and try again in a new folder or remove .git folder from existing folder and try again.</value>
+  </data>
+  <data name="BranchInsteadOfMain" xml:space="preserve">
+    <value>Would you like to open a Branch instead of pushing directly to main?</value>
+  </data>
+  <data name="BranchUponCommitPushPrompt" xml:space="preserve">
+    <value>You are on the main Branch, would you like to push to a new development branch instead of directly to the main?</value>
+  </data>
+  <data name="BuildFolderDescription" xml:space="preserve">
+    <value>This is a folder that can be used to save builds and is tracked by Git. You can 'save as' projects as spfx into this folder with different names and they will be saved alongside the rest of the repository remotely.</value>
+  </data>
+  <data name="CheckoutWithUncommitedChanges" xml:space="preserve">
+    <value>An Error occured while trying to check out the branch due to merge conflics. Make sure you have commited and pushed all changes before selecting a new branch.</value>
+    <comment>this is becasue it cant track what you did but is still in the disc so it will try to take these to the selected branch causing a merge conflict</comment>
+  </data>
+  <data name="Clonerepodetected" xml:space="preserve">
+    <value>The destination you are trying to clone into is not empty please delete all files contain in this folder or choose a new folder.</value>
+  </data>
+  <data name="CloneSuccess" xml:space="preserve">
+    <value>Success! Cloned Repository</value>
+  </data>
+  <data name="ConnectRepoBeforeActionError" xml:space="preserve">
+    <value>You must first initialize a repository before using this action.</value>
+  </data>
+  <data name="ConnectRepoPrompt" xml:space="preserve">
+    <value>Would you like to connect to a repository?</value>
+  </data>
+  <data name="FieldFillPAT" xml:space="preserve">
+    <value>Please fill in all fields. - Personal Access Token</value>
+  </data>
+  <data name="FieldFillPath" xml:space="preserve">
+    <value>Please fill in all fields. - Path</value>
+  </data>
+  <data name="FieldFillURL" xml:space="preserve">
+    <value>Please fill in all fields. - URL</value>
+  </data>
+  <data name="GitOpenNoGitDetected" xml:space="preserve">
+    <value>The folder you selected is not connected to any remote repository. Please select a new folder or a different repository action.</value>
+  </data>
+  <data name="GitSafePullErrorDuringSafePush" xml:space="preserve">
+    <value>There was an error in attempting a safe pull during the safe push, indicating there may be conflicts with the remote repository or credential errors, please resolve them before pushing changes.</value>
+  </data>
+  <data name="InitAndOverride" xml:space="preserve">
+    <value>Success! Initialized Repository and Overrode Remote Repository</value>
+  </data>
+  <data name="Initrepodetected" xml:space="preserve">
+    <value>A .git folder was detected in selected destination please delete this .git folder if present or choose a new folder.</value>
+    <comment>error</comment>
+  </data>
+  <data name="InitWithDetectedFilesPopUp" xml:space="preserve">
+    <value>Existing files were detected on this remote repository, would you like to override the data on the repo with local data, otherwise you may notice some instability with your local version.</value>
+    <comment>popup</comment>
+  </data>
+  <data name="InitWithDetectedFilesPopUp2" xml:space="preserve">
+    <value>This is a removal action are you sure you want to delete all existing files on the remote repository. If just trying to connect to this remote repository you may want to clone into a empty folder on your device.</value>
+    <comment>warning</comment>
+  </data>
+  <data name="MainToMainMergeError" xml:space="preserve">
+    <value>You are on the main Branch already</value>
+  </data>
+  <data name="MasterBranchRemovalFail" xml:space="preserve">
+    <value>Failed to remove master branch after initializing feel free to ignore.</value>
+    <comment>NonIssue</comment>
+  </data>
+  <data name="MergeConflicts" xml:space="preserve">
+    <value>Merge conflicts were detected. Please resolve them before proceding</value>
+    <comment>Error</comment>
+  </data>
+  <data name="MergeToMainSuccess" xml:space="preserve">
+    <value>Successfully merged current branch into main.</value>
+  </data>
+  <data name="MustHaveRepoInstanceMerge" xml:space="preserve">
+    <value>You must first initialize a repository before you can merge to main.</value>
+  </data>
+  <data name="RemoteRetrival" xml:space="preserve">
+    <value>Unable to communicate with provided URL</value>
+    <comment>404 Error</comment>
+  </data>
+  <data name="RepoOpenedSuccess" xml:space="preserve">
+    <value>Repository Opened</value>
+  </data>
+</root>

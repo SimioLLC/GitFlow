@@ -1,0 +1,16 @@
+C:\Users\LiamO'Sullivan\source\repos\GitFlowAddin\GitFlow\GitFlow\GitFlow\obj\Debug\net8.0\GitFlow.csproj.AssemblyReference.cache
+C:\Users\LiamO'Sullivan\source\repos\GitFlowAddin\GitFlow\GitFlow\GitFlow\obj\Debug\net8.0\GitFlow.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\LiamO'Sullivan\source\repos\GitFlowAddin\GitFlow\GitFlow\GitFlow\obj\Debug\net8.0\GitFlow.AssemblyInfoInputs.cache
+C:\Users\LiamO'Sullivan\source\repos\GitFlowAddin\GitFlow\GitFlow\GitFlow\obj\Debug\net8.0\GitFlow.AssemblyInfo.cs
+C:\Users\LiamO'Sullivan\source\repos\GitFlowAddin\GitFlow\GitFlow\GitFlow\obj\Debug\net8.0\GitFlow.csproj.CoreCompileInputs.cache
+C:\Users\LiamO'Sullivan\source\repos\GitFlowAddin\GitFlow\GitFlow\GitFlow\bin\Debug\net8.0\GitFlow.deps.json
+C:\Users\LiamO'Sullivan\source\repos\GitFlowAddin\GitFlow\GitFlow\GitFlow\bin\Debug\net8.0\GitFlow.dll
+C:\Users\LiamO'Sullivan\source\repos\GitFlowAddin\GitFlow\GitFlow\GitFlow\bin\Debug\net8.0\GitFlow.pdb
+C:\Users\LiamO'Sullivan\source\repos\GitFlowAddin\GitFlow\GitFlow\GitFlow\bin\Debug\net8.0\SimioAPI.dll
+C:\Users\LiamO'Sullivan\source\repos\GitFlowAddin\GitFlow\GitFlow\GitFlow\bin\Debug\net8.0\SimioAPI.Extensions.dll
+C:\Users\LiamO'Sullivan\source\repos\GitFlowAddin\GitFlow\GitFlow\GitFlow\bin\Debug\net8.0\SimioAPI.Graphics.dll
+C:\Users\LiamO'Sullivan\source\repos\GitFlowAddin\GitFlow\GitFlow\GitFlow\obj\Debug\net8.0\GitFlow.csproj.Up2Date
+C:\Users\LiamO'Sullivan\source\repos\GitFlowAddin\GitFlow\GitFlow\GitFlow\obj\Debug\net8.0\GitFlow.dll
+C:\Users\LiamO'Sullivan\source\repos\GitFlowAddin\GitFlow\GitFlow\GitFlow\obj\Debug\net8.0\refint\GitFlow.dll
+C:\Users\LiamO'Sullivan\source\repos\GitFlowAddin\GitFlow\GitFlow\GitFlow\obj\Debug\net8.0\GitFlow.pdb
+C:\Users\LiamO'Sullivan\source\repos\GitFlowAddin\GitFlow\GitFlow\GitFlow\obj\Debug\net8.0\ref\GitFlow.dll

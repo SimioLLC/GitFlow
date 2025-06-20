@@ -4425,11 +4425,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Code\\GitFlow\\GitFlow\\GitFlow.csproj",
+      "projectUniqueName": "C:\\Code\\GitFlow - Simio LLC\\GitFlow\\GitFlow.csproj",
       "projectName": "GitFlow",
-      "projectPath": "C:\\Code\\GitFlow\\GitFlow\\GitFlow.csproj",
+      "projectPath": "C:\\Code\\GitFlow - Simio LLC\\GitFlow\\GitFlow.csproj",
       "packagesPath": "C:\\Users\\LiamO'Sullivan\\.nuget\\packages\\",
-      "outputPath": "C:\\Code\\GitFlow\\GitFlow\\obj\\",
+      "outputPath": "C:\\Code\\GitFlow - Simio LLC\\GitFlow\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\DevExpress 23.2\\Components\\Offline Packages",

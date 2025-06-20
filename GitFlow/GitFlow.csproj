@@ -9,7 +9,7 @@
 <PropertyGroup>
 	<TargetFramework>net8.0-windows</TargetFramework>
 	<UseWindowsForms>true</UseWindowsForms>
-	<BaseOutputPath>C:\Code\GitFlow\GitFlow\bin\Debug\net8.0-windows</BaseOutputPath>
+	<BaseOutputPath>C:\Code\GitFlow - Simio LLC\dllOutput</BaseOutputPath>
 </PropertyGroup>
 
   <ItemGroup>

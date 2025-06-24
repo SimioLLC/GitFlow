@@ -349,7 +349,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There was an error pulling from the remote repository. There may be a branch name with special characters or something formatted uncorrectly in the remote repository..
+        ///   Looks up a localized string similar to There was an error pulling from the remote repository. There may be a branch name with special characters or formatted incorrectly in the remote repository..
         /// </summary>
         internal static string ErrorBadCharactersInRemote {
             get {
@@ -543,6 +543,15 @@ namespace GitFlow.Resources {
         internal static string PullForceSuccess {
             get {
                 return ResourceManager.GetString("PullForceSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nothing to commit. Push Successful..
+        /// </summary>
+        internal static string PushSuccess {
+            get {
+                return ResourceManager.GetString("PushSuccess", resourceCulture);
             }
         }
         

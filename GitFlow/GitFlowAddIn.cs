@@ -396,6 +396,7 @@ namespace GitFlow
                             try
                             {
                                 LibgitFunctionClass.git_safe_push(GitContext.Instance.RepositoryPath, GitContext.Instance.GetSignature());
+                                MessageBox.Show(Resources.Resource1.PushSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                             catch (Exception ex)
                             {
@@ -423,6 +424,7 @@ namespace GitFlow
                         try
                         {
                             LibgitFunctionClass.git_safe_push(GitContext.Instance.RepositoryPath, GitContext.Instance.GetSignature());
+                            MessageBox.Show(Resources.Resource1.PushSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         catch (Exception ex)
                         {

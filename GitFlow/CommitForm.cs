@@ -35,7 +35,7 @@ namespace GitFlow
                 }
                 LibgitFunctionClass.git_commit(GitContext.Instance.RepositoryPath, _commitMessage, GitContext.Instance.GetSignature());
                 LibgitFunctionClass.git_safe_push(GitContext.Instance.RepositoryPath, GitContext.Instance.GetSignature());
-                MessageBox.Show("Commit and Push Successful", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Commit and Push Successful.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
             catch (Exception ex)

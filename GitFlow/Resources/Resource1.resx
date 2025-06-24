@@ -302,7 +302,11 @@ which show more what is happening since the names are dynamic</comment>
     <comment>[new branch =  bad] [newBranch, new-branch, new_branch = good]</comment>
   </data>
   <data name="ErrorBadCharactersInRemote" xml:space="preserve">
-    <value>There was an error pulling from the remote repository. There may be a branch name with special characters or something formatted uncorrectly in the remote repository.</value>
+    <value>There was an error pulling from the remote repository. There may be a branch name with special characters or formatted incorrectly in the remote repository.</value>
     <comment>In one of the cases I will chack if there is an error message and display that after this if it shows the branch that is causing issues.</comment>
+  </data>
+  <data name="PushSuccess" xml:space="preserve">
+    <value>Nothing to commit. Push Successful.</value>
+    <comment>in GitFlow addin for commit_push_maybe_branch_function</comment>
   </data>
 </root>

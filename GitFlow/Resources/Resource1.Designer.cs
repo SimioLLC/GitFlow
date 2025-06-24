@@ -115,7 +115,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downloads a complete copy of an existing remote repository, including all files and history, to your machine. Syncs your new local repository to the remote cloned repository \r\n.
+        ///   Looks up a localized string similar to Downloads a complete copy of an existing remote repository, including all files and history, to your machine. Syncs your new local repository to the remote cloned repository..
         /// </summary>
         internal static string ButtonDescriptionClone {
             get {
@@ -124,7 +124,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A commit saves a snapshot of your changes locally, and a push uploads those saved changes to a remote server.\r\nMUST save before this to ensure all changes are pushed \r\n.
+        ///   Looks up a localized string similar to A commit saves a snapshot of your changes locally, and a push uploads those saved changes to a remote server. MUST save before this to ensure all changes are pushed..
         /// </summary>
         internal static string ButtonDescriptionCommitPush {
             get {
@@ -133,7 +133,16 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Turns a folder on your computer into a Git repository to start tracking file changes.\r\nMust be connected to a remote repository \r\n.
+        ///   Looks up a localized string similar to PLACEHOLDER.
+        /// </summary>
+        internal static string ButtonDescriptionGitReset {
+            get {
+                return ResourceManager.GetString("ButtonDescriptionGitReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turns a folder on your computer into a Git repository to start tracking file changes. Must be connected to a remote repository..
         /// </summary>
         internal static string ButtonDescriptionInit {
             get {
@@ -142,7 +151,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Integrates the completed work from current branch into the primary main branch of the project.\r\n\r\n.
+        ///   Looks up a localized string similar to Integrates the completed work from current branch into the primary main branch of the project..
         /// </summary>
         internal static string ButtonDescriptionMergeMain {
             get {
@@ -169,7 +178,16 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Switches your current working context to a different line of development within the repository.\r\nOpen and close project to see changes \r\n.
+        ///   Looks up a localized string similar to PLACEHOLDER.
+        /// </summary>
+        internal static string ButtonDescriptionRemoveBranch {
+            get {
+                return ResourceManager.GetString("ButtonDescriptionRemoveBranch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switches your current working context to a different line of development within the repository. Open and close project to see changes..
         /// </summary>
         internal static string ButtonDescriptionSelectBranch {
             get {
@@ -192,6 +210,15 @@ namespace GitFlow.Resources {
         internal static string ButtonLabelCommitPush {
             get {
                 return ResourceManager.GetString("ButtonLabelCommitPush", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local Reset.
+        /// </summary>
+        internal static string ButtonLabelGitReset {
+            get {
+                return ResourceManager.GetString("ButtonLabelGitReset", resourceCulture);
             }
         }
         
@@ -228,6 +255,15 @@ namespace GitFlow.Resources {
         internal static string ButtonLabelPull {
             get {
                 return ResourceManager.GetString("ButtonLabelPull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Branch.
+        /// </summary>
+        internal static string ButtonLabelRemoveBranch {
+            get {
+                return ResourceManager.GetString("ButtonLabelRemoveBranch", resourceCulture);
             }
         }
         
@@ -295,6 +331,15 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are now on the main branch please refresh your project to see changes..
+        /// </summary>
+        internal static string DeleteNowOnMainMessage {
+            get {
+                return ResourceManager.GetString("DeleteNowOnMainMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please fill in all fields. - Personal Access Token.
         /// </summary>
         internal static string FieldFillPAT {
@@ -349,6 +394,24 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Branch Actions.
+        /// </summary>
+        internal static string GroupNameBranchingActions {
+            get {
+                return ResourceManager.GetString("GroupNameBranchingActions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repository Actions.
+        /// </summary>
+        internal static string GroupNameRepoActions {
+            get {
+                return ResourceManager.GetString("GroupNameRepoActions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Success! Initialized Repository and Overrode Remote Repository.
         /// </summary>
         internal static string InitAndOverride {
@@ -381,6 +444,15 @@ namespace GitFlow.Resources {
         internal static string InitWithDetectedFilesPopUp2 {
             get {
                 return ResourceManager.GetString("InitWithDetectedFilesPopUp2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Repository has been reverted to your last commit. Please close and open you project to see changes..
+        /// </summary>
+        internal static string LocalResetSuccess {
+            get {
+                return ResourceManager.GetString("LocalResetSuccess", resourceCulture);
             }
         }
         
@@ -426,6 +498,15 @@ namespace GitFlow.Resources {
         internal static string MustHaveRepoInstanceMerge {
             get {
                 return ResourceManager.GetString("MustHaveRepoInstanceMerge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local repository is up to date..
+        /// </summary>
+        internal static string NormalPullSuccess {
+            get {
+                return ResourceManager.GetString("NormalPullSuccess", resourceCulture);
             }
         }
         

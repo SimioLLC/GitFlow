@@ -48,6 +48,10 @@ C:\Code\GitFlow\GitFlow\bin\Debug\net8.0-windows\Debug\net8.0-windows\runtimes\w
 C:\Code\GitFlow\GitFlow\bin\Debug\net8.0-windows\Debug\net8.0-windows\GitFlow.deps.json
 C:\Code\GitFlow\GitFlow\bin\Debug\net8.0-windows\Debug\net8.0-windows\GitFlow.dll
 C:\Code\GitFlow\GitFlow\bin\Debug\net8.0-windows\Debug\net8.0-windows\GitFlow.pdb
+C:\Code\GitFlow - Simio LLC\dllOutput\Debug\net8.0-windows\runtimes\win-x64\native\git2-3f4182d.dll
+C:\Code\GitFlow - Simio LLC\dllOutput\Debug\net8.0-windows\GitFlow.deps.json
+C:\Code\GitFlow - Simio LLC\dllOutput\Debug\net8.0-windows\GitFlow.dll
+C:\Code\GitFlow - Simio LLC\dllOutput\Debug\net8.0-windows\GitFlow.pdb
 C:\Code\GitFlow - Simio LLC\GitFlow\obj\Debug\net8.0-windows\GitFlow.csproj.AssemblyReference.cache
 C:\Code\GitFlow - Simio LLC\GitFlow\obj\Debug\net8.0-windows\GitFlow.BranchSelectForm.resources
 C:\Code\GitFlow - Simio LLC\GitFlow\obj\Debug\net8.0-windows\GitFlow.CloneRepoForm.resources
@@ -69,7 +73,4 @@ C:\Code\GitFlow - Simio LLC\GitFlow\obj\Debug\net8.0-windows\GitFlow.dll
 C:\Code\GitFlow - Simio LLC\GitFlow\obj\Debug\net8.0-windows\refint\GitFlow.dll
 C:\Code\GitFlow - Simio LLC\GitFlow\obj\Debug\net8.0-windows\GitFlow.pdb
 C:\Code\GitFlow - Simio LLC\GitFlow\obj\Debug\net8.0-windows\ref\GitFlow.dll
-C:\Code\GitFlow - Simio LLC\dllOutput\Debug\net8.0-windows\runtimes\win-x64\native\git2-3f4182d.dll
-C:\Code\GitFlow - Simio LLC\dllOutput\Debug\net8.0-windows\GitFlow.deps.json
-C:\Code\GitFlow - Simio LLC\dllOutput\Debug\net8.0-windows\GitFlow.dll
-C:\Code\GitFlow - Simio LLC\dllOutput\Debug\net8.0-windows\GitFlow.pdb
+C:\Code\GitFlow - Simio LLC\GitFlow\obj\Debug\net8.0-windows\GitFlow.BranchRemoveForm.resources

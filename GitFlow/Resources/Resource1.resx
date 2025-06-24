@@ -229,10 +229,10 @@
     <value>Clone Repository</value>
   </data>
   <data name="ButtonDescriptionInit" xml:space="preserve">
-    <value>Turns a folder on your computer into a Git repository to start tracking file changes.\r\nMust be connected to a remote repository \r\n</value>
+    <value>Turns a folder on your computer into a Git repository to start tracking file changes. Must be connected to a remote repository.</value>
   </data>
   <data name="ButtonDescriptionClone" xml:space="preserve">
-    <value>Downloads a complete copy of an existing remote repository, including all files and history, to your machine. Syncs your new local repository to the remote cloned repository \r\n</value>
+    <value>Downloads a complete copy of an existing remote repository, including all files and history, to your machine. Syncs your new local repository to the remote cloned repository.</value>
   </data>
   <data name="ButtonLabelOpenRepo" xml:space="preserve">
     <value>Connect Repository</value>
@@ -244,24 +244,52 @@
     <value>Select Branch</value>
   </data>
   <data name="ButtonDescriptionSelectBranch" xml:space="preserve">
-    <value>Switches your current working context to a different line of development within the repository.\r\nOpen and close project to see changes \r\n</value>
+    <value>Switches your current working context to a different line of development within the repository. Open and close project to see changes.</value>
   </data>
   <data name="ButtonLabelMergeMain" xml:space="preserve">
     <value>Merge to Main</value>
   </data>
   <data name="ButtonDescriptionMergeMain" xml:space="preserve">
-    <value>Integrates the completed work from current branch into the primary main branch of the project.\r\n\r\n</value>
+    <value>Integrates the completed work from current branch into the primary main branch of the project.</value>
   </data>
   <data name="ButtonLabelCommitPush" xml:space="preserve">
     <value>Commit/Push</value>
   </data>
   <data name="ButtonDescriptionCommitPush" xml:space="preserve">
-    <value>A commit saves a snapshot of your changes locally, and a push uploads those saved changes to a remote server.\r\nMUST save before this to ensure all changes are pushed \r\n</value>
+    <value>A commit saves a snapshot of your changes locally, and a push uploads those saved changes to a remote server. MUST save before this to ensure all changes are pushed.</value>
   </data>
   <data name="PullForcePromptAfterFailSafePull" xml:space="preserve">
     <value>There were conflicts when pulling remote to local repository. Would you like to overwrite you local project with remote?</value>
   </data>
   <data name="PullForceSuccess" xml:space="preserve">
     <value>Success! Pull was successful.</value>
+  </data>
+  <data name="NormalPullSuccess" xml:space="preserve">
+    <value>Local repository is up to date.</value>
+  </data>
+  <data name="GroupNameRepoActions" xml:space="preserve">
+    <value>Repository Actions</value>
+  </data>
+  <data name="GroupNameBranchingActions" xml:space="preserve">
+    <value>Branch Actions</value>
+  </data>
+  <data name="ButtonLabelRemoveBranch" xml:space="preserve">
+    <value>Remove Branch</value>
+  </data>
+  <data name="ButtonDescriptionRemoveBranch" xml:space="preserve">
+    <value>PLACEHOLDER</value>
+  </data>
+  <data name="ButtonLabelGitReset" xml:space="preserve">
+    <value>Local Reset</value>
+  </data>
+  <data name="ButtonDescriptionGitReset" xml:space="preserve">
+    <value>PLACEHOLDER</value>
+  </data>
+  <data name="DeleteNowOnMainMessage" xml:space="preserve">
+    <value>You are now on the main branch please refresh your project to see changes.</value>
+    <comment>comes after "deleted branch:" + _branchname +" Success" -&gt; here</comment>
+  </data>
+  <data name="LocalResetSuccess" xml:space="preserve">
+    <value>Your Repository has been reverted to your last commit. Please close and open you project to see changes.</value>
   </data>
 </root>

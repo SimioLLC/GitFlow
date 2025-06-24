@@ -884,9 +884,7 @@ namespace GitFlow
 
 
         //overwrite branch with another branch ie git_merge_branch
-        /*
-         * NEEDS TO BE TESTED
-         */
+
         public static bool git_branch_merge_force(string repoPath, string branchToOverwrite, string sourceBranch = "")
         {
             // Function to overwrite a branch with another branch
@@ -1050,7 +1048,17 @@ namespace GitFlow
         }
 
 
-
+        public static string git_current_branch(String RepositoryPath)
+        {
+            // Function to get the current branch name of the local Git repository
+            // Parameters:
+            // RepositoryPath: Path to the local Git repository
+            using (var repo = new Repository(RepositoryPath))
+            {
+                // Return the friendly name of the current branch
+                return repo.Head.FriendlyName;
+            }
+        }
 
 
         public static void git_status(string localRepoPath)

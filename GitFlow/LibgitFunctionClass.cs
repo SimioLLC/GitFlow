@@ -1190,7 +1190,7 @@ namespace GitFlow
                 try
                 {
                     repo.Reset(ResetMode.Hard, repo.Head.Tip);
-                    MessageBox.Show("Local repository has been reset to the last commit.", "Git Reset Status", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show("Local repository has been reset to the last commit.", "Git Reset Status", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
                 catch (Exception ex) when (ex.Message.Contains("authentication replays"))

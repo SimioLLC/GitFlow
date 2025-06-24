@@ -277,7 +277,7 @@
     <value>Remove Branch</value>
   </data>
   <data name="ButtonDescriptionRemoveBranch" xml:space="preserve">
-    <value>PLACEHOLDER</value>
+    <value>Branch Removal in Git works by removing the branch locally and then pushing that change to the remote repository to remove it there as well. This branch will still be present in other local repositories until deleted.</value>
   </data>
   <data name="ButtonLabelGitReset" xml:space="preserve">
     <value>Local Reset</value>

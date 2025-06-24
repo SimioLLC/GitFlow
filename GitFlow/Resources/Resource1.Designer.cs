@@ -178,7 +178,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PLACEHOLDER.
+        ///   Looks up a localized string similar to Branch Removal in Git works by removing the branch locally and then pushing that change to the remote repository to remove it there as well. This branch will still be present in other local repositories until deleted..
         /// </summary>
         internal static string ButtonDescriptionRemoveBranch {
             get {

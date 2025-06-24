@@ -37,6 +37,11 @@ namespace GitFlow
 
 
             }
+            catch (Exception ex) when (ex.Message.Contains("the given reference name"))
+            {
+                // Handle the case where the branch already exists
+                MessageBox.Show(this, Resources.Resource1.CreateNewBranchWithSpaceError, "Branch Naming Issue", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             catch (Exception ex)
             {
                 // Show the error message and do not close the form

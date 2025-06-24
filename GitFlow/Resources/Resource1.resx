@@ -202,6 +202,11 @@
   </data>
   <data name="MergeToMainSuccess" xml:space="preserve">
     <value>Successfully merged current branch into main.</value>
+    <comment>Currently not in use to avoid double prompting as function class has:
+                    MessageBox.Show($"the tip of '{branchToOverwrite}' has been updated to match '{sourceBranch}'.", "Git Branch Merge Status", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+which show more what is happening since the names are dynamic</comment>
   </data>
   <data name="MustHaveRepoInstanceMerge" xml:space="preserve">
     <value>You must first initialize a repository before you can merge to main.</value>
@@ -262,10 +267,10 @@
     <value>There were conflicts when pulling remote to local repository. Would you like to overwrite you local project with remote?</value>
   </data>
   <data name="PullForceSuccess" xml:space="preserve">
-    <value>Success! Pull was successful.</value>
+    <value>Success! Pull was successful. Please close and reopen project for any changes to be reflected.</value>
   </data>
   <data name="NormalPullSuccess" xml:space="preserve">
-    <value>Local repository is up to date.</value>
+    <value>Local repository was synced to remote repository. Please close and reopen project for any changes to be reflected.</value>
   </data>
   <data name="GroupNameRepoActions" xml:space="preserve">
     <value>Repository Actions</value>
@@ -283,7 +288,7 @@
     <value>Local Reset</value>
   </data>
   <data name="ButtonDescriptionGitReset" xml:space="preserve">
-    <value>PLACEHOLDER</value>
+    <value>Resets your repository to the state it was in at time of your last commit/pushed or pulled changes. Please make sure to close and reopen your project to see changes.</value>
   </data>
   <data name="DeleteNowOnMainMessage" xml:space="preserve">
     <value>You are now on the main branch please refresh your project to see changes.</value>
@@ -291,5 +296,13 @@
   </data>
   <data name="LocalResetSuccess" xml:space="preserve">
     <value>Your Repository has been reverted to your last commit. Please close and open you project to see changes.</value>
+  </data>
+  <data name="CreateNewBranchWithSpaceError" xml:space="preserve">
+    <value>There was an error creating this branch. Please make sure your branch name does not have any spaces or special characters besides: ' - _</value>
+    <comment>[new branch =  bad] [newBranch, new-branch, new_branch = good]</comment>
+  </data>
+  <data name="ErrorBadCharactersInRemote" xml:space="preserve">
+    <value>There was an error pulling from the remote repository. There may be a branch name with special characters or something formatted uncorrectly in the remote repository.</value>
+    <comment>In one of the cases I will chack if there is an error message and display that after this if it shows the branch that is causing issues.</comment>
   </data>
 </root>

@@ -133,7 +133,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PLACEHOLDER.
+        ///   Looks up a localized string similar to Resets your repository to the state it was in at time of your last commit/pushed or pulled changes. Please make sure to close and reopen your project to see changes..
         /// </summary>
         internal static string ButtonDescriptionGitReset {
             get {
@@ -331,11 +331,29 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error creating this branch. Please make sure your branch name does not have any spaces or special characters besides: &apos; - _.
+        /// </summary>
+        internal static string CreateNewBranchWithSpaceError {
+            get {
+                return ResourceManager.GetString("CreateNewBranchWithSpaceError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You are now on the main branch please refresh your project to see changes..
         /// </summary>
         internal static string DeleteNowOnMainMessage {
             get {
                 return ResourceManager.GetString("DeleteNowOnMainMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error pulling from the remote repository. There may be a branch name with special characters or something formatted uncorrectly in the remote repository..
+        /// </summary>
+        internal static string ErrorBadCharactersInRemote {
+            get {
+                return ResourceManager.GetString("ErrorBadCharactersInRemote", resourceCulture);
             }
         }
         
@@ -502,7 +520,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Local repository is up to date..
+        ///   Looks up a localized string similar to Local repository was synced to remote repository. Please close and reopen project for any changes to be reflected..
         /// </summary>
         internal static string NormalPullSuccess {
             get {
@@ -520,7 +538,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Success! Pull was successful..
+        ///   Looks up a localized string similar to Success! Pull was successful. Please close and reopen project for any changes to be reflected..
         /// </summary>
         internal static string PullForceSuccess {
             get {

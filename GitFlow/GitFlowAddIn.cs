@@ -545,7 +545,9 @@ namespace GitFlow
             catch (Exception ex) when (ex.Message.Contains("conflicts prevent checkout"))
             {
                 // Handle merge conflicts with force push
-                MessageBox.Show(Resources.Resource1.PullForcePromptAfterFailSafePull, "Merge Conflict", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                //MessageBox.Show(Resources.Resource1.PullForcePromptAfterFailSafePull, "Merge Conflict", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                //might have been redundant
+
                 //if the user chooses to force pull, then do it
                 if (DialogResult.Yes == MessageBox.Show(Resources.Resource1.PullForcePromptAfterFailSafePull, "Merge Conflict", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
                 {
@@ -913,7 +915,7 @@ namespace GitFlow
                     {
                         // Attempt to merge the current branch into main
                         LibgitFunctionClass.git_branch_merge_force(GitContext.Instance.RepositoryPath, "main");
-                        MessageBox.Show(Resources.Resource1.MergeToMainSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //MessageBox.Show(Resources.Resource1.MergeToMainSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex) when (ex.Message.Contains("An error occurred: failed rmdir - "))
                     {

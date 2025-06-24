@@ -325,6 +325,14 @@ namespace GitFlow
                 {
                     Commands.Pull(repo, signature, options);
                 }
+                catch (Exception ex) when (ex.Message.Contains("Input string was not in a correct format. Failure to parse near offset"))
+                {
+                    throw new Exception(Resources.Resource1.ErrorBadCharactersInRemote);
+                }
+                catch (Exception ex) when (ex.Message.Contains("Error fetching/merging from remote: invalid reference name 'refs/remotes/origin/"))
+                {
+                    throw new Exception(Resources.Resource1.ErrorBadCharactersInRemote + ":\n" + ex.Message);
+                }
                 catch (Exception ex) when (ex.Message.Contains("authentication replays"))
                 {
                     throw new Exception(Resources.Resource1.AuthenticationError);
@@ -339,9 +347,9 @@ namespace GitFlow
                 {
                     throw new Exception(Resources.Resource1.RemoteRetrival);
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Error pulling from remote: " + e.Message);
+                    Console.WriteLine("Error pulling from remote: " + ex.Message);
                     return false; // Return false if an error occurs
                 }
                 //new PullOptions() { FetchOptions = { CredentialsProvider = PrivateRepoCredentials } }
@@ -472,9 +480,9 @@ namespace GitFlow
                     throw new Exception(Resources.Resource1.RemoteRetrival);
 
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    throw new Exception("Error pushing to remote: " + e.Message);
+                    throw new Exception("Error pushing to remote: " + ex.Message);
 
                 }
             }
@@ -542,6 +550,14 @@ namespace GitFlow
 
 
                 }
+                catch (Exception ex) when (ex.Message.Contains("Input string was not in a correct format. Failure to parse near offset"))
+                {
+                    throw new Exception(Resources.Resource1.ErrorBadCharactersInRemote);
+                }
+                catch (Exception ex) when (ex.Message.Contains("Error fetching/merging from remote: invalid reference name 'refs/remotes/origin/"))
+                {
+                    throw new Exception(Resources.Resource1.ErrorBadCharactersInRemote + ":\n" + ex.Message);
+                }
                 catch (Exception ex) when (ex.Message.Contains("authentication replays"))
                 {
                     throw new Exception(Resources.Resource1.AuthenticationError);
@@ -608,9 +624,9 @@ namespace GitFlow
                 {
                     throw new Exception(Resources.Resource1.RemoteRetrival);
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    throw new Exception("Error pushing to remote: " + e.Message);
+                    throw new Exception("Error pushing to remote: " + ex.Message);
 
                 }
                 return true; // Return true if successful
@@ -650,6 +666,14 @@ namespace GitFlow
                     
                     MessageBox.Show($"Local branch '{branchName}' has been forcefully updated to match the remote branch.", "Git Force Pull Status", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+                catch (Exception ex) when (ex.Message.Contains("Input string was not in a correct format. Failure to parse near offset"))
+                {
+                    throw new Exception(Resources.Resource1.ErrorBadCharactersInRemote);
+                }
+                catch (Exception ex) when (ex.Message.Contains("Error fetching/merging from remote: invalid reference name 'refs/remotes/origin/"))
+                {
+                    throw new Exception(Resources.Resource1.ErrorBadCharactersInRemote + ":\n" + ex.Message);
+                }
                 catch (Exception ex) when (ex.Message.Contains("authentication replays"))
                 {
                     throw new Exception(Resources.Resource1.AuthenticationError);
@@ -664,9 +688,9 @@ namespace GitFlow
                 {
                     throw new Exception(Resources.Resource1.RemoteRetrival);
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    throw new Exception("Error during force pull: " + e.Message);
+                    throw new Exception("Error during force pull: " + ex.Message);
 
                 }
             }
@@ -987,7 +1011,7 @@ namespace GitFlow
                     // 5. Delete branch2 remotely
                     repo.Network.Push(remote, $":refs/heads/{sourceBranch}", new PushOptions { CredentialsProvider = PrivateRepoCredentials });
                     
-                    MessageBox.Show($"Branch '{branchToOverwrite}' has been forcefully updated to match '{sourceBranch}'.", "Git Branch Merge Status", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"the tip of '{branchToOverwrite}' has been updated to match '{sourceBranch}'.", "Git Branch Merge Status", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex) when (ex.Message.Contains("authentication replays"))
@@ -1207,9 +1231,9 @@ namespace GitFlow
                 {
                     throw new Exception(Resources.Resource1.RemoteRetrival);
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    throw new Exception("Error resetting local repository: " + e.Message);
+                    throw new Exception("Error resetting local repository: " + ex.Message);
 
                 }
                 return true; // Return true if successful

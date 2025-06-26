@@ -115,6 +115,177 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloads a complete copy of an existing remote repository, including all files and history, to your machine. Syncs your new local repository to the remote cloned repository..
+        /// </summary>
+        internal static string ButtonDescriptionClone {
+            get {
+                return ResourceManager.GetString("ButtonDescriptionClone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A commit saves a snapshot of your changes locally, and a push uploads those saved changes to a remote server. MUST save before this to ensure all changes are pushed..
+        /// </summary>
+        internal static string ButtonDescriptionCommitPush {
+            get {
+                return ResourceManager.GetString("ButtonDescriptionCommitPush", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resets your repository to the state it was in at time of your last commit/pushed or pulled changes. Please make sure to close and reopen your project to see changes..
+        /// </summary>
+        internal static string ButtonDescriptionGitReset {
+            get {
+                return ResourceManager.GetString("ButtonDescriptionGitReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turns a folder on your computer into a Git repository to start tracking file changes. Must be connected to a remote repository..
+        /// </summary>
+        internal static string ButtonDescriptionInit {
+            get {
+                return ResourceManager.GetString("ButtonDescriptionInit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Integrates the completed work from current branch into the primary main branch of the project..
+        /// </summary>
+        internal static string ButtonDescriptionMergeMain {
+            get {
+                return ResourceManager.GetString("ButtonDescriptionMergeMain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Links your local repository to a remote one on a server, enabling you to sync changes..
+        /// </summary>
+        internal static string ButtonDescriptionOpenRepo {
+            get {
+                return ResourceManager.GetString("ButtonDescriptionOpenRepo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Latest Changes: Downloads and merges the newest updates from the shared project into your local copy. Be sure to close and reopen your project for changes to be present..
+        /// </summary>
+        internal static string ButtonDescriptionPull {
+            get {
+                return ResourceManager.GetString("ButtonDescriptionPull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Branch Removal in Git works by removing the branch locally and then pushing that change to the remote repository to remove it there as well. This branch will still be present in other local repositories until deleted..
+        /// </summary>
+        internal static string ButtonDescriptionRemoveBranch {
+            get {
+                return ResourceManager.GetString("ButtonDescriptionRemoveBranch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switches your current working context to a different line of development within the repository. Open and close project to see changes..
+        /// </summary>
+        internal static string ButtonDescriptionSelectBranch {
+            get {
+                return ResourceManager.GetString("ButtonDescriptionSelectBranch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clone Repository.
+        /// </summary>
+        internal static string ButtonLabelClone {
+            get {
+                return ResourceManager.GetString("ButtonLabelClone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commit/Push.
+        /// </summary>
+        internal static string ButtonLabelCommitPush {
+            get {
+                return ResourceManager.GetString("ButtonLabelCommitPush", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local Reset.
+        /// </summary>
+        internal static string ButtonLabelGitReset {
+            get {
+                return ResourceManager.GetString("ButtonLabelGitReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initialize Repository.
+        /// </summary>
+        internal static string ButtonLabelInit {
+            get {
+                return ResourceManager.GetString("ButtonLabelInit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Merge to Main.
+        /// </summary>
+        internal static string ButtonLabelMergeMain {
+            get {
+                return ResourceManager.GetString("ButtonLabelMergeMain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect Repository.
+        /// </summary>
+        internal static string ButtonLabelOpenRepo {
+            get {
+                return ResourceManager.GetString("ButtonLabelOpenRepo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pull.
+        /// </summary>
+        internal static string ButtonLabelPull {
+            get {
+                return ResourceManager.GetString("ButtonLabelPull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Branch.
+        /// </summary>
+        internal static string ButtonLabelRemoveBranch {
+            get {
+                return ResourceManager.GetString("ButtonLabelRemoveBranch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Branch.
+        /// </summary>
+        internal static string ButtonLabelSelectBranch {
+            get {
+                return ResourceManager.GetString("ButtonLabelSelectBranch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version Control.
+        /// </summary>
+        internal static string CatagoryNameVC {
+            get {
+                return ResourceManager.GetString("CatagoryNameVC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An Error occured while trying to check out the branch due to merge conflics. Make sure you have commited and pushed all changes before selecting a new branch..
         /// </summary>
         internal static string CheckoutWithUncommitedChanges {
@@ -156,6 +327,33 @@ namespace GitFlow.Resources {
         internal static string ConnectRepoPrompt {
             get {
                 return ResourceManager.GetString("ConnectRepoPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error creating this branch. Please make sure your branch name does not have any spaces or special characters besides: &apos; - _.
+        /// </summary>
+        internal static string CreateNewBranchWithSpaceError {
+            get {
+                return ResourceManager.GetString("CreateNewBranchWithSpaceError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are now on the main branch please refresh your project to see changes..
+        /// </summary>
+        internal static string DeleteNowOnMainMessage {
+            get {
+                return ResourceManager.GetString("DeleteNowOnMainMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error pulling from the remote repository. There may be a branch name with special characters or formatted incorrectly in the remote repository..
+        /// </summary>
+        internal static string ErrorBadCharactersInRemote {
+            get {
+                return ResourceManager.GetString("ErrorBadCharactersInRemote", resourceCulture);
             }
         }
         
@@ -205,6 +403,33 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Git Actions.
+        /// </summary>
+        internal static string GroupNameActions {
+            get {
+                return ResourceManager.GetString("GroupNameActions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Branch Actions.
+        /// </summary>
+        internal static string GroupNameBranchingActions {
+            get {
+                return ResourceManager.GetString("GroupNameBranchingActions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repository Actions.
+        /// </summary>
+        internal static string GroupNameRepoActions {
+            get {
+                return ResourceManager.GetString("GroupNameRepoActions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Success! Initialized Repository and Overrode Remote Repository.
         /// </summary>
         internal static string InitAndOverride {
@@ -237,6 +462,15 @@ namespace GitFlow.Resources {
         internal static string InitWithDetectedFilesPopUp2 {
             get {
                 return ResourceManager.GetString("InitWithDetectedFilesPopUp2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Repository has been reverted to your last commit. Please close and open you project to see changes..
+        /// </summary>
+        internal static string LocalResetSuccess {
+            get {
+                return ResourceManager.GetString("LocalResetSuccess", resourceCulture);
             }
         }
         
@@ -286,6 +520,42 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Local repository was synced to remote repository. Please close and reopen project for any changes to be reflected..
+        /// </summary>
+        internal static string NormalPullSuccess {
+            get {
+                return ResourceManager.GetString("NormalPullSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There were conflicts when pulling remote to local repository. Would you like to overwrite you local project with remote?.
+        /// </summary>
+        internal static string PullForcePromptAfterFailSafePull {
+            get {
+                return ResourceManager.GetString("PullForcePromptAfterFailSafePull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success! Pull was successful. Please close and reopen project for any changes to be reflected..
+        /// </summary>
+        internal static string PullForceSuccess {
+            get {
+                return ResourceManager.GetString("PullForceSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nothing to commit. Push Successful..
+        /// </summary>
+        internal static string PushSuccess {
+            get {
+                return ResourceManager.GetString("PushSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to communicate with provided URL.
         /// </summary>
         internal static string RemoteRetrival {
@@ -300,6 +570,15 @@ namespace GitFlow.Resources {
         internal static string RepoOpenedSuccess {
             get {
                 return ResourceManager.GetString("RepoOpenedSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GitFlow.
+        /// </summary>
+        internal static string TabName {
+            get {
+                return ResourceManager.GetString("TabName", resourceCulture);
             }
         }
     }

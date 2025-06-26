@@ -43,6 +43,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Include="BuildItems\.gitignore">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Link>.gitignore</Link>
+		</None>
+		<Content Include="BuildItems\LibGit2Sharp.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Link>LibGit2Sharp.dll</Link>
+		</Content>
+	</ItemGroup>
+
+
+	<ItemGroup>
 	  <Compile Update="CloneRepoForm.cs">
 	    <SubType>Form</SubType>
 	  </Compile>

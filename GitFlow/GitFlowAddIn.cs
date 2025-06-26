@@ -28,7 +28,7 @@ namespace GitFlow
         /// </summary>
         public string Name
         {
-            get { return "Initialize Repository"; }
+            get { return Resources.Resource1.ButtonLabelInit; }
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace GitFlow
         /// </summary>
         public string Description
         {
-            get { return "Turns a folder on your computer into a Git repository to start tracking file changes.\r\nMust be connected to a remote repository \r\n"; }
+            get { return Resources.Resource1.ButtonDescriptionInit; }
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace GitFlow
         /// </summary>
         public string CategoryName
         {
-            get { return "Version Control"; }
+            get { return Resources.Resource1.CatagoryNameVC; }
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace GitFlow
         /// </summary>
         public string GroupName
         {
-            get { return "Repository"; }
+            get { return Resources.Resource1.GroupNameRepoActions; }
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace GitFlow
         /// </summary>
         public string TabName
         {
-            get { return "GitFlow"; }
+            get { return Resources.Resource1.TabName; }
         }
 
         #endregion
@@ -113,7 +113,7 @@ namespace GitFlow
         /// </summary>
         public string Name
         {
-            get { return "Clone Repository"; }
+            get { return Resources.Resource1.ButtonLabelClone; }
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace GitFlow
         /// </summary>
         public string Description
         {
-            get { return "Downloads a complete copy of an existing remote repository, including all files and history, to your machine. Syncs your new local repository to the remote cloned repository \r\n"; }
+            get { return Resources.Resource1.ButtonDescriptionClone; }
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace GitFlow
         /// </summary>
         public string CategoryName
         {
-            get { return "Version Control"; }
+            get { return Resources.Resource1.CatagoryNameVC; }
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace GitFlow
         /// </summary>
         public string GroupName
         {
-            get { return "Repository"; }
+            get { return Resources.Resource1.GroupNameRepoActions; }
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace GitFlow
         /// </summary>
         public string TabName
         {
-            get { return "GitFlow"; }
+            get { return Resources.Resource1.TabName; }
         }
 
         #endregion
@@ -198,7 +198,7 @@ namespace GitFlow
         /// </summary>
         public string Name
         {
-            get { return "Connect Repository"; }
+            get { return Resources.Resource1.ButtonLabelOpenRepo; }
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace GitFlow
         /// </summary>
         public string Description
         {
-            get { return "Links your local repository to a remote one on a server, enabling you to sync changes."; }
+            get { return Resources.Resource1.ButtonDescriptionOpenRepo; }
         }
 
         /// <summary>
@@ -290,7 +290,7 @@ namespace GitFlow
         /// </summary>
         public string CategoryName
         {
-            get { return "Version Control"; }
+            get { return Resources.Resource1.CatagoryNameVC; }
         }
 
         /// <summary>
@@ -298,7 +298,7 @@ namespace GitFlow
         /// </summary>
         public string GroupName
         {
-            get { return "Repository"; }
+            get { return Resources.Resource1.GroupNameRepoActions; }
         }
 
         /// <summary>
@@ -306,7 +306,7 @@ namespace GitFlow
         /// </summary>
         public string TabName
         {
-            get { return "GitFlow"; }
+            get { return Resources.Resource1.TabName; }
         }
 
         #endregion
@@ -322,7 +322,7 @@ namespace GitFlow
         /// </summary>
         public string Name
         {
-            get { return "Commit/Push"; }
+            get { return Resources.Resource1.ButtonLabelCommitPush; }
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace GitFlow
         /// </summary>
         public string Description
         {
-            get { return "A commit saves a snapshot of your changes locally, and a push uploads those saved changes to a remote server.\r\nMUST save before this to ensure all changes are pushed \r\n"; }
+            get { return Resources.Resource1.ButtonDescriptionCommitPush; }
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace GitFlow
             {
                 if (GitContext.Instance.IsInitialized == false)
                 {
-                    DialogResult result = MessageBox.Show(Resources.Resource1.ConnectRepoPrompt, "Open Repository", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult result = MessageBox.Show(Resources.Resource1.ConnectRepoPrompt, "Connect Repository", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (result == DialogResult.Yes)
                     {
                         // Open the OpenRepoForm to allow the user to connect to a repository
@@ -396,6 +396,7 @@ namespace GitFlow
                             try
                             {
                                 LibgitFunctionClass.git_safe_push(GitContext.Instance.RepositoryPath, GitContext.Instance.GetSignature());
+                                MessageBox.Show(Resources.Resource1.PushSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                             catch (Exception ex)
                             {
@@ -423,6 +424,7 @@ namespace GitFlow
                         try
                         {
                             LibgitFunctionClass.git_safe_push(GitContext.Instance.RepositoryPath, GitContext.Instance.GetSignature());
+                            MessageBox.Show(Resources.Resource1.PushSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         catch (Exception ex)
                         {
@@ -457,7 +459,7 @@ namespace GitFlow
         /// </summary>
         public string CategoryName
         {
-            get { return "Version Control"; }
+            get { return Resources.Resource1.CatagoryNameVC; }
         }
 
         /// <summary>
@@ -465,7 +467,7 @@ namespace GitFlow
         /// </summary>
         public string GroupName
         {
-            get { return "Git Actions"; }
+            get { return Resources.Resource1.GroupNameActions; }
         }
 
         /// <summary>
@@ -473,7 +475,268 @@ namespace GitFlow
         /// </summary>
         public string TabName
         {
-            get { return "GitFlow"; }
+            get { return Resources.Resource1.TabName; }
+        }
+
+        #endregion
+
+    }
+
+    public class Pull : IDesignAddIn, IDesignAddInGuiDetails
+    {
+        #region IDesignAddIn Members
+
+        /// <summary>
+        /// Property returning the name of the add-in. This name may contain any characters and is used as the display name for the add-in in the UI.
+        /// </summary>
+        public string Name
+        {
+            get { return Resources.Resource1.ButtonLabelPull; }
+        }
+
+        /// <summary>
+        /// Property returning a short description of what the add-in does.  
+        /// </summary>
+        public string Description
+        {
+            get { return Resources.Resource1.ButtonDescriptionPull; }
+        }
+
+        /// <summary>
+        /// Property returning an icon to display for the add-in in the UI.
+        /// </summary>
+        public System.Drawing.Image Icon
+        {
+            get { return Properties.Resources.IconIco; }
+        }
+
+
+
+        #endregion
+
+
+        public void Execute(SimioAPI.Extensions.IDesignContext context)
+        {
+            try
+            {
+                //make sure they are in a valid repository
+                if (GitContext.Instance.IsInitialized == false)
+                {
+                    DialogResult result = MessageBox.Show(Resources.Resource1.ConnectRepoPrompt, "Connect Repository", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        // Open the OpenRepoForm to allow the user to connect to a repository
+                        OpenRepoForm openRepoForm = new OpenRepoForm();
+                        openRepoForm.ShowDialog();
+                    }
+                    else
+                    {
+                        // If the user chooses not to connect, exit the method
+                        MessageBox.Show(Resources.Resource1.ConnectRepoBeforeActionError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
+                //first try safe pull with merge ff only
+                if (LibgitFunctionClass.git_safe_pull(GitContext.Instance.RepositoryPath, GitContext.Instance.GetSignature()))
+                {
+                    MessageBox.Show(Resources.Resource1.NormalPullSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+            }
+            catch (Exception ex) when (ex.Message.Contains("conflicts prevent checkout"))
+            {
+                // Handle merge conflicts with force push
+                //MessageBox.Show(Resources.Resource1.PullForcePromptAfterFailSafePull, "Merge Conflict", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                //might have been redundant
+
+                //if the user chooses to force pull, then do it
+                if (DialogResult.Yes == MessageBox.Show(Resources.Resource1.PullForcePromptAfterFailSafePull, "Merge Conflict", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                {
+                    try
+                    {
+                        LibgitFunctionClass.git_force_pull(GitContext.Instance.RepositoryPath, GitContext.Instance.GetSignature());
+                        MessageBox.Show(Resources.Resource1.PullForceSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception e)
+                    {
+                        // Show the error message and do not close the form
+                        MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex) when (ex.Message.Contains("403"))
+            {
+                // Handle authentication error
+                MessageBox.Show(Resources.Resource1.AuthenticationError, "Authentication Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex) when (ex.Message.Contains("404"))
+            {
+                // Handle remote retrieval error
+                MessageBox.Show(Resources.Resource1.RemoteRetrival, "Remote Retrieval Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                // Show the error message and do not close the form
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        #region IDesignAddInGuiDetails Members
+
+        // Here is a sample implementation of the optional IDesignAddInGuiDetails interface.
+        // To use this implementation, un-comment the interface name on the "class" line at
+        // the top of this file.
+        //
+        // If a design-time add-in implements this optional interface, it can specify where
+        // in Simio's ribbon area it should appear.  Merely implementing the interface, and
+        // returning null for CategoryName, TabName, and GroupName will cause the add-in to
+        // appear at a default location defined by Simio.  However, the add-in can return a
+        // specific name for any or all of these properties, to indicate where it should be
+        // located in Simio's ribbon area.
+
+        /// <summary>
+        /// Property returning the category name for this Add-In.  Return null to use Simio's default add-in category name.
+        /// </summary>
+        public string CategoryName
+        {
+            get { return Resources.Resource1.CatagoryNameVC; }
+        }
+
+        /// <summary>
+        /// Property returning the group name for this Add-In.  Return null to use Simio's default add-in group name.
+        /// </summary>
+        public string GroupName
+        {
+            get { return Resources.Resource1.GroupNameActions; }
+        }
+
+        /// <summary>
+        /// Property returning the tab name for this Add-In.  Return null to use Simio's default add-in tab name.
+        /// </summary>
+        public string TabName
+        {
+            get { return Resources.Resource1.TabName; }
+        }
+
+        #endregion
+
+    }
+
+    public class LocalReset : IDesignAddIn, IDesignAddInGuiDetails
+    {
+        #region IDesignAddIn Members
+
+        /// <summary>
+        /// Property returning the name of the add-in. This name may contain any characters and is used as the display name for the add-in in the UI.
+        /// </summary>
+        public string Name
+        {
+            get { return Resources.Resource1.ButtonLabelGitReset; }
+        }
+
+        /// <summary>
+        /// Property returning a short description of what the add-in does.  
+        /// </summary>
+        public string Description
+        {
+            get { return Resources.Resource1.ButtonDescriptionGitReset; }
+        }
+
+        /// <summary>
+        /// Property returning an icon to display for the add-in in the UI.
+        /// </summary>
+        public System.Drawing.Image Icon
+        {
+            get { return Properties.Resources.IconIco; }
+        }
+
+
+
+        #endregion
+
+
+        public void Execute(SimioAPI.Extensions.IDesignContext context)
+        {
+            try
+            {
+                //make sure they are in a valid repository
+                if (GitContext.Instance.IsInitialized == false)
+                {
+                    DialogResult result = MessageBox.Show(Resources.Resource1.ConnectRepoPrompt, "Connect Repository", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        // Open the OpenRepoForm to allow the user to connect to a repository
+                        OpenRepoForm openRepoForm = new OpenRepoForm();
+                        openRepoForm.ShowDialog();
+                    }
+                    else
+                    {
+                        // If the user chooses not to connect, exit the method
+                        MessageBox.Show(Resources.Resource1.ConnectRepoBeforeActionError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
+                //first try safe pull with merge ff only
+                if (LibgitFunctionClass.git_reset_local(GitContext.Instance.RepositoryPath))
+                {
+                    MessageBox.Show(Resources.Resource1.LocalResetSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+            }
+            catch (Exception ex) when (ex.Message.Contains("403"))
+            {
+                // Handle authentication error
+                MessageBox.Show(Resources.Resource1.AuthenticationError, "Authentication Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex) when (ex.Message.Contains("404"))
+            {
+                // Handle remote retrieval error
+                MessageBox.Show(Resources.Resource1.RemoteRetrival, "Remote Retrieval Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                // Show the error message and do not close the form
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        #region IDesignAddInGuiDetails Members
+
+        // Here is a sample implementation of the optional IDesignAddInGuiDetails interface.
+        // To use this implementation, un-comment the interface name on the "class" line at
+        // the top of this file.
+        //
+        // If a design-time add-in implements this optional interface, it can specify where
+        // in Simio's ribbon area it should appear.  Merely implementing the interface, and
+        // returning null for CategoryName, TabName, and GroupName will cause the add-in to
+        // appear at a default location defined by Simio.  However, the add-in can return a
+        // specific name for any or all of these properties, to indicate where it should be
+        // located in Simio's ribbon area.
+
+        /// <summary>
+        /// Property returning the category name for this Add-In.  Return null to use Simio's default add-in category name.
+        /// </summary>
+        public string CategoryName
+        {
+            get { return Resources.Resource1.CatagoryNameVC; }
+        }
+
+        /// <summary>
+        /// Property returning the group name for this Add-In.  Return null to use Simio's default add-in group name.
+        /// </summary>
+        public string GroupName
+        {
+            get { return Resources.Resource1.GroupNameActions; }
+        }
+
+        /// <summary>
+        /// Property returning the tab name for this Add-In.  Return null to use Simio's default add-in tab name.
+        /// </summary>
+        public string TabName
+        {
+            get { return Resources.Resource1.TabName; }
         }
 
         #endregion
@@ -489,7 +752,7 @@ namespace GitFlow
         /// </summary>
         public string Name
         {
-            get { return "Select Branch"; }
+            get { return Resources.Resource1.ButtonLabelSelectBranch; }
         }
 
         /// <summary>
@@ -497,7 +760,7 @@ namespace GitFlow
         /// </summary>
         public string Description
         {
-            get { return "Switches your current working context to a different line of development within the repository.\r\nOpen and close project to see changes \r\n"; }
+            get { return Resources.Resource1.ButtonDescriptionSelectBranch; }
         }
 
         /// <summary>
@@ -519,7 +782,7 @@ namespace GitFlow
             {
                 if (GitContext.Instance.IsInitialized == false)
                 {
-                    DialogResult result = MessageBox.Show(Resources.Resource1.ConnectRepoPrompt, "Open Repository", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult result = MessageBox.Show(Resources.Resource1.ConnectRepoPrompt, "Connect Repository", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (result == DialogResult.Yes)
                     {
                         // Open the OpenRepoForm to allow the user to connect to a repository
@@ -563,7 +826,7 @@ namespace GitFlow
         /// </summary>
         public string CategoryName
         {
-            get { return "Version Control"; }
+            get { return Resources.Resource1.CatagoryNameVC; }
         }
 
         /// <summary>
@@ -571,7 +834,7 @@ namespace GitFlow
         /// </summary>
         public string GroupName
         {
-            get { return "Git Actions"; }
+            get { return Resources.Resource1.GroupNameBranchingActions; }
         }
 
         /// <summary>
@@ -579,7 +842,7 @@ namespace GitFlow
         /// </summary>
         public string TabName
         {
-            get { return "GitFlow"; }
+            get { return Resources.Resource1.TabName; }
         }
 
         #endregion
@@ -595,7 +858,7 @@ namespace GitFlow
         /// </summary>
         public string Name
         {
-            get { return "Merge to Main"; }
+            get { return Resources.Resource1.ButtonLabelMergeMain; }
         }
 
         /// <summary>
@@ -603,7 +866,7 @@ namespace GitFlow
         /// </summary>
         public string Description
         {
-            get { return "Integrates the completed work from current branch into the primary main branch of the project.\r\n\r\n"; }
+            get { return Resources.Resource1.ButtonDescriptionMergeMain; }
         }
 
         /// <summary>
@@ -628,7 +891,7 @@ namespace GitFlow
             {
                 if (GitContext.Instance.IsInitialized == false)
                 {
-                    DialogResult result = MessageBox.Show(Resources.Resource1.ConnectRepoPrompt, "Open Repository", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult result = MessageBox.Show(Resources.Resource1.ConnectRepoPrompt, "Connect Repository", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (result == DialogResult.Yes)
                     {
                         // Open the OpenRepoForm to allow the user to connect to a repository
@@ -654,7 +917,7 @@ namespace GitFlow
                     {
                         // Attempt to merge the current branch into main
                         LibgitFunctionClass.git_branch_merge_force(GitContext.Instance.RepositoryPath, "main");
-                        MessageBox.Show(Resources.Resource1.MergeToMainSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //MessageBox.Show(Resources.Resource1.MergeToMainSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex) when (ex.Message.Contains("An error occurred: failed rmdir - "))
                     {
@@ -726,7 +989,7 @@ namespace GitFlow
         /// </summary>
         public string CategoryName
         {
-            get { return "Version Control"; }
+            get { return Resources.Resource1.CatagoryNameVC; }
         }
 
         /// <summary>
@@ -734,7 +997,7 @@ namespace GitFlow
         /// </summary>
         public string GroupName
         {
-            get { return "Git Actions"; }
+            get { return Resources.Resource1.GroupNameBranchingActions; }
         }
 
         /// <summary>
@@ -742,7 +1005,114 @@ namespace GitFlow
         /// </summary>
         public string TabName
         {
-            get { return "GitFlow"; }
+            get { return Resources.Resource1.TabName; }
+        }
+
+        #endregion
+
+    }
+
+    public class RemoveBranch : IDesignAddIn, IDesignAddInGuiDetails
+    {
+        #region IDesignAddIn Members
+
+        /// <summary>
+        /// Property returning the name of the add-in. This name may contain any characters and is used as the display name for the add-in in the UI.
+        /// </summary>
+        public string Name
+        {
+            get { return Resources.Resource1.ButtonLabelRemoveBranch; }
+        }
+
+        /// <summary>
+        /// Property returning a short description of what the add-in does.  
+        /// </summary>
+        public string Description
+        {
+            get { return Resources.Resource1.ButtonDescriptionRemoveBranch; }
+        }
+
+        /// <summary>
+        /// Property returning an icon to display for the add-in in the UI.
+        /// </summary>
+        public System.Drawing.Image Icon
+        {
+            get { return Properties.Resources.IconIco; ; }
+        }
+
+
+
+        #endregion
+
+
+        public void Execute(SimioAPI.Extensions.IDesignContext context)
+        {
+            try
+            {
+                if (GitContext.Instance.IsInitialized == false)
+                {
+                    DialogResult result = MessageBox.Show(Resources.Resource1.ConnectRepoPrompt, "Connect Repository", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        // Open the OpenRepoForm to allow the user to connect to a repository
+                        OpenRepoForm openRepoForm = new OpenRepoForm();
+                        openRepoForm.ShowDialog();
+                    }
+                    else
+                    {
+                        // If the user chooses not to connect, exit the method
+                        MessageBox.Show(Resources.Resource1.ConnectRepoBeforeActionError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
+                //bring up branch Remove form
+                BranchRemoveForm FormViewer = new BranchRemoveForm();
+                FormViewer.Show();
+            }
+            catch (Exception ex)
+            {
+                // Show the error message and do not close the form
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        #region IDesignAddInGuiDetails Members
+
+        // Here is a sample implementation of the optional IDesignAddInGuiDetails interface.
+        // To use this implementation, un-comment the interface name on the "class" line at
+        // the top of this file.
+        //
+        // If a design-time add-in implements this optional interface, it can specify where
+        // in Simio's ribbon area it should appear.  Merely implementing the interface, and
+        // returning null for CategoryName, TabName, and GroupName will cause the add-in to
+        // appear at a default location defined by Simio.  However, the add-in can return a
+        // specific name for any or all of these properties, to indicate where it should be
+        // located in Simio's ribbon area.
+
+        /// <summary>
+        /// Property returning the category name for this Add-In.  Return null to use Simio's default add-in category name.
+        /// </summary>
+        public string CategoryName
+        {
+            get { return Resources.Resource1.CatagoryNameVC; }
+        }
+
+        /// <summary>
+        /// Property returning the group name for this Add-In.  Return null to use Simio's default add-in group name.
+        /// </summary>
+        public string GroupName
+        {
+            get { return Resources.Resource1.GroupNameBranchingActions; }
+        }
+
+        /// <summary>
+        /// Property returning the tab name for this Add-In.  Return null to use Simio's default add-in tab name.
+        /// </summary>
+        public string TabName
+        {
+            get { return Resources.Resource1.TabName; }
         }
 
         #endregion

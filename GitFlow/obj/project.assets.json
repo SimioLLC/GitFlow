@@ -1354,6 +1354,19 @@
           }
         }
       },
+      "Meziantou.Framework.Win32.CredentialManager/1.7.4": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/Meziantou.Framework.Win32.CredentialManager.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Meziantou.Framework.Win32.CredentialManager.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.Bcl.AsyncInterfaces/5.0.0": {
         "type": "package",
         "compile": {
@@ -3119,6 +3132,30 @@
         "runtimes/win-x86/native/git2-3f4182d.dll"
       ]
     },
+    "Meziantou.Framework.Win32.CredentialManager/1.7.4": {
+      "sha512": "S8pMJI/g+ZooKcY4So2jfaBD6PgzU50cVjrEUAMEO4/VkTYuOiP8sY/FiHfcMQKOHzrbmklUwZyVoaZOVkzeVg==",
+      "type": "package",
+      "path": "meziantou.framework.win32.credentialmanager/1.7.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "_manifest/spdx_2.2/manifest.spdx.json",
+        "_manifest/spdx_2.2/manifest.spdx.json.sha256",
+        "icon.png",
+        "lib/net462/Meziantou.Framework.Win32.CredentialManager.dll",
+        "lib/net462/Meziantou.Framework.Win32.CredentialManager.xml",
+        "lib/net8.0/Meziantou.Framework.Win32.CredentialManager.dll",
+        "lib/net8.0/Meziantou.Framework.Win32.CredentialManager.xml",
+        "lib/net9.0/Meziantou.Framework.Win32.CredentialManager.dll",
+        "lib/net9.0/Meziantou.Framework.Win32.CredentialManager.xml",
+        "lib/netstandard2.0/Meziantou.Framework.Win32.CredentialManager.dll",
+        "lib/netstandard2.0/Meziantou.Framework.Win32.CredentialManager.xml",
+        "meziantou.framework.win32.credentialmanager.1.7.4.nupkg.sha512",
+        "meziantou.framework.win32.credentialmanager.nuspec",
+        "readme.md"
+      ]
+    },
     "Microsoft.Bcl.AsyncInterfaces/5.0.0": {
       "sha512": "W8DPQjkMScOMTtJbPwmPyj9c3zYSFGawDW3jwlBOOsnY+EzZFLgNQ/UMkK35JmkNOVPdCyPr2Tw7Vv9N+KA3ZQ==",
       "type": "package",
@@ -4414,6 +4451,7 @@
       "DevExpress.Win.Design >= 23.2.12",
       "LibGit2Sharp >= 0.31.0",
       "LibGit2Sharp.NativeBinaries >= 2.0.323",
+      "Meziantou.Framework.Win32.CredentialManager >= 1.7.4",
       "System.Drawing.Common >= 9.0.5"
     ]
   },
@@ -4483,6 +4521,10 @@
           "LibGit2Sharp.NativeBinaries": {
             "target": "Package",
             "version": "[2.0.323, )"
+          },
+          "Meziantou.Framework.Win32.CredentialManager": {
+            "target": "Package",
+            "version": "[1.7.4, )"
           },
           "System.Drawing.Common": {
             "target": "Package",

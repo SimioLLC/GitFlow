@@ -5,10 +5,12 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.DirectX.Common.Direct2D;
+using DevExpress.Pdf.Xmp;
 using DevExpress.XtraEditors;
 
 namespace GitFlow
@@ -77,10 +79,16 @@ namespace GitFlow
                     throw new Exception(Resources.Resource1.FieldFillPath);
                 }
                 // Attempt to set the Git context
+                /*
                 if (string.IsNullOrEmpty(_pat))
                 {
-                    throw new Exception(Resources.Resource1.FieldFillPAT);
+                    var credential = CredentialHandler.ReadCredential(_RepoPath);
+                    if (credential != null)
+                    {
+                        throw new Exception(Resources.Resource1.FieldFillPAT);
+                    }
                 }
+                */
 
                 //check if _RepoPath ends with .git, if so remove it
                 if (_RepoPath.EndsWith(".git"))
@@ -97,8 +105,30 @@ namespace GitFlow
                 // Attempt to set the Git context
 
                 GitContext.Instance.Initialize(_RepoPath, _remoteURL, _pat, _username, _email);
+
+                int permissionLevel = LibgitFunctionClass.GetPermission(_RepoPath);
+                // Show the permission level in a message box
+                string permissionLevelString = "Unknown";
+                if (permissionLevel == 0)
+                {
+                    permissionLevelString = "No Access";
+                    throw new Exception(Resources.Resource1.FieldFillPAT);
+                }
+                else if (permissionLevel == 1)
+                {
+                    permissionLevelString = "Read Only";
+                }
+                else if (permissionLevel == 2)
+                {
+                    permissionLevelString = "Read/Write";
+                }
+
                 
-                //have to talk to higherups but unsure how to open since there is no folder opening in simio and one repo may have multiple projects or even multiple folders of projects
+                GitContext.Instance.PermissionLevel = permissionLevel; // Set the permission level in the GitContext
+
+                // Show the permission level in a message box
+                MessageBox.Show(this, "Permission: "+ permissionLevelString, "Permission Level", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 MessageBox.Show(Resources.Resource1.RepoOpenedSuccess);
                 // If successful, close the form
                 this.Close();

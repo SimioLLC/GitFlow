@@ -37,6 +37,8 @@ namespace GitFlow
         public string Email { get; private set; }
         public string PAT { get; private set; }
 
+        public int PermissionLevel { get; set; } = 0; // Default to no access
+
         /// <summary>
         /// The current working branch. Can be updated using 'SetCurrentBranch'.
         /// </summary>

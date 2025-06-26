@@ -1309,7 +1309,121 @@ namespace GitFlow
          * members: PrivateRepoCredentials, getPAT, setPAT, getUser, setUser
          */
 
+        public static int GetPermission(string localRepoPath)
+        {
+            // Function to get the permission level of the user for the local repository.
+            // It attempts to connect to the remote repository and checks the permissions.
+            // If the remote repository is not set up, it returns 0 (no permissions).
+            // It tries to write to the remote repository by creating and deleting a temporary branch.
+            // If the write fails, it tries a read-only operation (fetch).
+            // The process does not permanently alter the repository's state.
+            //
+            // Parameters:
+            //   localRepoPath: Path to the local Git repository
+            //
+            // Returns:
+            //   Permission level as an integer:
+            //   - 0 = none (no remote, or no read/write access)
+            //   - 1 = read-only
+            //   - 2 = read and write
+            try
+            {
+                using (var repo = new Repository(localRepoPath))
+                {
+                    string tempBranchName = $"temp-permission-check-{Guid.NewGuid()}";
+                    Branch newBranch;
+                    var remote = repo.Network.Remotes["origin"];
+                    if (remote == null)
+                    {
+                        return 0; // No remote configured, therefore no permissions.
+                    }
+                    // Check if the branch already exists
+                    try
+                    {
+                        if (repo.Branches[tempBranchName] != null)
+                        {
+                            throw new Exception($"Branch '{tempBranchName}' already exists.");
 
+                        }
+                        // Create a new branch
+                        newBranch = repo.CreateBranch(tempBranchName);
+                        //Commands.Checkout(repo, newBranch);
+                        // Push the new branch to the remote repository
+                        repo.Network.Push(repo.Network.Remotes["origin"], $"refs/heads/{tempBranchName}", new PushOptions { CredentialsProvider = PrivateRepoCredentials });
+                    }
+                    catch (LibGit2SharpException ex)
+                    {
+                        // This is a clear "permission denied" error for a write operation.
+                        // We will now fall through to check for read-only access.
+                        MessageBox.Show($"Write-permission check failed with an error: {ex.Message}");
+
+
+
+
+
+
+                        try
+                        {
+                            var fetchOptions = new FetchOptions { CredentialsProvider = PrivateRepoCredentials };
+                            var refSpecs = remote.FetchRefSpecs.Select(x => x.Specification);
+                            // The "logMessage" parameter is not strictly necessary for the check but is good practice.
+                            Commands.Fetch(repo, remote.Name, refSpecs, fetchOptions, "permission-check");
+
+                            // If the fetch command succeeds, the user has at least read permission.
+                            repo.Branches.Remove(tempBranchName);
+                            return 1; // Read-only permission
+                        }
+                        catch (LibGit2SharpException ex2) when (ex2.Message.Contains("403") || ex2.Message.Contains("authentication"))
+                        {
+                            // A clear authentication or permission error during a read operation.
+                            repo.Branches.Remove(tempBranchName);
+                            return 0; // No access
+                        }
+                        catch (Exception ex2)
+                        {
+                            // Any other exception during fetch (e.g., repository not found, network error)
+                            // means we cannot read from the repository.
+                            MessageBox.Show($"Read-permission check failed with an unexpected error: {ex2.Message}");
+                            repo.Branches.Remove(tempBranchName);
+                            return 0; // Assume no access
+                        }
+
+
+
+
+                    }
+                    catch (Exception e)
+                    {
+                        // Other errors during push (e.g., network failure, or the remote is down) could happen.
+                        // We'll log it and fall through to test for read access, as a write is not possible.
+                        MessageBox.Show($"Write-permission check failed with an unexpected error: {e.Message}");
+                        repo.Branches.Remove(tempBranchName);
+                        return 0; // Assume no access
+                    }
+
+                    try
+                    {
+                        //Delete branch locally
+                        repo.Branches.Remove(tempBranchName);
+
+                        //Delete branch remotely
+                        repo.Network.Push(repo.Network.Remotes["origin"], $":refs/heads/{tempBranchName}", new PushOptions { CredentialsProvider = PrivateRepoCredentials });
+                    }
+                    catch (Exception e)
+                    {
+                        // If we fail to delete the branch, it might be due to permissions, but we assume write access is granted.
+                        MessageBox.Show($"Failed to delete temporary branch '{tempBranchName}': {e.Message}");
+                    }
+                    return 2; // If we reach here, the user has write permission.
+
+
+                }
+            }
+            catch
+            {
+                return 0; // If any error occurs, assume no permissions.
+            }
+        }
 
 
         public static Credentials PrivateRepoCredentials(string url, string usernameFromUrl,

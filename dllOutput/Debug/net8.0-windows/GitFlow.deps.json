@@ -11,6 +11,7 @@
           "DevExpress.Win.Design": "23.2.12",
           "LibGit2Sharp": "0.31.0",
           "LibGit2Sharp.NativeBinaries": "2.0.323",
+          "Meziantou.Framework.Win32.CredentialManager": "1.7.4",
           "System.Drawing.Common": "9.0.5",
           "SimioAPI": "18.276.45400.0",
           "SimioAPI.Extensions": "18.276.45400.0"
@@ -1096,6 +1097,14 @@
           }
         }
       },
+      "Meziantou.Framework.Win32.CredentialManager/1.7.4": {
+        "runtime": {
+          "lib/net8.0/Meziantou.Framework.Win32.CredentialManager.dll": {
+            "assemblyVersion": "1.7.4.0",
+            "fileVersion": "1.7.4.0"
+          }
+        }
+      },
       "Microsoft.Bcl.AsyncInterfaces/5.0.0": {
         "runtime": {
           "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
@@ -1945,6 +1954,13 @@
       "sha512": "sha512-Kg+fJGWhGj5qRXG0Ilj4ddhuodGXZg57yhfX6OVUDR0M2DKg/UR42/d74+qv5l1qotc1qJilo/ho7xQnULP6yA==",
       "path": "libgit2sharp.nativebinaries/2.0.323",
       "hashPath": "libgit2sharp.nativebinaries.2.0.323.nupkg.sha512"
+    },
+    "Meziantou.Framework.Win32.CredentialManager/1.7.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-S8pMJI/g+ZooKcY4So2jfaBD6PgzU50cVjrEUAMEO4/VkTYuOiP8sY/FiHfcMQKOHzrbmklUwZyVoaZOVkzeVg==",
+      "path": "meziantou.framework.win32.credentialmanager/1.7.4",
+      "hashPath": "meziantou.framework.win32.credentialmanager.1.7.4.nupkg.sha512"
     },
     "Microsoft.Bcl.AsyncInterfaces/5.0.0": {
       "type": "package",

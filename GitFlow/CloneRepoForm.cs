@@ -89,6 +89,14 @@ namespace GitFlow
                     throw new Exception(Resources.Resource1.FieldFillPAT);
                 }
 
+                if (string.IsNullOrEmpty(_username))
+                {
+                    _username = "DefaultUser"; // Set a default username if not provided
+                }
+                if (string.IsNullOrEmpty(_email))
+                {
+                    _email = "DefaultUser@email.com"; // Set a default email if not provided
+                }
                 // Attempt to set the Git context
                 var cred = CredentialHandler.ReadCredential(_RepoPath);
                 if (cred == null)

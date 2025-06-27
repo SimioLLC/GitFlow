@@ -90,6 +90,16 @@ namespace GitFlow
 
                 //add credential
                 // Attempt to set the Git context
+                if (string.IsNullOrEmpty(_username))
+                {
+                    _username = "DefaultUser"; // Set a default username if not provided
+                }
+                if (string.IsNullOrEmpty(_email))
+                {
+                    _email = "DefaultUser@email.com"; // Set a default email if not provided
+                }
+
+
                 var cred = CredentialHandler.ReadCredential(_RepoPath);
                 if (cred == null)
                 {

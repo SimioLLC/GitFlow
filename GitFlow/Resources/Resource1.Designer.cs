@@ -358,6 +358,15 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please provide a new personal access token. Their is currently zero permissions associated with this repository..
+        /// </summary>
+        internal static string ErrorNoPermissions {
+            get {
+                return ResourceManager.GetString("ErrorNoPermissions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please fill in all fields. - Personal Access Token.
         /// </summary>
         internal static string FieldFillPAT {
@@ -525,6 +534,15 @@ namespace GitFlow.Resources {
         internal static string NormalPullSuccess {
             get {
                 return ResourceManager.GetString("NormalPullSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The action you are trying to complete requires read/write capabilities, please try reconnecting to a different repository or using a different personal access token..
+        /// </summary>
+        internal static string PermissionErrorBlockedAction {
+            get {
+                return ResourceManager.GetString("PermissionErrorBlockedAction", resourceCulture);
             }
         }
         

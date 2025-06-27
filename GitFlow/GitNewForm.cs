@@ -88,6 +88,20 @@ namespace GitFlow
                     throw new Exception(Resources.Resource1.FieldFillPAT);
                 }
 
+                //add credential
+                // Attempt to set the Git context
+                var cred = CredentialHandler.ReadCredential(_RepoPath);
+                if (cred == null)
+                {
+                    CredentialHandler.SaveCredential(_RepoPath, _username, _pat, _email, Meziantou.Framework.Win32.CredentialPersistence.LocalMachine);
+                }
+                else
+                {
+                    CredentialHandler.UpdateCredential(_RepoPath, _username, _pat, _email);
+                }
+
+
+
                 // Attempt to set the Git context
 
                 GitContext.Instance.Initialize(_RepoPath, _remoteURL, _pat, _username, _email);

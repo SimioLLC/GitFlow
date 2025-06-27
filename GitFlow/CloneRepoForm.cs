@@ -90,8 +90,18 @@ namespace GitFlow
                 }
 
                 // Attempt to set the Git context
-       
-                GitContext.Instance.Initialize(_RepoPath, _remoteURL, _pat, _username, _email);
+                var cred = CredentialHandler.ReadCredential(_RepoPath);
+                if (cred == null)
+                {
+                    CredentialHandler.SaveCredential(_RepoPath, _username, _pat, _email, Meziantou.Framework.Win32.CredentialPersistence.LocalMachine);
+                }
+                else
+                {
+                    CredentialHandler.UpdateCredential(_RepoPath, _username, _pat, _email);
+                }
+
+
+                    GitContext.Instance.Initialize(_RepoPath, _remoteURL, _pat, _username, _email);
 
 
                 LibgitFunctionClass.git_clone(_RepoPath, _remoteURL);

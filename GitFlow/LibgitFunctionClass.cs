@@ -1355,12 +1355,6 @@ namespace GitFlow
                     {
                         // This is a clear "permission denied" error for a write operation.
                         // We will now fall through to check for read-only access.
-                        MessageBox.Show($"Write-permission check failed with an error: {ex.Message}");
-
-
-
-
-
 
                         try
                         {

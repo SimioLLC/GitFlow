@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DevExpress.CodeParser;
 using DevExpress.DirectX.Common.Direct2D;
 using DevExpress.Pdf.Xmp;
 using DevExpress.XtraEditors;
@@ -78,17 +79,7 @@ namespace GitFlow
                 {
                     throw new Exception(Resources.Resource1.FieldFillPath);
                 }
-                // Attempt to set the Git context
-                /*
-                if (string.IsNullOrEmpty(_pat))
-                {
-                    var credential = CredentialHandler.ReadCredential(_RepoPath);
-                    if (credential != null)
-                    {
-                        throw new Exception(Resources.Resource1.FieldFillPAT);
-                    }
-                }
-                */
+
 
                 //check if _RepoPath ends with .git, if so remove it
                 if (_RepoPath.EndsWith(".git"))
@@ -102,9 +93,59 @@ namespace GitFlow
                     throw new Exception(Resources.Resource1.GitOpenNoGitDetected + " " + _RepoPath);
 
                 }
+                // defaultize other strings to defaults instead of empty strings
+                if (string.IsNullOrEmpty(_username))
+                {
+                    _username = "defaultuser";
+                }
+                if (string.IsNullOrEmpty(_email))
+                {
+                    _email = "defaultuser@email.com";
+                }
+
                 // Attempt to set the Git context
 
-                GitContext.Instance.Initialize(_RepoPath, _remoteURL, _pat, _username, _email);
+                if (string.IsNullOrEmpty(_pat))
+                {
+                    var credential = CredentialHandler.ReadCredential(_RepoPath);
+                    if (credential == null)
+                    {
+                        throw new Exception(Resources.Resource1.ErrorNoPermissions);
+                    }
+                    else
+                    {
+                        if (string.IsNullOrEmpty(credential.Password) || string.IsNullOrEmpty(credential.UserName) || string.IsNullOrEmpty(credential.Comment))
+                        {
+                            throw new Exception(Resources.Resource1.ErrorNoPermissions);
+                        }
+                        else
+                        {
+                            _pat = credential.Password; // If no PAT is provided, try to read it from the stored credentials
+                            _username = credential.UserName; // If no username is provided, try to read it from the stored credentials
+                            _email = credential.Comment; // If no email is provided, try to read it from the stored credential
+
+                        }
+
+                    }
+
+
+                }
+                else//either save or update creds depending if there already exists creds
+                {
+                    var credential = CredentialHandler.ReadCredential(_RepoPath);
+                    if (credential == null)
+                    {
+                        CredentialHandler.SaveCredential(_RepoPath, _username, _pat, _email, Meziantou.Framework.Win32.CredentialPersistence.LocalMachine);
+                    }
+                    else
+                    {
+                        CredentialHandler.UpdateCredential(_RepoPath, _username, _pat, _email);
+                    }
+                        
+                }
+
+
+                    GitContext.Instance.Initialize(_RepoPath, _remoteURL, _pat, _username, _email);
 
                 int permissionLevel = LibgitFunctionClass.GetPermission(_RepoPath);
                 // Show the permission level in a message box
@@ -112,7 +153,7 @@ namespace GitFlow
                 if (permissionLevel == 0)
                 {
                     permissionLevelString = "No Access";
-                    throw new Exception(Resources.Resource1.FieldFillPAT);
+                    throw new Exception(Resources.Resource1.ErrorNoPermissions);
                 }
                 else if (permissionLevel == 1)
                 {
@@ -138,9 +179,7 @@ namespace GitFlow
                 // Show the error message and do not close the form
                 MessageBox.Show(this, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            //create a new git context
-            //GitContext.setGitContext(_RepoPath, _remoteURL, _pat, _username);
-            //this.Close();
+
         }
 
         private void textBox4_TextChanged(object sender, EventArgs e)

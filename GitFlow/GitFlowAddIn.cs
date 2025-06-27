@@ -366,6 +366,12 @@ namespace GitFlow
                         return;
                     }
                 }
+                else if (GitContext.Instance.PermissionLevel != 2)
+                {
+                    // If the user is not allowed to commit, show an error message and exit
+                    MessageBox.Show(Resources.Resource1.PermissionErrorBlockedAction, "Permission Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 if (LibgitFunctionClass.git_main_branch_check(GitContext.Instance.RepositoryPath))
                 {
                     // Display a Yes/No message box
@@ -905,6 +911,12 @@ namespace GitFlow
                         return;
                     }
                 }
+                else if (GitContext.Instance.PermissionLevel != 2)
+                {
+                    // If the user is not allowed to commit, show an error message and exit
+                    MessageBox.Show(Resources.Resource1.PermissionErrorBlockedAction, "Permission Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 if (LibgitFunctionClass.git_main_branch_check(GitContext.Instance.RepositoryPath))
                 {
                     // Error message if the user is already on the main branch
@@ -1065,7 +1077,12 @@ namespace GitFlow
                         return;
                     }
                 }
-
+                else if (GitContext.Instance.PermissionLevel != 2)
+                {
+                    // If the user is not allowed to commit, show an error message and exit
+                    MessageBox.Show(Resources.Resource1.PermissionErrorBlockedAction, "Permission Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 //bring up branch Remove form
                 BranchRemoveForm FormViewer = new BranchRemoveForm();
                 FormViewer.Show();

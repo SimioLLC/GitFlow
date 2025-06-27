@@ -68,7 +68,7 @@
             // 
             textBox3.Location = new Point(23, 62);
             textBox3.Name = "textBox3";
-            textBox3.PlaceholderText = "PAT (Personal Access Token)";
+            textBox3.PlaceholderText = "Personal Access Token (optional)";
             textBox3.Size = new Size(436, 23);
             textBox3.TabIndex = 3;
             textBox3.TextChanged += textBox3_TextChanged;

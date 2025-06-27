@@ -52,6 +52,11 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<Link>LibGit2Sharp.dll</Link>
 		</Content>
+		
+		<Content Include="BuildItems\Meziantou.Framework.Win32.CredentialManager.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Link>Meziantou.Framework.Win32.CredentialManager.dll</Link>
+		</Content>
 	</ItemGroup>
 
 

@@ -76,3 +76,4 @@ C:\Code\GitFlow - Simio LLC\GitFlow\obj\Debug\net8.0-windows\GitFlow.dll
 C:\Code\GitFlow - Simio LLC\GitFlow\obj\Debug\net8.0-windows\refint\GitFlow.dll
 C:\Code\GitFlow - Simio LLC\GitFlow\obj\Debug\net8.0-windows\GitFlow.pdb
 C:\Code\GitFlow - Simio LLC\GitFlow\obj\Debug\net8.0-windows\ref\GitFlow.dll
+C:\Code\GitFlow - Simio LLC\dllOutput\Debug\net8.0-windows\Meziantou.Framework.Win32.CredentialManager.dll

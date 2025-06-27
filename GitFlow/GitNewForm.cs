@@ -116,6 +116,30 @@ namespace GitFlow
                 string myGitIgnorePath = Path.Combine(dllDirectory, ".gitignore");
 
                 LibgitFunctionClass.git_init(GitContext.Instance.RepositoryPath, GitContext.Instance.RemoteUrl, GitContext.Instance.GetSignature(), myGitIgnorePath);
+
+                int permissionLevel = LibgitFunctionClass.GetPermission(_RepoPath);
+                // Show the permission level in a message box
+                string permissionLevelString = "Unknown";
+                if (permissionLevel == 0)
+                {
+                    permissionLevelString = "No Access";
+                    throw new Exception(Resources.Resource1.ErrorNoPermissions);
+                }
+                else if (permissionLevel == 1)
+                {
+                    permissionLevelString = "Read Only";
+                }
+                else if (permissionLevel == 2)
+                {
+                    permissionLevelString = "Read/Write";
+                }
+
+
+                GitContext.Instance.PermissionLevel = permissionLevel; // Set the permission level in the GitContext
+
+                // Show the permission level in a message box
+                MessageBox.Show(this, "Permission: " + permissionLevelString, "Permission Level", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 MessageBox.Show("Success Initialized Repository");
                 // If successful, close the form
                 this.Close();
@@ -144,6 +168,30 @@ namespace GitFlow
                         {
                             File.Delete(masterBranchFile);
                         }
+
+                        int permissionLevel = LibgitFunctionClass.GetPermission(_RepoPath);
+                        // Show the permission level in a message box
+                        string permissionLevelString = "Unknown";
+                        if (permissionLevel == 0)
+                        {
+                            permissionLevelString = "No Access";
+                            throw new Exception(Resources.Resource1.ErrorNoPermissions);
+                        }
+                        else if (permissionLevel == 1)
+                        {
+                            permissionLevelString = "Read Only";
+                        }
+                        else if (permissionLevel == 2)
+                        {
+                            permissionLevelString = "Read/Write";
+                        }
+
+
+                        GitContext.Instance.PermissionLevel = permissionLevel; // Set the permission level in the GitContext
+
+                        // Show the permission level in a message box
+                        MessageBox.Show(this, "Permission: " + permissionLevelString, "Permission Level", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                         MessageBox.Show(Resources.Resource1.InitAndOverride, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 

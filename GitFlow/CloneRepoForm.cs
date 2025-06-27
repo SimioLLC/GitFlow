@@ -106,6 +106,30 @@ namespace GitFlow
 
                 LibgitFunctionClass.git_clone(_RepoPath, _remoteURL);
                 //LibgitFunctionClass.git_init(GitContext.getRepositoryPath(), GitContext.getRemoteUrl(), GitContext.getSignature());
+
+                int permissionLevel = LibgitFunctionClass.GetPermission(_RepoPath);
+                // Show the permission level in a message box
+                string permissionLevelString = "Unknown";
+                if (permissionLevel == 0)
+                {
+                    permissionLevelString = "No Access";
+                    throw new Exception(Resources.Resource1.ErrorNoPermissions);
+                }
+                else if (permissionLevel == 1)
+                {
+                    permissionLevelString = "Read Only";
+                }
+                else if (permissionLevel == 2)
+                {
+                    permissionLevelString = "Read/Write";
+                }
+
+
+                GitContext.Instance.PermissionLevel = permissionLevel; // Set the permission level in the GitContext
+
+                // Show the permission level in a message box
+                MessageBox.Show(this, "Permission: " + permissionLevelString, "Permission Level", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 MessageBox.Show(Resources.Resource1.CloneSuccess);
                 // If successful, close the form
                 this.Close();

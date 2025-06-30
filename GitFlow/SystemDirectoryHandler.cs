@@ -415,6 +415,44 @@ namespace GitFlow
         }
 
 
+        private static bool DeleteDirectoryRecursive(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                return false;
+            }
+
+            try
+            {
+                // First, remove read-only attributes from all files and subdirectories
+                // This is crucial for successful deletion if files are marked read-only.
+                foreach (string file in Directory.GetFiles(path))
+                {
+                    File.SetAttributes(file, File.GetAttributes(file) & ~FileAttributes.ReadOnly);
+                }
+
+                foreach (string subDirectory in Directory.GetDirectories(path))
+                {
+                    DeleteDirectoryRecursive(subDirectory); // Recursive call for subdirectories
+                }
+
+                // Now that all contents are processed, delete the directory itself.
+                // The 'true' argument ensures recursive deletion, though we've handled attributes manually.
+                // It's good practice to keep it for robustness.
+                Directory.Delete(path, true);
+                if (Directory.Exists(path))
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+
 
     }
 }

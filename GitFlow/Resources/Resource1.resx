@@ -122,7 +122,7 @@
     <comment>Info</comment>
   </data>
   <data name="AuthenticationError" xml:space="preserve">
-    <value>Error Contecting to remote - Check PAT and URL</value>
+    <value>Error Contecting to remote - Check PAT and URL.</value>
     <comment>403 Error</comment>
   </data>
   <data name="AuthenticationErrorInit" xml:space="preserve">
@@ -148,7 +148,7 @@
     <value>The destination you are trying to clone into is not empty please delete all files contain in this folder or choose a new folder.</value>
   </data>
   <data name="CloneSuccess" xml:space="preserve">
-    <value>Success! Cloned Repository</value>
+    <value>Success! Cloned Repository.</value>
   </data>
   <data name="ConnectRepoBeforeActionError" xml:space="preserve">
     <value>You must first initialize a repository before using this action.</value>
@@ -175,7 +175,7 @@
     <value>Git Actions</value>
   </data>
   <data name="InitAndOverride" xml:space="preserve">
-    <value>Success! Initialized Repository and Overrode Remote Repository</value>
+    <value>Success! Initialized Repository and overrode Remote Repository.</value>
   </data>
   <data name="Initrepodetected" xml:space="preserve">
     <value>A .git folder was detected in selected destination please delete this .git folder if present or choose a new folder.</value>
@@ -190,14 +190,14 @@
     <comment>warning</comment>
   </data>
   <data name="MainToMainMergeError" xml:space="preserve">
-    <value>You are on the main Branch already</value>
+    <value>You are on the main Branch already.</value>
   </data>
   <data name="MasterBranchRemovalFail" xml:space="preserve">
     <value>Failed to remove master branch after initializing feel free to ignore.</value>
     <comment>NonIssue</comment>
   </data>
   <data name="MergeConflicts" xml:space="preserve">
-    <value>Merge conflicts were detected. Please resolve them before proceding</value>
+    <value>Merge conflicts were detected. Please resolve them before proceeding.</value>
     <comment>Error</comment>
   </data>
   <data name="MergeToMainSuccess" xml:space="preserve">
@@ -218,11 +218,11 @@ which show more what is happening since the names are dynamic</comment>
     <value>Get Latest Changes: Downloads and merges the newest updates from the shared project into your local copy. Be sure to close and reopen your project for changes to be present.</value>
   </data>
   <data name="RemoteRetrival" xml:space="preserve">
-    <value>Unable to communicate with provided URL</value>
+    <value>Unable to communicate with provided URL.</value>
     <comment>404 Error</comment>
   </data>
   <data name="RepoOpenedSuccess" xml:space="preserve">
-    <value>Repository Opened</value>
+    <value>Repository Opened.</value>
   </data>
   <data name="TabName" xml:space="preserve">
     <value>GitFlow</value>
@@ -252,7 +252,7 @@ which show more what is happening since the names are dynamic</comment>
     <value>Switches your current working context to a different line of development within the repository. Open and close project to see changes.</value>
   </data>
   <data name="ButtonLabelMergeMain" xml:space="preserve">
-    <value>Merge to Main</value>
+    <value>Promote to Main</value>
   </data>
   <data name="ButtonDescriptionMergeMain" xml:space="preserve">
     <value>Integrates the completed work from current branch into the primary main branch of the project.</value>
@@ -314,5 +314,8 @@ which show more what is happening since the names are dynamic</comment>
   </data>
   <data name="PermissionErrorBlockedAction" xml:space="preserve">
     <value>The action you are trying to complete requires read/write capabilities, please try reconnecting to a different repository or using a different personal access token.</value>
+  </data>
+  <data name="AdditionalErrorInCleanup" xml:space="preserve">
+    <value> Additionally there was an error likely due to your systems file permissions in the automated clean up process in response to this failure. Be sure to view the folder being modified to ensure there are no unwanted instances of .git, .gitignore, or Builds folders/files before trying again as this may cause future errors. Feel free to manually delete these if they are unwanted instances.</value>
   </data>
 </root>

@@ -8,6 +8,7 @@ using System.IO;
 using LibGit2Sharp;
 using GitFlow;
 using GitFlow.Properties;
+using System.IO.Compression;
 
 namespace GitFlow
 
@@ -102,7 +103,7 @@ namespace GitFlow
 
 
 
-        public static bool git_init(string localRepoPath, string gitRepoUrl, Signature sig, string gitIgnFile = "C:/source/repos/Libgit2sharpTester/ConsoleApp1/Assests/.gitignore")
+        public static bool git_init(string localRepoPath, string gitRepoUrl, Signature sig, string gitIgnFile = ".gitignore")
         {
             // Function to initialize a new Git repository and set it up with a remote
             // Parameters:
@@ -110,6 +111,11 @@ namespace GitFlow
             // gitRepoUrl: URL of the remote Git repository to link with
             // sig: Signature object containing author and committer information
             // gitIgnFile: Path to the .gitignore file to be copied into the new repository
+
+
+            //create variable used to delete files after failure
+            bool gitIgnoreAddedFlag = false; // Flag to check if .gitignore was added
+            bool buildFolderCreated = false; // Flag to check if the Builds folder was created
 
             // Initialize a new Git repository at the specified path
             // Check for existing .git directory
@@ -145,14 +151,16 @@ namespace GitFlow
                     // 3. Create the file and write the content to it.
                     // File.WriteAllText handles creating, writing, and closing the file in one step.
                     File.WriteAllText(filePath, descriptionContent);
-
+                    buildFolderCreated = true; // Flag to indicate the build folder was created
                 }
+                
                 if (!File.Exists(gitFile))
                 {
-                    File.Copy(gitIgnFile, Path.Combine(localRepoPath, Path.GetFileName(gitIgnFile)), true);
 
+                    File.Copy(gitIgnFile, Path.Combine(localRepoPath, Path.GetFileName(gitIgnFile)), true);
+                    gitIgnoreAddedFlag = true;
                 }
-                //add the git ignore
+                //addd the git ignore
                 
 
                 // Create a new repository instance
@@ -190,30 +198,198 @@ namespace GitFlow
             }
             catch (Exception ex) when (ex.Message.Contains("unsupported URL protocol"))
             {
+                try
+                {
+                    //delete gitIgnore
+                    string gitFile = Path.Combine(localRepoPath, ".gitignore");
+                    if (File.Exists(gitFile) && gitIgnoreAddedFlag == true)
+                    {
+
+                        File.Delete(gitFile);
+                    }
+                    //delete Builds folder
+                    string buildsDirectory = Path.Combine(localRepoPath, "Builds");
+                    if (Directory.Exists(buildsDirectory) && buildFolderCreated == true)
+                    {
+                        Directory.Delete(buildsDirectory, true);
+                    }
+
+                    //delete .git folder
+                    string gitDirectory = Path.Combine(localRepoPath, ".git");
+                    if (Directory.Exists(gitDirectory))
+                    {
+                        Directory.Delete(gitDirectory, true);
+                    }
+                }
+                catch (Exception delEx)
+                {
+                    throw new Exception(Resources.Resource1.RemoteRetrival + Resources.Resource1.AdditionalErrorInCleanup);
+
+                }
                 throw new Exception(Resources.Resource1.RemoteRetrival);
 
             }
             catch (Exception ex) when (ex.Message.Contains("authentication replays"))
             {
+                try
+                {
+                    //delete gitIgnore
+                    string gitFile = Path.Combine(localRepoPath, ".gitignore");
+                    if (File.Exists(gitFile) && gitIgnoreAddedFlag == true)
+                    {
+
+                        File.Delete(gitFile);
+                    }
+                    //delete Builds folder
+                    string buildsDirectory = Path.Combine(localRepoPath, "Builds");
+                    if (Directory.Exists(buildsDirectory) && buildFolderCreated == true)
+                    {
+                        Directory.Delete(buildsDirectory, true);
+                    }
+
+                    //delete .git folder
+                    string gitDirectory = Path.Combine(localRepoPath, ".git");
+                    if (Directory.Exists(gitDirectory))
+                    {
+                        Directory.Delete(gitDirectory, true);
+                    }
+                }
+                catch (Exception delEx)
+                {
+                    throw new Exception(Resources.Resource1.AuthenticationErrorInit + Resources.Resource1.AdditionalErrorInCleanup);
+
+                }
                 throw new Exception(Resources.Resource1.AuthenticationErrorInit);
 
             }
             catch (Exception ex) when (ex.Message.Contains("403"))
             {
+                try
+                {
+                    //delete gitIgnore
+                    string gitFile = Path.Combine(localRepoPath, ".gitignore");
+                    if (File.Exists(gitFile) && gitIgnoreAddedFlag == true)
+                    {
+
+                        File.Delete(gitFile);
+                    }
+                    //delete Builds folder
+                    string buildsDirectory = Path.Combine(localRepoPath, "Builds");
+                    if (Directory.Exists(buildsDirectory) && buildFolderCreated == true)
+                    {
+                        Directory.Delete(buildsDirectory, true);
+                    }
+
+                    //delete .git folder
+                    string gitDirectory = Path.Combine(localRepoPath, ".git");
+                    if (Directory.Exists(gitDirectory))
+                    {
+                        Directory.Delete(gitDirectory, true);
+                    }
+                }
+                catch (Exception delEx)
+                {
+                    throw new Exception(Resources.Resource1.AuthenticationError + Resources.Resource1.AdditionalErrorInCleanup);
+
+                }
                 throw new Exception(Resources.Resource1.AuthenticationError);
 
             }
             catch (Exception ex) when (ex.Message.Contains("404"))
             {
+                try
+                {
+                    //delete gitIgnore
+                    string gitFile = Path.Combine(localRepoPath, ".gitignore");
+                    if (File.Exists(gitFile) && gitIgnoreAddedFlag == true)
+                    {
+
+                        File.Delete(gitFile);
+                    }
+                    //delete Builds folder
+                    string buildsDirectory = Path.Combine(localRepoPath, "Builds");
+                    if (Directory.Exists(buildsDirectory) && buildFolderCreated == true)
+                    {
+                        Directory.Delete(buildsDirectory, true);
+                    }
+
+                    //delete .git folder
+                    string gitDirectory = Path.Combine(localRepoPath, ".git");
+                    if (Directory.Exists(gitDirectory))
+                    {
+                        Directory.Delete(gitDirectory, true);
+                    }
+                }
+                catch (Exception delEx)
+                {
+                    throw new Exception(Resources.Resource1.RemoteRetrival + Resources.Resource1.AdditionalErrorInCleanup);
+
+                }
                 throw new Exception(Resources.Resource1.RemoteRetrival);
             }
             catch (Exception ex) when (ex.Message.Contains("A .git repository already exists"))
             {
+                try
+                {
+                    //delete gitIgnore
+                    string gitFile = Path.Combine(localRepoPath, ".gitignore");
+                    if (File.Exists(gitFile) && gitIgnoreAddedFlag == true)
+                    {
+
+                        File.Delete(gitFile);
+                    }
+                    //delete Builds folder
+                    string buildsDirectory = Path.Combine(localRepoPath, "Builds");
+                    if (Directory.Exists(buildsDirectory) && buildFolderCreated == true)
+                    {
+                        Directory.Delete(buildsDirectory, true);
+                    }
+
+                    //delete .git folder
+                    string gitDirectory = Path.Combine(localRepoPath, ".git");
+                    if (Directory.Exists(gitDirectory))
+                    {
+                        Directory.Delete(gitDirectory, true);
+                    }
+                }
+                catch (Exception delEx)
+                {
+                    throw new Exception(Resources.Resource1.Initrepodetected + Resources.Resource1.AdditionalErrorInCleanup);
+
+                }
                 throw new Exception(Resources.Resource1.Initrepodetected);
 
             }
             catch (Exception ex)
             {
+                try
+                {
+                    //delete gitIgnore
+                    string gitFile = Path.Combine(localRepoPath, ".gitignore");
+                    if (File.Exists(gitFile) && gitIgnoreAddedFlag == true)
+                    {
+
+                        File.Delete(gitFile);
+                    }
+                    //delete Builds folder
+                    string buildsDirectory = Path.Combine(localRepoPath, "Builds");
+                    if (Directory.Exists(buildsDirectory) && buildFolderCreated == true)
+                    {
+                        Directory.Delete(buildsDirectory, true);
+                    }
+
+                    //delete .git folder
+                    string gitDirectory = Path.Combine(localRepoPath, ".git");
+                    if (Directory.Exists(gitDirectory))
+                    {
+                        Directory.Delete(gitDirectory, true);
+                    }
+                }
+                catch (Exception delEx)
+                {
+                    throw new Exception("An Initialization Error Occured: " + ex.Message + Resources.Resource1.AdditionalErrorInCleanup);
+
+                }
                 throw new Exception("An Initialization Error Occured: " + ex.Message);
                 
             }

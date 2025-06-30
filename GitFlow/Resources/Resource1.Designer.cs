@@ -61,6 +61,15 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  Additionally there was an error likely due to your systems file permissions in the automated clean up process in response to this failure. Be sure to view the folder being modified to ensure there are no unwanted instances of .git, .gitignore, or Builds folders/files before trying again as this may cause future errors. Feel free to manually delete these if they are unwanted instances..
+        /// </summary>
+        internal static string AdditionalErrorInCleanup {
+            get {
+                return ResourceManager.GetString("AdditionalErrorInCleanup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The local repository was already up to date with remote..
         /// </summary>
         internal static string AlreadyUpToDate {
@@ -70,7 +79,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error Contecting to remote - Check PAT and URL.
+        ///   Looks up a localized string similar to Error Contecting to remote - Check PAT and URL..
         /// </summary>
         internal static string AuthenticationError {
             get {
@@ -232,7 +241,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Merge to Main.
+        ///   Looks up a localized string similar to Promote to Main.
         /// </summary>
         internal static string ButtonLabelMergeMain {
             get {
@@ -304,7 +313,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Success! Cloned Repository.
+        ///   Looks up a localized string similar to Success! Cloned Repository..
         /// </summary>
         internal static string CloneSuccess {
             get {
@@ -439,7 +448,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Success! Initialized Repository and Overrode Remote Repository.
+        ///   Looks up a localized string similar to Success! Initialized Repository and overrode Remote Repository..
         /// </summary>
         internal static string InitAndOverride {
             get {
@@ -484,7 +493,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You are on the main Branch already.
+        ///   Looks up a localized string similar to You are on the main Branch already..
         /// </summary>
         internal static string MainToMainMergeError {
             get {
@@ -502,7 +511,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Merge conflicts were detected. Please resolve them before proceding.
+        ///   Looks up a localized string similar to Merge conflicts were detected. Please resolve them before proceeding..
         /// </summary>
         internal static string MergeConflicts {
             get {
@@ -574,7 +583,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to communicate with provided URL.
+        ///   Looks up a localized string similar to Unable to communicate with provided URL..
         /// </summary>
         internal static string RemoteRetrival {
             get {
@@ -583,7 +592,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Repository Opened.
+        ///   Looks up a localized string similar to Repository Opened..
         /// </summary>
         internal static string RepoOpenedSuccess {
             get {

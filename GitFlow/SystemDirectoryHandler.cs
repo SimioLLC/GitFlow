@@ -267,7 +267,7 @@ namespace GitFlow
                 }
 
                 GitContext.Instance.simioContext.ExecuteUICommand("CloseProject", fullPath);
-                MessageBox.Show($"Closed project {GitContext.Instance.simioContext.ActiveProject.Name} please reopen to see changes.", "GitFlow", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show($"Closed project {GitContext.Instance.simioContext.ActiveProject.Name} please reopen to see changes.", "GitFlow", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
                 //System.Threading.Thread.Sleep(10000);//in ms

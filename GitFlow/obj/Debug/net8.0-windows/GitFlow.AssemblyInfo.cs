@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GitFlow")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bac2f7f2c4302523834d59ef0af19f32d06c5909")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c9c7e5d2a48e6336e27031008f978451a271941b")]
 [assembly: System.Reflection.AssemblyProductAttribute("GitFlow")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GitFlow")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

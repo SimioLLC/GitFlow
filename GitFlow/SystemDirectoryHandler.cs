@@ -16,6 +16,7 @@ namespace GitFlow
     using System.Runtime.Versioning;
     using System.Security.Policy;
     using LibGit2Sharp;
+    using SimioAPI.Extensions;
 
     internal class SystemDirectoryHandler
     {
@@ -235,18 +236,13 @@ namespace GitFlow
                 foreach (PropertyInfo pi in obj.GetType().GetProperties())
                 {
                     var getter = pi.GetGetMethod();
-                    if (getter.ReturnType.IsArray)
-                    {
-                        // Not using this now.
-                    }
-                    else
-                    {
+
                         if (pi.Name == propertyName)
                         {
                             var vv = pi.GetValue(obj, null);
                             return (vv ?? "").ToString();
                         }
-                    }
+                    
 
                 }
                 return string.Empty;
@@ -255,6 +251,41 @@ namespace GitFlow
             catch (Exception)
             {
                 return string.Empty;
+            }
+        }
+
+        public static bool Refresh()
+        {
+            try
+            {
+                string projectFileNameWithExtSimproj = GitContext.Instance.simioContext.ActiveProject.Name + ".simproj";
+                string fullPath = Path.Combine(GitContext.Instance.RepositoryPath, projectFileNameWithExtSimproj);
+
+                if(!File.Exists(fullPath))
+                {
+                    return false;
+                }
+
+                GitContext.Instance.simioContext.ExecuteUICommand("CloseProject", fullPath);
+                MessageBox.Show($"Closed project {GitContext.Instance.simioContext.ActiveProject.Name} please reopen to see changes.", "GitFlow", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+                //System.Threading.Thread.Sleep(10000);//in ms
+
+
+                //if (!File.Exists(fullPath))
+                //{
+                //    return false;
+                //}
+                //GitContext.Instance.simioContext.ExecuteUICommand("OpenProject", null); //Currently makes the system crash
+
+
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
 

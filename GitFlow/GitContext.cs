@@ -39,6 +39,8 @@ namespace GitFlow
 
         public int PermissionLevel { get; set; } = 0; // Default to no access
 
+        public SimioAPI.Extensions.IDesignContext simioContext { get; set; }
+
         /// <summary>
         /// The current working branch. Can be updated using 'SetCurrentBranch'.
         /// </summary>

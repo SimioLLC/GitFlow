@@ -448,6 +448,96 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ImageClone {
+            get {
+                object obj = ResourceManager.GetObject("ImageClone", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ImageCommitPush {
+            get {
+                object obj = ResourceManager.GetObject("ImageCommitPush", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ImageConnect {
+            get {
+                object obj = ResourceManager.GetObject("ImageConnect", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ImageInit {
+            get {
+                object obj = ResourceManager.GetObject("ImageInit", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ImagePromote {
+            get {
+                object obj = ResourceManager.GetObject("ImagePromote", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ImagePull {
+            get {
+                object obj = ResourceManager.GetObject("ImagePull", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ImageRemoveBranch {
+            get {
+                object obj = ResourceManager.GetObject("ImageRemoveBranch", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ImageReset {
+            get {
+                object obj = ResourceManager.GetObject("ImageReset", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ImageSelectBranch {
+            get {
+                object obj = ResourceManager.GetObject("ImageSelectBranch", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Success! Initialized Repository and overrode Remote Repository..
         /// </summary>
         internal static string InitAndOverride {

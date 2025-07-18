@@ -318,4 +318,32 @@ which show more what is happening since the names are dynamic</comment>
   <data name="AdditionalErrorInCleanup" xml:space="preserve">
     <value> Additionally there was an error likely due to your systems file permissions in the automated clean up process in response to this failure. Be sure to view the folder being modified to ensure there are no unwanted instances of .git, .gitignore, or Builds folders/files before trying again as this may cause future errors. Feel free to manually delete these if they are unwanted instances.</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ImageClone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GitFlow Clone Repository.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ImageCommitPush" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GitFlow Commit and Push.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ImageConnect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GitFlow Connect Repository.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ImageInit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GitFlow Initialize Repository.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ImagePromote" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GitFlow Promote Branch.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ImagePull" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GitFlow Pull.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ImageRemoveBranch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GitFlow Remove Branch.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ImageReset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GitFlow Reset.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ImageSelectBranch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GitFlow Select Branch.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

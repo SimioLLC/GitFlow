@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
+using SimioAPI.Extensions;
 
 namespace GitFlow
 {
@@ -37,6 +38,7 @@ namespace GitFlow
                 // Attempt to checkout the selected branch
                 LibgitFunctionClass.git_checkout_branch(GitContext.Instance.RepositoryPath, _branchName);
                 MessageBox.Show("Switched to branch: " + _branchName + "\nPlease close and reopen your project to show contents of the new branch.", "Success" , MessageBoxButtons.OK, MessageBoxIcon.Information);
+                SystemDirectoryHandler.Refresh();
                 this.Close();
             }
             catch (Exception ex) when (ex.Message.Contains("conflicts prevent checkout"))

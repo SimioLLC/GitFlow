@@ -156,6 +156,7 @@ namespace GitFlow
             }
             catch (Exception ex) when (ex.Message.Contains("contains commits that are not present locally"))
             {
+
                 var resp = MessageBox.Show(this, Resources.Resource1.InitWithDetectedFilesPopUp, "Detected Files on Remote Repository", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (resp == DialogResult.Yes)
                 {
@@ -219,6 +220,7 @@ namespace GitFlow
                     return;
 
                 }
+
             }
             catch (Exception ex) when (ex.Message.Contains("403"))
             {

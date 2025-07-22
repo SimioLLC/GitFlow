@@ -122,30 +122,31 @@
     <comment>Info</comment>
   </data>
   <data name="AuthenticationError" xml:space="preserve">
-    <value>Error Contecting to remote - Check PAT and URL.</value>
+    <value>Error connecting to remote. Check your personal access token (PAT) and URL.</value>
     <comment>403 Error</comment>
   </data>
   <data name="AuthenticationErrorInit" xml:space="preserve">
-    <value>Error Connecting to remote - Check PAT and try again in a new folder or remove .git folder from existing folder and try again.</value>
+    <value>Error connecting to remote. Check your personal access token (PAT) and try again in a new folder, or remove the .git folder from your existing one.</value>
   </data>
   <data name="BranchInsteadOfMain" xml:space="preserve">
-    <value>Would you like to open a Branch instead of pushing directly to main?</value>
+    <value>Would you like to open a new branch instead of pushing directly to main?</value>
   </data>
   <data name="BranchUponCommitPushPrompt" xml:space="preserve">
-    <value>You are on the main Branch, would you like to push to a new development branch instead of directly to the main?</value>
+    <value>You're currently on the main branch. Would you like to push to a new development branch instead of directly to main?</value>
   </data>
   <data name="BuildFolderDescription" xml:space="preserve">
-    <value>This is a folder that can be used to save builds and is tracked by Git. You can 'save as' projects as spfx into this folder with different names and they will be saved alongside the rest of the repository remotely.</value>
+    <value>About This Folder
+This folder is set up for saving your builds and is tracked by Git. You can use 'Save As' to save your projects as SPFX files directly into this folder under different names. They'll be stored with the rest of your repository remotely.</value>
   </data>
   <data name="CatagoryNameVC" xml:space="preserve">
     <value>Version Control</value>
   </data>
   <data name="CheckoutWithUncommitedChanges" xml:space="preserve">
-    <value>An Error occured while trying to check out the branch due to merge conflics. Make sure you have commited and pushed all changes before selecting a new branch.</value>
+    <value>An error occurred while trying to check out the branch due to merge conflicts. Make sure you have committed and pushed all changes before selecting a new branch.</value>
     <comment>this is becasue it cant track what you did but is still in the disc so it will try to take these to the selected branch causing a merge conflict</comment>
   </data>
   <data name="Clonerepodetected" xml:space="preserve">
-    <value>The destination you are trying to clone into is not empty please delete all files contain in this folder or choose a new folder.</value>
+    <value>The destination folder you're trying to clone into isn't empty. Please delete all files in it or choose a new folder.</value>
   </data>
   <data name="CloneSuccess" xml:space="preserve">
     <value>Success! Cloned Repository.</value>
@@ -157,13 +158,13 @@
     <value>Would you like to connect to a repository?</value>
   </data>
   <data name="FieldFillPAT" xml:space="preserve">
-    <value>Please fill in all fields. - Personal Access Token</value>
+    <value>Please fill in all fields, including the personal access token (PAT).</value>
   </data>
   <data name="FieldFillPath" xml:space="preserve">
-    <value>Please fill in all fields. - Path</value>
+    <value>Please fill in all fields, including the Path.</value>
   </data>
   <data name="FieldFillURL" xml:space="preserve">
-    <value>Please fill in all fields. - URL</value>
+    <value>Please fill in all fields, including the URL.</value>
   </data>
   <data name="GitOpenNoGitDetected" xml:space="preserve">
     <value>The folder you selected is not connected to any remote repository. Please select a new folder or a different repository action.</value>
@@ -237,7 +238,7 @@ which show more what is happening since the names are dynamic</comment>
     <value>Turns a folder on your computer into a Git repository to start tracking file changes. Must be connected to a remote repository.</value>
   </data>
   <data name="ButtonDescriptionClone" xml:space="preserve">
-    <value>Downloads a complete copy of an existing remote repository, including all files and history, to your machine. Syncs your new local repository to the remote cloned repository.</value>
+    <value>Downloads a complete copy of an existing remote repository, including all files and history, to your machine. It then syncs your new local repository to the remote cloned repository.</value>
   </data>
   <data name="ButtonLabelOpenRepo" xml:space="preserve">
     <value>Connect Repository</value>
@@ -264,10 +265,10 @@ which show more what is happening since the names are dynamic</comment>
     <value>A commit saves a snapshot of your changes locally, and a push uploads those saved changes to a remote server. MUST save before this to ensure all changes are pushed.</value>
   </data>
   <data name="PullForcePromptAfterFailSafePull" xml:space="preserve">
-    <value>There were conflicts when pulling remote to local repository. Would you like to overwrite you local project with remote?</value>
+    <value>Conflicts were encountered when attempting to pull changes from the remote repository to your local project. Would you like to overwrite your local project with the remote version to resolve these conflicts?</value>
   </data>
   <data name="PullForceSuccess" xml:space="preserve">
-    <value>Success! Pull was successful. Please close and reopen project for any changes to be reflected.</value>
+    <value>Pull successful. Please close and reopen your project to ensure all changes are fully reflected.</value>
   </data>
   <data name="NormalPullSuccess" xml:space="preserve">
     <value>Local repository was synced to remote repository. Please close and reopen project for any changes to be reflected.</value>
@@ -291,14 +292,14 @@ which show more what is happening since the names are dynamic</comment>
     <value>Resets your repository to the state it was in at time of your last commit/pushed or pulled changes. Please make sure to close and reopen your project to see changes.</value>
   </data>
   <data name="DeleteNowOnMainMessage" xml:space="preserve">
-    <value>You are now on the main branch please refresh your project to see changes.</value>
+    <value>You're now on the main branch. Please refresh your project to see the changes.</value>
     <comment>comes after "deleted branch:" + _branchname +" Success" -&gt; here</comment>
   </data>
   <data name="LocalResetSuccess" xml:space="preserve">
     <value>Your Repository has been reverted to your last commit. Please close and open you project to see changes.</value>
   </data>
   <data name="CreateNewBranchWithSpaceError" xml:space="preserve">
-    <value>There was an error creating this branch. Please make sure your branch name does not have any spaces or special characters besides: ' - _</value>
+    <value>There was an error creating this branch. Please make sure your branch name does not contain any spaces or special characters besides: ' - _</value>
     <comment>[new branch =  bad] [newBranch, new-branch, new_branch = good]</comment>
   </data>
   <data name="ErrorBadCharactersInRemote" xml:space="preserve">
@@ -306,14 +307,14 @@ which show more what is happening since the names are dynamic</comment>
     <comment>In one of the cases I will chack if there is an error message and display that after this if it shows the branch that is causing issues.</comment>
   </data>
   <data name="PushSuccess" xml:space="preserve">
-    <value>Nothing to commit. Push Successful.</value>
+    <value>Nothing to commit. Push successful.</value>
     <comment>in GitFlow addin for commit_push_maybe_branch_function</comment>
   </data>
   <data name="ErrorNoPermissions" xml:space="preserve">
-    <value>Please provide a new personal access token. Their is currently zero permissions associated with this repository.</value>
+    <value>Please provide a new personal access token (PAT). There are currently zero permissions associated with this repository. Ensure you are in the correct repository, using the right PAT, and that it has not expired.</value>
   </data>
   <data name="PermissionErrorBlockedAction" xml:space="preserve">
-    <value>The action you are trying to complete requires read/write capabilities, please try reconnecting to a different repository or using a different personal access token.</value>
+    <value>Permission denied: Unable to complete the requested action. This operation requires read and write access, but your current permissions are insufficient. Please try reconnecting to a different repository or using a different personal access token (PAT) with the necessary read and write capabilities.</value>
   </data>
   <data name="AdditionalErrorInCleanup" xml:space="preserve">
     <value> Additionally there was an error likely due to your systems file permissions in the automated clean up process in response to this failure. Be sure to view the folder being modified to ensure there are no unwanted instances of .git, .gitignore, or Builds folders/files before trying again as this may cause future errors. Feel free to manually delete these if they are unwanted instances.</value>
@@ -345,5 +346,11 @@ which show more what is happening since the names are dynamic</comment>
   </data>
   <data name="ImageSelectBranch" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>GitFlow Select Branch.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PermissionErrorReadAction" xml:space="preserve">
+    <value>Permission denied: Unable to complete the requested action. Please check your personal access token (PAT) as it may have expired or lack the necessary read permissions. Generate a new PAT with appropriate scopes and try again.</value>
+  </data>
+  <data name="BranchCouldntBeCheckedOut" xml:space="preserve">
+    <value>Couldn't find that branch. It may have been deleted remotely.</value>
   </data>
 </root>

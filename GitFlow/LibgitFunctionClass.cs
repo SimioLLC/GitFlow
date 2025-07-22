@@ -112,7 +112,6 @@ namespace GitFlow
             // sig: Signature object containing author and committer information
             // gitIgnFile: Path to the .gitignore file to be copied into the new repository
 
-
             //create variable used to delete files after failure
             bool gitIgnoreAddedFlag = false; // Flag to check if .gitignore was added
             bool buildFolderCreated = false; // Flag to check if the Builds folder was created
@@ -129,7 +128,6 @@ namespace GitFlow
             {
                 //init the local repository
                 Repository.Init(@localRepoPath);
-
                 //check for existing gitignore file
                 string gitFile = Path.Combine(localRepoPath, ".gitignore");
 
@@ -161,7 +159,6 @@ namespace GitFlow
                     gitIgnoreAddedFlag = true;
                 }
                 //addd the git ignore
-                
 
                 // Create a new repository instance
                 using (var repo = new Repository(localRepoPath))
@@ -170,7 +167,6 @@ namespace GitFlow
 
                     // 1. Stage changes
                     Commands.Stage(repo, "*");
-
                     // 2. Create a commit
                     repo.Commit("Initial commit", sig, sig);
 
@@ -185,14 +181,11 @@ namespace GitFlow
                     // 4. Add remote
                     if (repo.Network.Remotes["origin"] == null)
                         repo.Network.Remotes.Add("origin", gitRepoUrl);
-
                     // 5. Set upstream (tracking) for main
                     repo.Branches.Update(mainBranch, b => b.TrackedBranch = "refs/remotes/origin/main");
-
                     // 6. Push to origin main
                     var remote = repo.Network.Remotes["origin"];
                     repo.Network.Push(mainBranch, new PushOptions { CredentialsProvider = PrivateRepoCredentials });
-
                 }
 
             }
@@ -362,36 +355,7 @@ namespace GitFlow
             }
             catch (Exception ex)
             {
-                try
-                {
-                    //delete gitIgnore
-                    string gitFile = Path.Combine(localRepoPath, ".gitignore");
-                    if (File.Exists(gitFile) && gitIgnoreAddedFlag == true)
-                    {
-
-                        File.Delete(gitFile);
-                    }
-                    //delete Builds folder
-                    string buildsDirectory = Path.Combine(localRepoPath, "Builds");
-                    if (Directory.Exists(buildsDirectory) && buildFolderCreated == true)
-                    {
-                        Directory.Delete(buildsDirectory, true);
-                    }
-
-                    //delete .git folder
-                    string gitDirectory = Path.Combine(localRepoPath, ".git");
-                    if (Directory.Exists(gitDirectory))
-                    {
-                        Directory.Delete(gitDirectory, true);
-                    }
-                }
-                catch (Exception delEx)
-                {
-                    throw new Exception("An Initialization Error Occured: " + ex.Message + Resources.Resource1.AdditionalErrorInCleanup);
-
-                }
                 throw new Exception("An Initialization Error Occured: " + ex.Message);
-                
             }
             try
             {
@@ -699,12 +663,6 @@ namespace GitFlow
 
                     var localBranch = repo.Head;
                     var remoteBranch = repo.Branches[$"origin/{localBranch.FriendlyName}"];
-                    if (remoteBranch == null)
-                    {
-
-                        throw new Exception($"Remote branch origin/{localBranch.FriendlyName} not found.");
-
-                    }
 
                     var mergeResult = repo.Merge(remoteBranch, signature, mergeOptions);
 
@@ -1051,6 +1009,11 @@ namespace GitFlow
 
                     // Checkout the branch
                     Commands.Checkout(repo, branchName, checkoutOptions);
+
+                    if (repo.Head.FriendlyName != branchName)
+                    {
+                        return false; // Return false if the checkout fails
+                    }
                 }
             }
             catch (Exception ex) when (ex.Message.Contains("authentication replays"))
@@ -1244,6 +1207,29 @@ namespace GitFlow
 
                     return false; // Return false if there are no uncommitted changes
                 }
+            }
+        }
+
+        public static bool git_dirty_internal(string localRepoPath, Repository repo)
+        {
+            // Function to check if there are uncommitted changes in the local repository
+            // Parameters:
+            // localRepoPath: Path to the local Git repository
+
+            //NEEDS TO ME TESTED MORE
+
+
+            // Check if there are any changes in the repository
+            var status = repo.RetrieveStatus();
+            if (status.IsDirty)
+            {
+
+                return true; // Return true if there are uncommitted changes
+            }
+            else
+            {
+
+                return false; // Return false if there are no uncommitted changes
             }
         }
 

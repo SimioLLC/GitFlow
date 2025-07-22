@@ -36,7 +36,11 @@ namespace GitFlow
             try
             {
                 // Attempt to checkout the selected branch
-                LibgitFunctionClass.git_checkout_branch(GitContext.Instance.RepositoryPath, _branchName);
+                if(!LibgitFunctionClass.git_checkout_branch(GitContext.Instance.RepositoryPath, _branchName))
+                {
+                    MessageBox.Show(Resources.Resource1.BranchCouldntBeCheckedOut, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 MessageBox.Show("Switched to branch: " + _branchName + "\nPlease close and reopen your project to show contents of the new branch.", "Success" , MessageBoxButtons.OK, MessageBoxIcon.Information);
                 SystemDirectoryHandler.Refresh();
                 this.Close();

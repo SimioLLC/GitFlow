@@ -79,7 +79,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error Contecting to remote - Check PAT and URL..
+        ///   Looks up a localized string similar to Error connecting to remote. Check your personal access token (PAT) and URL..
         /// </summary>
         internal static string AuthenticationError {
             get {
@@ -88,7 +88,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error Connecting to remote - Check PAT and try again in a new folder or remove .git folder from existing folder and try again..
+        ///   Looks up a localized string similar to Error connecting to remote. Check your personal access token (PAT) and try again in a new folder, or remove the .git folder from your existing one..
         /// </summary>
         internal static string AuthenticationErrorInit {
             get {
@@ -97,7 +97,16 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Would you like to open a Branch instead of pushing directly to main?.
+        ///   Looks up a localized string similar to Couldn&apos;t find that branch. It may have been deleted remotely..
+        /// </summary>
+        internal static string BranchCouldntBeCheckedOut {
+            get {
+                return ResourceManager.GetString("BranchCouldntBeCheckedOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Would you like to open a new branch instead of pushing directly to main?.
         /// </summary>
         internal static string BranchInsteadOfMain {
             get {
@@ -106,7 +115,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You are on the main Branch, would you like to push to a new development branch instead of directly to the main?.
+        ///   Looks up a localized string similar to You&apos;re currently on the main branch. Would you like to push to a new development branch instead of directly to main?.
         /// </summary>
         internal static string BranchUponCommitPushPrompt {
             get {
@@ -115,7 +124,8 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This is a folder that can be used to save builds and is tracked by Git. You can &apos;save as&apos; projects as spfx into this folder with different names and they will be saved alongside the rest of the repository remotely..
+        ///   Looks up a localized string similar to About This Folder
+        ///This folder is set up for saving your builds and is tracked by Git. You can use &apos;Save As&apos; to save your projects as SPFX files directly into this folder under different names. They&apos;ll be stored with the rest of your repository remotely..
         /// </summary>
         internal static string BuildFolderDescription {
             get {
@@ -124,7 +134,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downloads a complete copy of an existing remote repository, including all files and history, to your machine. Syncs your new local repository to the remote cloned repository..
+        ///   Looks up a localized string similar to Downloads a complete copy of an existing remote repository, including all files and history, to your machine. It then syncs your new local repository to the remote cloned repository..
         /// </summary>
         internal static string ButtonDescriptionClone {
             get {
@@ -295,7 +305,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An Error occured while trying to check out the branch due to merge conflics. Make sure you have commited and pushed all changes before selecting a new branch..
+        ///   Looks up a localized string similar to An error occurred while trying to check out the branch due to merge conflicts. Make sure you have committed and pushed all changes before selecting a new branch..
         /// </summary>
         internal static string CheckoutWithUncommitedChanges {
             get {
@@ -304,7 +314,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The destination you are trying to clone into is not empty please delete all files contain in this folder or choose a new folder..
+        ///   Looks up a localized string similar to The destination folder you&apos;re trying to clone into isn&apos;t empty. Please delete all files in it or choose a new folder..
         /// </summary>
         internal static string Clonerepodetected {
             get {
@@ -340,7 +350,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There was an error creating this branch. Please make sure your branch name does not have any spaces or special characters besides: &apos; - _.
+        ///   Looks up a localized string similar to There was an error creating this branch. Please make sure your branch name does not contain any spaces or special characters besides: &apos; - _.
         /// </summary>
         internal static string CreateNewBranchWithSpaceError {
             get {
@@ -349,7 +359,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You are now on the main branch please refresh your project to see changes..
+        ///   Looks up a localized string similar to You&apos;re now on the main branch. Please refresh your project to see the changes..
         /// </summary>
         internal static string DeleteNowOnMainMessage {
             get {
@@ -367,7 +377,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please provide a new personal access token. Their is currently zero permissions associated with this repository..
+        ///   Looks up a localized string similar to Please provide a new personal access token (PAT). There are currently zero permissions associated with this repository. Ensure you are in the correct repository, using the right PAT, and that it has not expired..
         /// </summary>
         internal static string ErrorNoPermissions {
             get {
@@ -376,7 +386,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please fill in all fields. - Personal Access Token.
+        ///   Looks up a localized string similar to Please fill in all fields, including the personal access token (PAT)..
         /// </summary>
         internal static string FieldFillPAT {
             get {
@@ -385,7 +395,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please fill in all fields. - Path.
+        ///   Looks up a localized string similar to Please fill in all fields, including the Path..
         /// </summary>
         internal static string FieldFillPath {
             get {
@@ -394,7 +404,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please fill in all fields. - URL.
+        ///   Looks up a localized string similar to Please fill in all fields, including the URL..
         /// </summary>
         internal static string FieldFillURL {
             get {
@@ -637,7 +647,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The action you are trying to complete requires read/write capabilities, please try reconnecting to a different repository or using a different personal access token..
+        ///   Looks up a localized string similar to Permission denied: Unable to complete the requested action. This operation requires read and write access, but your current permissions are insufficient. Please try reconnecting to a different repository or using a different personal access token (PAT) with the necessary read and write capabilities..
         /// </summary>
         internal static string PermissionErrorBlockedAction {
             get {
@@ -646,7 +656,16 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There were conflicts when pulling remote to local repository. Would you like to overwrite you local project with remote?.
+        ///   Looks up a localized string similar to Permission denied: Unable to complete the requested action. Please check your personal access token (PAT) as it may have expired or lack the necessary read permissions. Generate a new PAT with appropriate scopes and try again..
+        /// </summary>
+        internal static string PermissionErrorReadAction {
+            get {
+                return ResourceManager.GetString("PermissionErrorReadAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Conflicts were encountered when attempting to pull changes from the remote repository to your local project. Would you like to overwrite your local project with the remote version to resolve these conflicts?.
         /// </summary>
         internal static string PullForcePromptAfterFailSafePull {
             get {
@@ -655,7 +674,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Success! Pull was successful. Please close and reopen project for any changes to be reflected..
+        ///   Looks up a localized string similar to Pull successful. Please close and reopen your project to ensure all changes are fully reflected..
         /// </summary>
         internal static string PullForceSuccess {
             get {
@@ -664,7 +683,7 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nothing to commit. Push Successful..
+        ///   Looks up a localized string similar to Nothing to commit. Push successful..
         /// </summary>
         internal static string PushSuccess {
             get {

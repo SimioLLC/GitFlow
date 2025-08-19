@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/GitFlow/obj/Debug/net8.0-windows/GitFlow.AssemblyInfo.cs
+/GitFlow/obj/Debug/net8.0-windows/GitFlow.AssemblyInfoInputs.cache
+/GitFlow/obj/Debug/net8.0-windows/GitFlow.assets.cache
+/GitFlow/obj/Debug/net8.0-windows/GitFlow.csproj.AssemblyReference.cache
+/GitFlow/obj/Debug/net8.0-windows/GitFlow.GeneratedMSBuildEditorConfig.editorconfig

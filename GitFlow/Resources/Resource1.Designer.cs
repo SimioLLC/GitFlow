@@ -692,6 +692,15 @@ namespace GitFlow.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occurred while refreshing the project. Please Close and Reopen the Project..
+        /// </summary>
+        internal static string RefreshFail {
+            get {
+                return ResourceManager.GetString("RefreshFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to communicate with provided URL..
         /// </summary>
         internal static string RemoteRetrival {

@@ -15,7 +15,9 @@ namespace GitFlow
     using System.Reflection;
     using System.Runtime.Versioning;
     using System.Security.Policy;
+    using DevExpress.DataProcessing.InMemoryDataProcessor;
     using LibGit2Sharp;
+    using SimioAPI;
     using SimioAPI.Extensions;
 
     internal class SystemDirectoryHandler
@@ -267,26 +269,14 @@ namespace GitFlow
                 }
 
                 GitContext.Instance.simioContext.ExecuteUICommand("CloseProject", fullPath);
-                //MessageBox.Show($"Closed project {GitContext.Instance.simioContext.ActiveProject.Name} please reopen to see changes.", "GitFlow", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
-                //System.Threading.Thread.Sleep(10000);//in ms
-
-
-                //if (!File.Exists(fullPath))
-                //{
-                //    return false;
-                //}
-                //GitContext.Instance.simioContext.ExecuteUICommand("OpenProject", null); //Currently makes the system crash
-
-
-
                 return true;
+
             }
             catch (Exception)
             {
-                return false;
+                MessageBox.Show(Resources.Resource1.RefreshFail, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            return false; // Return 1 to indicate failure
         }
 
         public static void DeleteFileInGitRepository(string repositoryPath, string fileNameToDelete)

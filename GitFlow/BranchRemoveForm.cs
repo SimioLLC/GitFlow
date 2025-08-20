@@ -55,6 +55,7 @@ namespace GitFlow
 
                     MessageBox.Show("deleted branch: " + _branchName + "\n" + Resources.Resource1.DeleteNowOnMainMessage, "Success" , MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
+                    SystemDirectoryHandler.Refresh();
                 }
                 else
                 {

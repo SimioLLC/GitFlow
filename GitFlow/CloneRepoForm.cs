@@ -20,7 +20,7 @@ namespace GitFlow
             GitContext = gitContext;
         }
         //vars to hold objects
-        internal GitContext GitContext { get; set; }
+        internal GitContext GitContext;// { get; set; }
 
         private string _pat = "";
         private string _remoteURL = "";

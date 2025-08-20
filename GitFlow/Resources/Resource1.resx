@@ -353,4 +353,7 @@ which show more what is happening since the names are dynamic</comment>
   <data name="BranchCouldntBeCheckedOut" xml:space="preserve">
     <value>Couldn't find that branch. It may have been deleted remotely.</value>
   </data>
+  <data name="RefreshFail" xml:space="preserve">
+    <value>An error occurred while refreshing the project. Please Close and Reopen the Project.</value>
+  </data>
 </root>

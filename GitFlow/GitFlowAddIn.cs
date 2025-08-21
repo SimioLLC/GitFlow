@@ -596,7 +596,7 @@ namespace GitFlow
                 }
 
             }
-            catch (Exception ex) when (ex.Message.Contains("conflicts prevent checkout"))
+            catch (Exception ex) when (ex.Message.Contains("conflicts prevent checkout") || ex.Message.Contains("Cannot perform fast-forward merge"))
             {
                 //TODO: handle this for commit and push maybe seperate function
                 // Handle merge conflicts with force push
@@ -1008,9 +1008,29 @@ namespace GitFlow
                 {
                     try
                     {
-                        // Attempt to merge the current branch into main
-                        LibgitFunctionClass.git_branch_merge_force(GitContext.Instance.RepositoryPath, "main");
-                        //MessageBox.Show(Resources.Resource1.MergeToMainSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        // First, check if there are conflicts.
+                        // The function returns 'false' if conflicts exist.
+                        if (!LibgitFunctionClass.CanMergeWithoutConflicts(GitContext.Instance.RepositoryPath, "main") == false)
+                        {
+                            // Conflicts were found, so we must ask the user if they want to proceed.
+                            string warningMessage = "Merge conflicts detected. Forcing this merge will overwrite the 'main' branch with your current branch's content. This is a destructive action and cannot be undone easily.\n\nDo you want to continue?";
+
+                            DialogResult result = MessageBox.Show(warningMessage, "Conflict Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                            // Only proceed if the user explicitly clicks "Yes".
+                            if (result == DialogResult.Yes)
+                            {
+                                // User confirmed, so perform the destructive merge.
+                                LibgitFunctionClass.git_branch_merge_force(GitContext.Instance.RepositoryPath, "main");
+                            }
+                            // If the user clicks "No", we do nothing and the merge is skipped.
+                        }
+                        else
+                        {
+                            // No conflicts found, so we can proceed with a safe overwrite.
+                            LibgitFunctionClass.git_branch_merge_force(GitContext.Instance.RepositoryPath, "main");
+                        }
+
                     }
                     catch (Exception ex) when (ex.Message.Contains("An error occurred: failed rmdir - "))
                     {

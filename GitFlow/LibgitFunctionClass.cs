@@ -1044,7 +1044,68 @@ namespace GitFlow
         }
 
 
+        //safe branch merge attempt
+        public static bool CanMergeWithoutConflicts(string repoPath, string targetBranchName, string sourceBranchName = "")
+        {
+            try
+            {
+                using (var repo = new Repository(repoPath))
+                {
+                    // If no source branch is specified, use the current HEAD branch.
+                    if (string.IsNullOrWhiteSpace(sourceBranchName))
+                    {
+                        if (repo.Head == null || repo.Head.FriendlyName == "(no branch)")
+                        {
+                            // Cannot check from a detached HEAD state.
+                            return false;
+                        }
+                        sourceBranchName = repo.Head.FriendlyName;
+                    }
 
+                    // --- 1. Get the branch objects ---
+                    var targetBranch = repo.Branches[targetBranchName];
+                    var sourceBranch = repo.Branches[sourceBranchName];
+
+                    // Ensure both branches exist locally.
+                    if (targetBranch == null || sourceBranch == null)
+                    {
+                        return false;
+                    }
+
+                    // A branch is always conflict-free with itself.
+                    if (targetBranch.CanonicalName == sourceBranch.CanonicalName)
+                    {
+                        return true;
+                    }
+
+                    var sourceCommit = sourceBranch.Tip;
+                    var targetCommit = targetBranch.Tip;
+
+                    // Ensure branches have commits to compare.
+                    if (sourceCommit == null || targetCommit == null)
+                    {
+                        // If one branch is uninitialized, we can't determine conflicts.
+                        // A common case is merging into a new, empty 'main'. This is usually conflict-free.
+                        // We'll consider this a "clean" merge possibility.
+                        return true;
+                    }
+
+                    // --- 2. Perform the dry-run merge simulation ---
+                    var MergeTreeOption = new MergeTreeOptions();
+                    MergeTreeResult mergeAnalysis = repo.ObjectDatabase.MergeCommits(targetCommit, sourceCommit, MergeTreeOption);//.Merge(targetCommit, sourceCommit);
+
+                    // --- 3. Return the result ---
+                    // The function returns true if HasConflicts is false, and vice-versa.
+                    return !mergeAnalysis.Conflicts.Any();
+                }
+            }
+            catch (Exception)
+            {
+                // Catch any unexpected exceptions (e.g., repository not found)
+                // and return false to indicate the check could not be completed.
+                return false;
+            }
+        }
 
         //overwrite branch with another branch ie git_merge_branch
 

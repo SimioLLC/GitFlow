@@ -16,24 +16,27 @@ namespace GitFlow
         private string _detectedRepoPath;
 
         // Form controls
+        private Label lblHeader;
         private Label lblStatus;
-        private Panel pnlModeSelection;
-        private RadioButton rbInit;
-        private RadioButton rbClone;
-        private Label lblRemoteUrl;
-        private TextBox txtRemoteUrl;
+        private Label lblStep1;
         private Label lblLocalPath;
         private TextBox txtLocalPath;
         private Button btnBrowse;
-        private Panel pnlAuth;
-        private Label lblAuth;
+        private Label lblDetectedInfo;
+        private Panel pnlModeSelection;
+        private RadioButton rbInit;
+        private RadioButton rbClone;
+        private Label lblStep2;
+        private Label lblRemoteUrl;
+        private TextBox txtRemoteUrl;
+        private Label lblStep3;
+        private Label lblAuthHelp;
         private Button btnSignInGitHub;
         private Label lblOrPat;
         private TextBox txtPat;
         private LinkLabel lnkCreateToken;
-        private Label lblUsername;
+        private Label lblUserInfo;
         private TextBox txtUsername;
-        private Label lblEmail;
         private TextBox txtEmail;
         private Button btnOk;
         private Button btnCancel;
@@ -47,71 +50,65 @@ namespace GitFlow
         private void InitializeFormLayout()
         {
             this.Text = "Connect to Repository";
-            this.Size = new Size(520, 520);
+            this.Size = new Size(540, 620);
             this.StartPosition = FormStartPosition.CenterParent;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
 
-            int y = 15;
+            int y = 12;
             int leftMargin = 20;
-            int fieldWidth = 460;
+            int fieldWidth = 480;
 
-            // Status label (shows auto-detection result)
+            // Header
+            lblHeader = new Label
+            {
+                Text = "Connect Your Simio Project to Git",
+                Location = new Point(leftMargin, y),
+                Size = new Size(fieldWidth, 24),
+                Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                ForeColor = Color.FromArgb(50, 50, 50)
+            };
+            y += 28;
+
+            // Status / detection message
             lblStatus = new Label
             {
                 Location = new Point(leftMargin, y),
-                Size = new Size(fieldWidth, 40),
+                Size = new Size(fieldWidth, 36),
                 Font = new Font("Segoe UI", 9, FontStyle.Italic),
                 ForeColor = Color.FromArgb(0, 120, 0)
             };
-            y += 45;
+            y += 40;
 
-            // Mode selection panel (only shown when no repo detected)
-            pnlModeSelection = new Panel
+            // ── STEP 1: Local folder ──
+            lblStep1 = new Label
             {
+                Text = "Step 1: Select your project folder",
                 Location = new Point(leftMargin, y),
-                Size = new Size(fieldWidth, 30),
-                Visible = false
+                Size = new Size(fieldWidth, 18),
+                Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                ForeColor = Color.FromArgb(60, 60, 60)
             };
-            rbInit = new RadioButton
-            {
-                Text = "Create new repository for this project",
-                Location = new Point(0, 5),
-                Size = new Size(230, 20),
-                Checked = true
-            };
-            rbInit.CheckedChanged += (s, e) => { if (rbInit.Checked) SetMode(ConnectMode.InitNew); };
-            rbClone = new RadioButton
-            {
-                Text = "Clone an existing repository",
-                Location = new Point(235, 5),
-                Size = new Size(220, 20)
-            };
-            rbClone.CheckedChanged += (s, e) => { if (rbClone.Checked) SetMode(ConnectMode.Clone); };
-            pnlModeSelection.Controls.AddRange(new Control[] { rbInit, rbClone });
-            y += 35;
-
-            // Remote URL
-            lblRemoteUrl = new Label { Text = "Remote URL:", Location = new Point(leftMargin, y), Size = new Size(fieldWidth, 18) };
             y += 20;
-            txtRemoteUrl = new TextBox
+
+            lblLocalPath = new Label
             {
+                Text = "Browse to the folder where your Simio project is (or will be):",
                 Location = new Point(leftMargin, y),
-                Size = new Size(fieldWidth, 23),
-                PlaceholderText = "https://github.com/user/repo.git"
+                Size = new Size(fieldWidth, 16),
+                Font = new Font("Segoe UI", 8.25F),
+                ForeColor = Color.Gray
             };
-            txtRemoteUrl.TextChanged += (s, e) => UpdateAuthUI();
-            y += 30;
+            y += 18;
 
-            // Local Path
-            lblLocalPath = new Label { Text = "Local Folder:", Location = new Point(leftMargin, y), Size = new Size(fieldWidth, 18) };
-            y += 20;
             txtLocalPath = new TextBox
             {
                 Location = new Point(leftMargin, y),
                 Size = new Size(fieldWidth - 40, 23)
             };
+            txtLocalPath.TextChanged += TxtLocalPath_TextChanged;
+
             btnBrowse = new Button
             {
                 Text = "...",
@@ -124,101 +121,172 @@ namespace GitFlow
                 if (!string.IsNullOrEmpty(path))
                     txtLocalPath.Text = path;
             };
-            y += 35;
+            y += 28;
 
-            // Authentication section
-            pnlAuth = new Panel
+            // Detection info (shown after folder is selected and repo found)
+            lblDetectedInfo = new Label
+            {
+                Location = new Point(leftMargin + 10, y),
+                Size = new Size(fieldWidth - 10, 18),
+                Font = new Font("Segoe UI", 8.25F, FontStyle.Italic),
+                ForeColor = Color.FromArgb(0, 100, 180),
+                Visible = false
+            };
+            y += 22;
+
+            // Mode selection (only shown when folder has no repo)
+            pnlModeSelection = new Panel
             {
                 Location = new Point(leftMargin, y),
-                Size = new Size(fieldWidth, 130)
+                Size = new Size(fieldWidth, 28),
+                Visible = false
             };
-
-            int ay = 0;
-            lblAuth = new Label
+            rbInit = new RadioButton
             {
-                Text = "Authentication:",
-                Location = new Point(0, ay),
-                Size = new Size(fieldWidth, 18),
-                Font = new Font("Segoe UI", 9, FontStyle.Bold)
+                Text = "Create a new repository here",
+                Location = new Point(0, 4),
+                Size = new Size(220, 20),
+                Checked = true
             };
-            ay += 22;
+            rbInit.CheckedChanged += (s, e) => { if (rbInit.Checked) SetMode(ConnectMode.InitNew); };
+            rbClone = new RadioButton
+            {
+                Text = "Clone a repository into this folder",
+                Location = new Point(230, 4),
+                Size = new Size(240, 20)
+            };
+            rbClone.CheckedChanged += (s, e) => { if (rbClone.Checked) SetMode(ConnectMode.Clone); };
+            pnlModeSelection.Controls.AddRange(new Control[] { rbInit, rbClone });
+            y += 32;
+
+            // ── STEP 2: Remote URL ──
+            lblStep2 = new Label
+            {
+                Text = "Step 2: Remote repository URL",
+                Location = new Point(leftMargin, y),
+                Size = new Size(fieldWidth, 18),
+                Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                ForeColor = Color.FromArgb(60, 60, 60)
+            };
+            y += 20;
+
+            lblRemoteUrl = new Label
+            {
+                Text = "The web address of your Git repository (e.g. from GitHub, Azure DevOps, or Bitbucket):",
+                Location = new Point(leftMargin, y),
+                Size = new Size(fieldWidth, 16),
+                Font = new Font("Segoe UI", 8.25F),
+                ForeColor = Color.Gray
+            };
+            y += 18;
+
+            txtRemoteUrl = new TextBox
+            {
+                Location = new Point(leftMargin, y),
+                Size = new Size(fieldWidth, 23),
+                PlaceholderText = "https://github.com/your-org/your-repo.git"
+            };
+            txtRemoteUrl.TextChanged += (s, e) => UpdateAuthUI();
+            y += 32;
+
+            // ── STEP 3: Authentication ──
+            lblStep3 = new Label
+            {
+                Text = "Step 3: Sign in",
+                Location = new Point(leftMargin, y),
+                Size = new Size(fieldWidth, 18),
+                Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                ForeColor = Color.FromArgb(60, 60, 60)
+            };
+            y += 20;
+
+            lblAuthHelp = new Label
+            {
+                Text = "Choose how to authenticate. GitHub users can sign in directly.\n" +
+                       "For other hosts (Azure DevOps, Bitbucket), use a Personal Access Token (PAT).",
+                Location = new Point(leftMargin, y),
+                Size = new Size(fieldWidth, 32),
+                Font = new Font("Segoe UI", 8.25F),
+                ForeColor = Color.Gray
+            };
+            y += 35;
 
             btnSignInGitHub = new Button
             {
                 Text = "Sign in with GitHub",
-                Location = new Point(0, ay),
-                Size = new Size(180, 30),
-                Font = new Font("Segoe UI", 9)
+                Location = new Point(leftMargin, y),
+                Size = new Size(200, 32),
+                Font = new Font("Segoe UI", 9.5F),
+                FlatStyle = FlatStyle.System
             };
             btnSignInGitHub.Click += BtnSignInGitHub_Click;
-            ay += 38;
+            y += 40;
 
             lblOrPat = new Label
             {
                 Text = "Or enter a Personal Access Token:",
-                Location = new Point(0, ay),
+                Location = new Point(leftMargin, y),
                 Size = new Size(250, 18),
-                ForeColor = Color.Gray
+                ForeColor = Color.FromArgb(80, 80, 80)
             };
             lnkCreateToken = new LinkLabel
             {
-                Text = "Create token",
-                Location = new Point(255, ay),
-                Size = new Size(100, 18)
+                Text = "How do I get a token?",
+                Location = new Point(leftMargin + 255, y),
+                Size = new Size(150, 18)
             };
             lnkCreateToken.LinkClicked += (s, e) =>
             {
                 var host = GitHostDetector.DetectHost(txtRemoteUrl.Text);
                 var url = GitHostDetector.GetTokenCreationUrl(host);
-                if (!string.IsNullOrEmpty(url))
-                {
-                    try { Process.Start(new ProcessStartInfo(url) { UseShellExecute = true }); }
-                    catch { }
-                }
+                if (string.IsNullOrEmpty(url))
+                    url = "https://github.com/settings/tokens";
+                try { Process.Start(new ProcessStartInfo(url) { UseShellExecute = true }); }
+                catch { }
             };
-            ay += 22;
+            y += 20;
 
             txtPat = new TextBox
             {
-                Location = new Point(0, ay),
+                Location = new Point(leftMargin, y),
                 Size = new Size(fieldWidth, 23),
-                PlaceholderText = "Personal Access Token",
+                PlaceholderText = "Paste your token here (starts with ghp_ for GitHub)",
                 UseSystemPasswordChar = true
             };
-            ay += 30;
+            y += 32;
 
-            pnlAuth.Controls.AddRange(new Control[] { lblAuth, btnSignInGitHub, lblOrPat, lnkCreateToken, txtPat });
-            y += 135;
+            // ── Username / Email ──
+            lblUserInfo = new Label
+            {
+                Text = "Your name and email (shown in commit history, optional):",
+                Location = new Point(leftMargin, y),
+                Size = new Size(fieldWidth, 16),
+                Font = new Font("Segoe UI", 8.25F),
+                ForeColor = Color.Gray
+            };
+            y += 18;
 
-            // Username
-            lblUsername = new Label { Text = "Username (optional):", Location = new Point(leftMargin, y), Size = new Size(fieldWidth, 18) };
-            y += 20;
             txtUsername = new TextBox
             {
                 Location = new Point(leftMargin, y),
-                Size = new Size(fieldWidth, 23),
-                PlaceholderText = "Your name for commit history"
+                Size = new Size(230, 23),
+                PlaceholderText = "Your name"
             };
-            y += 30;
-
-            // Email
-            lblEmail = new Label { Text = "Email (optional):", Location = new Point(leftMargin, y), Size = new Size(fieldWidth, 18) };
-            y += 20;
             txtEmail = new TextBox
             {
-                Location = new Point(leftMargin, y),
-                Size = new Size(fieldWidth, 23),
-                PlaceholderText = "Your email for commit history"
+                Location = new Point(leftMargin + 240, y),
+                Size = new Size(240, 23),
+                PlaceholderText = "Your email"
             };
             y += 35;
 
-            // Buttons
+            // ── Buttons ──
             btnOk = new Button
             {
                 Text = "Connect",
-                Location = new Point(leftMargin + fieldWidth - 180, y),
-                Size = new Size(85, 30),
-                Font = new Font("Segoe UI", 9, FontStyle.Bold)
+                Location = new Point(leftMargin + fieldWidth - 185, y),
+                Size = new Size(90, 32),
+                Font = new Font("Segoe UI", 9.5F, FontStyle.Bold)
             };
             btnOk.Click += BtnOk_Click;
 
@@ -226,23 +294,99 @@ namespace GitFlow
             {
                 Text = "Cancel",
                 Location = new Point(leftMargin + fieldWidth - 85, y),
-                Size = new Size(85, 30)
+                Size = new Size(85, 32)
             };
             btnCancel.Click += (s, e) => this.Close();
 
             this.Controls.AddRange(new Control[]
             {
-                lblStatus, pnlModeSelection,
-                lblRemoteUrl, txtRemoteUrl,
-                lblLocalPath, txtLocalPath, btnBrowse,
-                pnlAuth,
-                lblUsername, txtUsername,
-                lblEmail, txtEmail,
+                lblHeader, lblStatus,
+                lblStep1, lblLocalPath, txtLocalPath, btnBrowse,
+                lblDetectedInfo, pnlModeSelection,
+                lblStep2, lblRemoteUrl, txtRemoteUrl,
+                lblStep3, lblAuthHelp, btnSignInGitHub,
+                lblOrPat, lnkCreateToken, txtPat,
+                lblUserInfo, txtUsername, txtEmail,
                 btnOk, btnCancel
             });
 
             this.AcceptButton = btnOk;
             this.CancelButton = btnCancel;
+        }
+
+        /// <summary>
+        /// Called when the local path text changes. Checks if the folder
+        /// is an existing git repo and auto-fills remote URL + credentials.
+        /// </summary>
+        private void TxtLocalPath_TextChanged(object sender, EventArgs e)
+        {
+            string path = txtLocalPath.Text.Trim();
+            if (string.IsNullOrEmpty(path) || !Directory.Exists(path))
+            {
+                lblDetectedInfo.Visible = false;
+                return;
+            }
+
+            // Check if this folder (or a parent) is already a git repo
+            string repoRoot = LibgitFunctionClass.FindRepoRoot(path);
+            if (repoRoot != null)
+            {
+                _detectedRepoPath = repoRoot;
+                _mode = ConnectMode.OpenExisting;
+
+                // Auto-populate remote URL from git config
+                string remoteUrl = LibgitFunctionClass.ReadRemoteUrl(repoRoot);
+                if (!string.IsNullOrEmpty(remoteUrl) && string.IsNullOrEmpty(txtRemoteUrl.Text))
+                {
+                    txtRemoteUrl.Text = remoteUrl;
+                }
+
+                // Try to load stored credentials
+                try
+                {
+                    var cred = CredentialHandler.ReadCredential(repoRoot);
+                    if (cred != null)
+                    {
+                        if (!string.IsNullOrEmpty(cred.Password) && string.IsNullOrEmpty(txtPat.Text))
+                            txtPat.Text = cred.Password;
+                        if (!string.IsNullOrEmpty(cred.UserName) && string.IsNullOrEmpty(txtUsername.Text))
+                            txtUsername.Text = cred.UserName;
+                        if (!string.IsNullOrEmpty(cred.Comment) && string.IsNullOrEmpty(txtEmail.Text))
+                            txtEmail.Text = cred.Comment;
+                    }
+                }
+                catch { }
+
+                // Get current branch info
+                string branchInfo = "";
+                try
+                {
+                    string branch = LibgitFunctionClass.git_current_branch(repoRoot);
+                    branchInfo = $" (branch: {branch})";
+                }
+                catch { }
+
+                lblDetectedInfo.Text = $"Git repository detected at: {repoRoot}{branchInfo}";
+                lblDetectedInfo.Visible = true;
+                pnlModeSelection.Visible = false;
+
+                lblStatus.Text = "Existing repository found! Fill in authentication and click Connect.";
+                lblStatus.ForeColor = Color.FromArgb(0, 120, 0);
+            }
+            else
+            {
+                _detectedRepoPath = null;
+                lblDetectedInfo.Text = "No Git repository found in this folder.";
+                lblDetectedInfo.ForeColor = Color.FromArgb(180, 100, 0);
+                lblDetectedInfo.Visible = true;
+                pnlModeSelection.Visible = true;
+                _mode = rbClone.Checked ? ConnectMode.Clone : ConnectMode.InitNew;
+
+                lblStatus.Text = "Choose to create a new repository or clone an existing one:";
+                lblStatus.ForeColor = Color.FromArgb(60, 60, 60);
+            }
+
+            UpdateAuthUI();
         }
 
         private void AutoDetect()
@@ -260,57 +404,31 @@ namespace GitFlow
                 if (!string.IsNullOrEmpty(projectPath))
                 {
                     string projectDir = Path.GetDirectoryName(projectPath);
-
-                    // Walk up looking for an existing .git folder
-                    _detectedRepoPath = LibgitFunctionClass.FindRepoRoot(projectDir);
+                    txtLocalPath.Text = projectDir; // This triggers TxtLocalPath_TextChanged
 
                     if (_detectedRepoPath != null)
                     {
-                        // Existing repo found -- Open mode
-                        _mode = ConnectMode.OpenExisting;
-                        txtLocalPath.Text = _detectedRepoPath;
-                        txtLocalPath.ReadOnly = true;
-
-                        string remoteUrl = LibgitFunctionClass.ReadRemoteUrl(_detectedRepoPath);
-                        if (!string.IsNullOrEmpty(remoteUrl))
-                        {
-                            txtRemoteUrl.Text = remoteUrl;
-                            txtRemoteUrl.ReadOnly = true;
-                        }
-
-                        // Try to load stored credentials
-                        var cred = CredentialHandler.ReadCredential(_detectedRepoPath);
-                        if (cred != null)
-                        {
-                            txtPat.Text = cred.Password ?? "";
-                            txtUsername.Text = cred.UserName ?? "";
-                            txtEmail.Text = cred.Comment ?? "";
-                        }
-
-                        lblStatus.Text = $"Found existing repository at:\n{_detectedRepoPath}";
-                        pnlModeSelection.Visible = false;
+                        lblStatus.Text = "Your Simio project is already in a Git repository.\nFill in authentication below and click Connect.";
                     }
                     else
                     {
-                        // No repo found, but project exists -- show Init/Clone options
-                        _mode = ConnectMode.InitNew;
-                        txtLocalPath.Text = projectDir;
-                        lblStatus.Text = "No Git repository detected for this project.\nChoose how to set one up:";
+                        lblStatus.Text = "Your Simio project is not yet in a Git repository.\nChoose how to set one up:";
                         pnlModeSelection.Visible = true;
                     }
                 }
                 else
                 {
-                    // No active project -- default to Clone
+                    // No active project
                     _mode = ConnectMode.Clone;
-                    lblStatus.Text = "No active project detected. Clone or connect to a repository:";
-                    pnlModeSelection.Visible = false;
+                    lblStatus.Text = "No Simio project is open. Browse to your project folder,\nor clone a repository to get started.";
+                    lblStatus.ForeColor = Color.FromArgb(60, 60, 60);
                 }
             }
             catch
             {
                 _mode = ConnectMode.Clone;
-                lblStatus.Text = "Enter repository details to connect:";
+                lblStatus.Text = "Browse to your project folder to get started:";
+                lblStatus.ForeColor = Color.FromArgb(60, 60, 60);
             }
 
             UpdateAuthUI();
@@ -323,13 +441,11 @@ namespace GitFlow
             {
                 txtRemoteUrl.ReadOnly = false;
                 txtLocalPath.ReadOnly = false;
-                txtRemoteUrl.PlaceholderText = "https://github.com/user/repo.git";
             }
             else if (mode == ConnectMode.InitNew)
             {
                 txtRemoteUrl.ReadOnly = false;
                 txtLocalPath.ReadOnly = false;
-                txtRemoteUrl.PlaceholderText = "https://github.com/user/repo.git (remote to push to)";
             }
         }
 
@@ -337,7 +453,9 @@ namespace GitFlow
         {
             var host = GitHostDetector.DetectHost(txtRemoteUrl.Text);
 
-            if (host == GitHost.GitHub)
+            // Always show the GitHub button -- it's the most common case
+            // and users may not have typed the URL yet
+            if (host == GitHost.GitHub || host == GitHost.Unknown)
             {
                 btnSignInGitHub.Visible = true;
                 btnSignInGitHub.Text = "Sign in with GitHub";
@@ -350,8 +468,8 @@ namespace GitFlow
                 lblOrPat.Text = $"Enter a Personal Access Token for {hostName}:";
             }
 
-            var tokenUrl = GitHostDetector.GetTokenCreationUrl(host);
-            lnkCreateToken.Visible = !string.IsNullOrEmpty(tokenUrl);
+            // Always show the token link
+            lnkCreateToken.Visible = true;
         }
 
         private async void BtnSignInGitHub_Click(object sender, EventArgs e)
@@ -395,9 +513,15 @@ namespace GitFlow
 
                 if (string.IsNullOrEmpty(repoPath))
                 {
-                    MessageBox.Show("Please select a local folder.", "Required Field",
+                    MessageBox.Show("Please select a local folder in Step 1.", "Required Field",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
+                }
+
+                // For OpenExisting, use the detected repo root (may differ from browsed path)
+                if (_mode == ConnectMode.OpenExisting && _detectedRepoPath != null)
+                {
+                    repoPath = _detectedRepoPath;
                 }
 
                 // Save/update credentials
@@ -437,12 +561,23 @@ namespace GitFlow
 
                 if (permissionLevel == 0)
                 {
-                    MessageBox.Show("Could not verify permissions. Please check your credentials.",
+                    MessageBox.Show(
+                        "Could not verify permissions for this repository.\n\n" +
+                        "This usually means your authentication token is missing or invalid.\n" +
+                        "Please check your PAT or try signing in with GitHub.",
                         "Permission Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                MessageBox.Show($"Connected successfully!\nPermission: {permStr}",
+                string branchName = "";
+                try { branchName = $"\nBranch: {LibgitFunctionClass.git_current_branch(repoPath)}"; }
+                catch { }
+
+                MessageBox.Show(
+                    $"Connected successfully!\n" +
+                    $"Permission: {permStr}{branchName}\n\n" +
+                    "You can now use Commit & Push, Pull, and other\n" +
+                    "version control actions from the ribbon.",
                     "Connected", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
@@ -462,7 +597,11 @@ namespace GitFlow
         private void ExecuteInit(string repoPath, string remoteUrl)
         {
             if (string.IsNullOrEmpty(remoteUrl))
-                throw new Exception("Remote URL is required to initialize a repository.");
+                throw new Exception(
+                    "Remote URL is required to create a repository.\n\n" +
+                    "This is the web address of your repository on GitHub,\n" +
+                    "Azure DevOps, or Bitbucket. Create a new empty repository\n" +
+                    "on your hosting service first, then paste the URL here.");
 
             string assemblyLocation = Assembly.GetExecutingAssembly().Location;
             string dllDirectory = Path.GetDirectoryName(assemblyLocation);
@@ -475,7 +614,10 @@ namespace GitFlow
         private void ExecuteClone(string repoPath, string remoteUrl)
         {
             if (string.IsNullOrEmpty(remoteUrl))
-                throw new Exception("Remote URL is required to clone a repository.");
+                throw new Exception(
+                    "Remote URL is required to clone a repository.\n\n" +
+                    "This is the web address of the repository you want to download.\n" +
+                    "You can find it on GitHub by clicking the green 'Code' button.");
 
             LibgitFunctionClass.git_clone(repoPath, remoteUrl);
         }

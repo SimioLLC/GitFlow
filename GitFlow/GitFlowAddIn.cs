@@ -179,11 +179,18 @@ namespace GitFlow
             {
                 if (!AddInHelper.EnsureConnected(context, 2)) return;
 
+                string currentBranch = "unknown";
+                try { currentBranch = LibgitFunctionClass.git_current_branch(GitContext.Instance.RepositoryPath); }
+                catch { }
+
                 if (LibgitFunctionClass.git_main_branch_check(GitContext.Instance.RepositoryPath))
                 {
                     DialogResult result = MessageBox.Show(
-                        Resources.Resource1.BranchUponCommitPushPrompt,
-                        "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        "You are on the 'main' branch.\n\n" +
+                        "It's recommended to create a separate branch for your changes.\n" +
+                        "This keeps the main version safe while you work.\n\n" +
+                        "Would you like to create a new branch first?",
+                        "Working on Main", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (result == DialogResult.Yes)
                     {
@@ -193,17 +200,19 @@ namespace GitFlow
                     }
                 }
 
-                // On a dev branch, or user chose not to create a branch
-                if (LibgitFunctionClass.git_dirty(GitContext.Instance.RepositoryPath))
+                // Check for changes
+                if (!LibgitFunctionClass.git_dirty(GitContext.Instance.RepositoryPath))
                 {
-                    CommitForm commitForm = new CommitForm();
-                    commitForm.Show();
+                    MessageBox.Show(
+                        $"No changes detected on branch '{currentBranch}'.\n\n" +
+                        "Your model matches the last saved version.\n" +
+                        "Make changes in Simio first, save the project, then come back here.",
+                        "Nothing to Save", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
                 }
-                else
-                {
-                    LibgitFunctionClass.git_safe_push(GitContext.Instance.RepositoryPath, GitContext.Instance.GetSignature());
-                    MessageBox.Show(Resources.Resource1.PushSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+
+                CommitForm commitForm = new CommitForm();
+                commitForm.Show();
             }
             catch (Exception ex)
             {

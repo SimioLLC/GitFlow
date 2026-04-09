@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -27,20 +27,70 @@ namespace GitFlow
 
         private void simpleButton1_Click(object sender, EventArgs e)
         {
-            try 
-            { 
+            try
+            {
                 if (string.IsNullOrWhiteSpace(_commitMessage))
                 {
-                    throw new Exception("Commit message cannot be empty.");
+                    MessageBox.Show(this,
+                        "Please enter a commit message.\n\n" +
+                        "This is a short description of what you changed\n" +
+                        "(e.g. 'Updated server processing time' or 'Added new source').",
+                        "Message Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
                 }
+
+                // Check if there are actually changes to commit
+                if (!LibgitFunctionClass.git_dirty(GitContext.Instance.RepositoryPath))
+                {
+                    MessageBox.Show(this,
+                        "There are no changes to save.\n\n" +
+                        "Your model matches the last saved version.\n" +
+                        "Make some changes in Simio first, then come back here.",
+                        "Nothing to Commit", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // Confirm before committing
+                string currentBranch = "unknown";
+                try { currentBranch = LibgitFunctionClass.git_current_branch(GitContext.Instance.RepositoryPath); }
+                catch { }
+
+                DialogResult confirm = MessageBox.Show(this,
+                    $"Save and push your changes?\n\n" +
+                    $"Branch: {currentBranch}\n" +
+                    $"Message: \"{_commitMessage}\"\n\n" +
+                    "This will save your changes and share them with your team.",
+                    "Confirm Commit & Push", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+                if (confirm != DialogResult.OK) return;
+
                 LibgitFunctionClass.git_commit(GitContext.Instance.RepositoryPath, _commitMessage, GitContext.Instance.GetSignature());
-                LibgitFunctionClass.git_safe_push(GitContext.Instance.RepositoryPath, GitContext.Instance.GetSignature());
-                MessageBox.Show("Commit and Push Successful.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                try
+                {
+                    LibgitFunctionClass.git_safe_push(GitContext.Instance.RepositoryPath, GitContext.Instance.GetSignature());
+                    MessageBox.Show(this,
+                        $"Changes saved and pushed successfully!\n\n" +
+                        $"Branch: {currentBranch}\n" +
+                        $"Message: \"{_commitMessage}\"\n\n" +
+                        "Your team can now pull these changes.",
+                        "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception pushEx)
+                {
+                    // Commit succeeded but push failed -- let the user know their work is saved locally
+                    MessageBox.Show(this,
+                        "Your changes were saved locally, but could not be pushed to the remote.\n\n" +
+                        $"Reason: {pushEx.Message}\n\n" +
+                        "Your work is safe. Try 'Commit & Push' again later,\n" +
+                        "or use 'Pull' first to get the latest changes from your team.",
+                        "Saved Locally (Push Failed)", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
                 this.Close();
             }
             catch (Exception ex)
             {
-                // Show the error message and do not close the form
                 MessageBox.Show(this, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

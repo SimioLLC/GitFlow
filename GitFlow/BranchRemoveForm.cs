@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -29,57 +29,75 @@ namespace GitFlow
         {
             if (string.IsNullOrWhiteSpace(_branchName))
             {
-                MessageBox.Show("Please select a branch to delete.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this,
+                    "Please select a branch from the dropdown list.",
+                    "No Branch Selected", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             try
             {
-
-                //if _branchName starts with origin/... get rid of origin/
+                // Clean up the branch name
                 if (_branchName.StartsWith("origin/"))
-                {
                     _branchName = _branchName.Substring(7);
-                }
-                // Strip "(current)" suffix added by UI
                 if (_branchName.EndsWith(" (current)"))
-                {
                     _branchName = _branchName.Substring(0, _branchName.Length - " (current)".Length);
-                }
-                //FOR TESTING PURPOSES ONLY
-                //send a message box the current branch is being deleted
-                //MessageBox.Show(LibgitFunctionClass.git_current_branch(GitContext.Instance.RepositoryPath), "info", MessageBoxButtons.OK, MessageBoxIcon.Question);
-                //send message box for what _branch is being deleted
-                //MessageBox.Show(_branchName, "Info", MessageBoxButtons.OK, MessageBoxIcon.Question);
 
+                // Confirm deletion -- this is destructive
+                DialogResult confirm = MessageBox.Show(this,
+                    $"Are you sure you want to delete the branch '{_branchName}'?\n\n" +
+                    "This will remove the branch both locally and from the remote.\n" +
+                    "Any uncommitted changes on that branch will be lost.\n\n" +
+                    "This action cannot be undone.",
+                    "Confirm Delete Branch", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                //check if on the branch to be deleted
-                if (LibgitFunctionClass.git_current_branch(GitContext.Instance.RepositoryPath) == _branchName)
+                if (confirm != DialogResult.Yes) return;
+
+                string currentBranch = LibgitFunctionClass.git_current_branch(GitContext.Instance.RepositoryPath);
+
+                if (currentBranch == _branchName)
                 {
+                    // Need to switch to main first
+                    MessageBox.Show(this,
+                        $"You are currently on the '{_branchName}' branch.\n\n" +
+                        "You will be switched to 'main' before the branch is deleted.\n" +
+                        "Your project will reload.",
+                        "Switching to Main", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                     LibgitFunctionClass.git_checkout_branch(GitContext.Instance.RepositoryPath, "main");
                     LibgitFunctionClass.git_delete_branch(GitContext.Instance.RepositoryPath, _branchName);
 
-                    MessageBox.Show("deleted branch: " + _branchName + "\n" + Resources.Resource1.DeleteNowOnMainMessage, "Success" , MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(this,
+                        $"Branch '{_branchName}' has been deleted.\n\n" +
+                        "You are now on the 'main' branch.\n" +
+                        "Your project will reload.",
+                        "Branch Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                     this.Close();
                     SystemDirectoryHandler.Refresh();
                 }
                 else
                 {
-                    // Attempt to delete the selected branch
                     LibgitFunctionClass.git_delete_branch(GitContext.Instance.RepositoryPath, _branchName);
 
-                    MessageBox.Show("deleted branch: " + _branchName, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(this,
+                        $"Branch '{_branchName}' has been deleted.\n\n" +
+                        $"You are still on the '{currentBranch}' branch.",
+                        "Branch Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                     this.Close();
                 }
-
             }
             catch (Exception ex) when (ex.Message.Contains("conflicts prevent checkout"))
             {
-                // Handle the case where the branch does not exist
-                MessageBox.Show(this, Resources.Resource1.CheckoutWithUncommitedChanges, "Branch Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(this,
+                    "Cannot delete this branch because you have unsaved changes.\n\n" +
+                    "Switching to 'main' requires a clean workspace.\n" +
+                    "Please save your Simio project and use 'Commit & Push' first,\n" +
+                    "then try deleting the branch again.",
+                    "Unsaved Changes", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {
-                // Show the error message and do not close the form
                 MessageBox.Show(this, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

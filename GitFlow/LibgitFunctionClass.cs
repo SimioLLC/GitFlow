@@ -49,8 +49,9 @@ namespace GitFlow
         }
 
         /// <summary>
-        /// Reads the remote "origin" URL from an existing repository.
-        /// Returns empty string if no origin remote is configured.
+        /// Reads the remote URL from an existing repository.
+        /// Tries "origin" first, then falls back to the first available remote.
+        /// Returns empty string if no remotes are configured.
         /// </summary>
         public static string ReadRemoteUrl(string repoPath)
         {
@@ -58,8 +59,19 @@ namespace GitFlow
             {
                 using (var repo = new Repository(repoPath))
                 {
+                    // Try "origin" first (most common)
                     var origin = repo.Network.Remotes["origin"];
-                    return origin?.Url ?? "";
+                    if (origin != null && !string.IsNullOrEmpty(origin.Url))
+                        return origin.Url;
+
+                    // Fall back to the first remote with a URL
+                    foreach (var remote in repo.Network.Remotes)
+                    {
+                        if (!string.IsNullOrEmpty(remote.Url))
+                            return remote.Url;
+                    }
+
+                    return "";
                 }
             }
             catch

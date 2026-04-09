@@ -45,7 +45,8 @@ namespace GitFlow
         public ConnectForm()
         {
             InitializeFormLayout();
-            AutoDetect();
+            // Run auto-detect after form is fully loaded, not during construction
+            this.Load += (s, e) => AutoDetect();
         }
 
         private void InitializeFormLayout()
@@ -337,7 +338,7 @@ namespace GitFlow
 
                 // Auto-populate remote URL from git config
                 string remoteUrl = LibgitFunctionClass.ReadRemoteUrl(repoRoot);
-                if (!string.IsNullOrEmpty(remoteUrl) && string.IsNullOrEmpty(txtRemoteUrl.Text))
+                if (!string.IsNullOrEmpty(remoteUrl))
                 {
                     txtRemoteUrl.Text = remoteUrl;
                 }

@@ -40,6 +40,20 @@ namespace GitFlow
             // Try auto-connect: detect repo from the active project
             if (TryAutoConnect(context))
             {
+                string branch = "";
+                try { branch = LibgitFunctionClass.git_current_branch(GitContext.Instance.RepositoryPath); }
+                catch { }
+
+                string permStr = GitContext.Instance.PermissionLevel == 2 ? "Read/Write" :
+                                 GitContext.Instance.PermissionLevel == 1 ? "Read Only" : "No Access";
+
+                MessageBox.Show(
+                    $"Auto-connected to Git repository.\n\n" +
+                    $"Repository: {GitContext.Instance.RepositoryPath}\n" +
+                    $"Branch: {branch}\n" +
+                    $"Permission: {permStr}",
+                    "Connected", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 return CheckPermission(requiredPermission);
             }
 

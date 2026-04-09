@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using LibGit2Sharp;
@@ -593,20 +594,132 @@ namespace GitFlow
                 }
 
                 string branchName = "";
-                try { branchName = $"\nBranch: {LibgitFunctionClass.git_current_branch(repoPath)}"; }
+                try { branchName = LibgitFunctionClass.git_current_branch(repoPath); }
                 catch { }
 
-                MessageBox.Show(
-                    $"Connected successfully!\n" +
-                    $"Permission: {permStr}{branchName}\n\n" +
-                    "You can now use Commit & Push, Pull, and other\n" +
-                    "version control actions from the ribbon.",
-                    "Connected", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Check if a project is already open
+                bool projectAlreadyOpen = false;
+                try { projectAlreadyOpen = GitContext.Instance.simioContext?.ActiveProject != null; }
+                catch { }
+
+                if (projectAlreadyOpen)
+                {
+                    MessageBox.Show(
+                        $"Connected successfully!\n\n" +
+                        $"Repository: {repoPath}\n" +
+                        $"Branch: {branchName}\n" +
+                        $"Permission: {permStr}\n\n" +
+                        "You can now use Commit & Push, Pull, and other\n" +
+                        "version control actions from the ribbon.",
+                        "Connected", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    // No project open -- find and offer to open .simproj
+                    TryOpenProject(repoPath, branchName, permStr);
+                }
+
                 this.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void TryOpenProject(string repoPath, string branchName, string permStr)
+        {
+            try
+            {
+                // Search for .simproj files in the repo
+                var simprojFiles = Directory.EnumerateFiles(repoPath, "*.simproj", SearchOption.AllDirectories).ToList();
+
+                if (simprojFiles.Count == 0)
+                {
+                    MessageBox.Show(
+                        $"Connected successfully!\n\n" +
+                        $"Repository: {repoPath}\n" +
+                        $"Branch: {branchName}\n" +
+                        $"Permission: {permStr}\n\n" +
+                        "No Simio project files (.simproj) were found in this repository.\n" +
+                        "You can create a new project and save it to this folder.",
+                        "Connected", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                string selectedFile;
+
+                if (simprojFiles.Count == 1)
+                {
+                    selectedFile = simprojFiles[0];
+                }
+                else
+                {
+                    // Multiple .simproj files -- let user pick
+                    // Show relative paths for readability
+                    var relPaths = simprojFiles.Select(f =>
+                        f.StartsWith(repoPath) ? f.Substring(repoPath.Length).TrimStart('\\', '/') : f
+                    ).ToList();
+
+                    string fileList = string.Join("\n", relPaths.Select((p, i) => $"  {i + 1}. {p}"));
+
+                    // For simplicity, use the first one but tell the user
+                    selectedFile = simprojFiles[0];
+                    string selectedRel = relPaths[0];
+
+                    DialogResult pickResult = MessageBox.Show(
+                        $"Connected successfully! (Branch: {branchName}, Permission: {permStr})\n\n" +
+                        $"Found {simprojFiles.Count} Simio project files:\n{fileList}\n\n" +
+                        $"Open '{selectedRel}'?",
+                        "Open Project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (pickResult != DialogResult.Yes) return;
+                }
+
+                // Open the project file in Simio
+                try
+                {
+                    GitContext.Instance.simioContext.ExecuteUICommand("LoadProject", selectedFile);
+
+                    MessageBox.Show(
+                        $"Connected and project loaded!\n\n" +
+                        $"Branch: {branchName}\n" +
+                        $"Permission: {permStr}\n\n" +
+                        "You can now use Commit & Push, Pull, and other\n" +
+                        "version control actions from the ribbon.",
+                        "Ready", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch
+                {
+                    // LoadProject may not be available -- try opening via shell
+                    try
+                    {
+                        Process.Start(new ProcessStartInfo(selectedFile) { UseShellExecute = true });
+                        MessageBox.Show(
+                            $"Connected! Opening project...\n\n" +
+                            $"Branch: {branchName}\n" +
+                            $"Permission: {permStr}",
+                            "Connected", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch
+                    {
+                        MessageBox.Show(
+                            $"Connected successfully!\n\n" +
+                            $"Branch: {branchName}\n" +
+                            $"Permission: {permStr}\n\n" +
+                            $"Please open your project manually:\n{selectedFile}",
+                            "Connected", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show(
+                    $"Connected successfully!\n\n" +
+                    $"Repository: {repoPath}\n" +
+                    $"Branch: {branchName}\n" +
+                    $"Permission: {permStr}",
+                    "Connected", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

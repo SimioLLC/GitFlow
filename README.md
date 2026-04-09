@@ -16,21 +16,28 @@ A Simio design-time add-in that brings Git version control directly into the Sim
 - **Local Reset** - Revert uncommitted changes to the last committed state
 - **Subfolder support** - Your .simproj can live in a subfolder of the repo
 
+## Installation
+
+1. Download the latest **GitFlow-vX.X.X.zip** from the [Releases page](https://github.com/SimioLLC/GitFlow/releases)
+2. Extract the zip -- it contains a `GitFlow` folder
+3. Copy the `GitFlow` folder to your `Documents/SimioUserExtensions/` directory
+4. Restart Simio -- the **Version Control** tab appears in the ribbon
+
+To update, repeat the steps above with the newer zip (it replaces the old files).
+
 ## Quick Start
 
 ### If your project is already in a Git repo (cloned via GitHub Desktop, etc.)
 
-1. **Install**: Copy the GitFlow folder to your `Documents/SimioUserExtensions/` directory
-2. **Open Simio** and open your project
-3. **Click any action** (Commit & Push, Pull, Create Branch, etc.) - GitFlow auto-detects the repo
-4. **Enter your PAT once** when prompted - it's saved for all future repos on that host
+1. **Open Simio** and open your project
+2. **Click any action** (Commit & Push, Pull, Create Branch, etc.) - GitFlow auto-detects the repo
+3. **Enter your PAT once** when prompted - it's saved for all future repos on that host
 
 ### Starting fresh
 
-1. **Install** the add-in
-2. **Open Simio** - the "Version Control" tab appears in the ribbon
-3. **Click Connect** - browse to your folder, enter the remote URL, authenticate
-4. **Start working** - commit, push, pull, and branch directly from Simio
+1. **Open Simio** - the "Version Control" tab appears in the ribbon
+2. **Click Connect** - browse to your folder, enter the remote URL, authenticate
+3. **Start working** - commit, push, pull, and branch directly from Simio
 
 ## Ribbon Layout
 
@@ -46,11 +53,23 @@ A Simio design-time add-in that brings Git version control directly into the Sim
 Requires .NET 9.0 SDK and Simio installed at the default location.
 
 ```powershell
-# Build and deploy to Simio extensions folder
+# Build and deploy to your local Simio extensions folder
 .\deploy.ps1
 
 # Build only
 dotnet build GitFlow/GitFlow.csproj -c Release
+```
+
+### Creating a Release
+
+To publish a new version for download:
+
+```powershell
+# Build and create the distributable zip in dist/
+.\package.ps1 -Version "1.2.0"
+
+# Or: build, zip, tag, and publish a GitHub Release in one step (requires gh CLI)
+.\release.ps1 -Version "1.2.0"
 ```
 
 ## Why Use Git with Simio?

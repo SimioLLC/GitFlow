@@ -40,6 +40,11 @@ namespace GitFlow
                 {
                     _branchName = _branchName.Substring(7);
                 }
+                // Strip "(current)" suffix added by UI
+                if (_branchName.EndsWith(" (current)"))
+                {
+                    _branchName = _branchName.Substring(0, _branchName.Length - " (current)".Length);
+                }
                 //FOR TESTING PURPOSES ONLY
                 //send a message box the current branch is being deleted
                 //MessageBox.Show(LibgitFunctionClass.git_current_branch(GitContext.Instance.RepositoryPath), "info", MessageBoxButtons.OK, MessageBoxIcon.Question);

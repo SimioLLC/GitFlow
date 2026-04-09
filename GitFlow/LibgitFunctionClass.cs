@@ -16,83 +16,100 @@ namespace GitFlow
     internal class LibgitFunctionClass
     {
 
-
         /*
-         * Functions Specific for GitFlow AddIn
-         * members: commit_and_push_maybe_branch, Merge_to_main_delete_old_branch, Select_Branch
-         * members but implimented elsewhere: git_init, git_clone
+         * Utility functions for repo discovery
          */
 
-        public static bool commit_and_push_maybe_branch_handler(string localRepoPath, string commitMessage, Signature signature)
+        /// <summary>
+        /// Walks up the directory tree from startPath looking for a .git folder.
+        /// Returns the repo root path, or null if no repo found.
+        /// </summary>
+        public static string FindRepoRoot(string startPath)
         {
-            // Function to commit changes and push to the remote repository, optionally creating a new branch
-            // Parameters:
-            // localRepoPath: Path to the local Git repository
-            // commitMessage: Message for the commit
-            // signature: Signature object containing author and committer information
-            // branchName: Optional name of the new branch to create before committing
+            if (string.IsNullOrWhiteSpace(startPath))
+                return null;
 
-
-            using (var repo = new Repository(localRepoPath))
+            try
             {
-                if (repo.Head.FriendlyName == "main" || repo.Head.FriendlyName == "master")
+                var dir = new DirectoryInfo(startPath);
+                // If startPath is a file, start from its directory
+                if (File.Exists(startPath))
+                    dir = new DirectoryInfo(Path.GetDirectoryName(startPath));
+
+                while (dir != null)
                 {
-                    //newBranchOption = newBranchPopUP();
-                    DialogResult dialogResult = MessageBox.Show(Resources.Resource1.BranchInsteadOfMain, "Commit/Push", MessageBoxButtons.YesNo);
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        //create Branch window
-                        return true;
-                    }
-                    else // if (dialogResult == DialogResult.No)
-                    {
-                        //commit and push to main
-                        try { 
-                            if (git_dirty(localRepoPath))
-                            {
-                                if (!git_commit(localRepoPath, commitMessage, signature))
-                                {
-                                    throw new Exception("Failed to commit changes.");
-                                    
-                                }
-                            }
-                            if (!git_push(localRepoPath))
-                            {
-                                throw new Exception("Failed to push changes.");
-                                
-                            }
-                            return true; // Return true if all operations are successful
-                            }
-                        catch (Exception ex)
-                        {
-                            throw new Exception($"An error occurred while committing and pushing changes: {ex.Message}");
-                            
-                        }
-                    }
+                    if (Directory.Exists(Path.Combine(dir.FullName, ".git")))
+                        return dir.FullName;
+                    dir = dir.Parent;
                 }
-                else
-                {//on a dev branch already
-                    if (git_dirty(localRepoPath))
-                    {
-                        if (!git_commit(localRepoPath, commitMessage, signature))
-                        {
-                            throw new Exception("Failed to commit changes.");
-                            
-                        }
-                    }
-                    if (!git_push(localRepoPath))
-                    {
-                        throw new Exception("Failed to push changes.");
-                        
-                    }
-                    return true;
-                }
-
             }
+            catch { }
 
-
+            return null;
         }
 
+        /// <summary>
+        /// Reads the remote "origin" URL from an existing repository.
+        /// Returns empty string if no origin remote is configured.
+        /// </summary>
+        public static string ReadRemoteUrl(string repoPath)
+        {
+            try
+            {
+                using (var repo = new Repository(repoPath))
+                {
+                    var origin = repo.Network.Remotes["origin"];
+                    return origin?.Url ?? "";
+                }
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+
+        /*
+         * Common error handling helpers
+         */
+
+        /// <summary>
+        /// Translates common LibGit2Sharp exceptions into user-friendly messages.
+        /// </summary>
+        public static Exception TranslateGitException(Exception ex)
+        {
+            if (ex.Message.Contains("authentication replays") || ex.Message.Contains("403"))
+                return new Exception(Resources.Resource1.AuthenticationError);
+            if (ex.Message.Contains("404"))
+                return new Exception(Resources.Resource1.RemoteRetrival);
+            if (ex.Message.Contains("Input string was not in a correct format. Failure to parse near offset"))
+                return new Exception(Resources.Resource1.ErrorBadCharactersInRemote);
+            if (ex.Message.Contains("invalid reference name 'refs/remotes/origin/"))
+                return new Exception(Resources.Resource1.ErrorBadCharactersInRemote + ":\n" + ex.Message);
+            return ex;
+        }
+
+        /// <summary>
+        /// Cleans up files created during a failed git_init.
+        /// </summary>
+        private static void CleanupFailedInit(string localRepoPath, bool gitIgnoreAdded, bool buildFolderCreated)
+        {
+            try
+            {
+                string gitFile = Path.Combine(localRepoPath, ".gitignore");
+                if (File.Exists(gitFile) && gitIgnoreAdded)
+                    File.Delete(gitFile);
+
+                string buildsDirectory = Path.Combine(localRepoPath, "Builds");
+                if (Directory.Exists(buildsDirectory) && buildFolderCreated)
+                    Directory.Delete(buildsDirectory, true);
+
+                string gitDirectory = Path.Combine(localRepoPath, ".git");
+                if (Directory.Exists(gitDirectory))
+                    Directory.Delete(gitDirectory, true);
+            }
+            catch { }
+        }
 
 
         /*
@@ -191,171 +208,33 @@ namespace GitFlow
             }
             catch (Exception ex) when (ex.Message.Contains("unsupported URL protocol"))
             {
-                try
-                {
-                    //delete gitIgnore
-                    string gitFile = Path.Combine(localRepoPath, ".gitignore");
-                    if (File.Exists(gitFile) && gitIgnoreAddedFlag == true)
-                    {
-
-                        File.Delete(gitFile);
-                    }
-                    //delete Builds folder
-                    string buildsDirectory = Path.Combine(localRepoPath, "Builds");
-                    if (Directory.Exists(buildsDirectory) && buildFolderCreated == true)
-                    {
-                        Directory.Delete(buildsDirectory, true);
-                    }
-
-                    //delete .git folder
-                    string gitDirectory = Path.Combine(localRepoPath, ".git");
-                    if (Directory.Exists(gitDirectory))
-                    {
-                        Directory.Delete(gitDirectory, true);
-                    }
-                }
-                catch (Exception delEx)
-                {
-                    throw new Exception(Resources.Resource1.RemoteRetrival + Resources.Resource1.AdditionalErrorInCleanup);
-
-                }
+                CleanupFailedInit(localRepoPath, gitIgnoreAddedFlag, buildFolderCreated);
                 throw new Exception(Resources.Resource1.RemoteRetrival);
-
             }
             catch (Exception ex) when (ex.Message.Contains("authentication replays"))
             {
-                try
-                {
-                    //delete gitIgnore
-                    string gitFile = Path.Combine(localRepoPath, ".gitignore");
-                    if (File.Exists(gitFile) && gitIgnoreAddedFlag == true)
-                    {
-
-                        File.Delete(gitFile);
-                    }
-                    //delete Builds folder
-                    string buildsDirectory = Path.Combine(localRepoPath, "Builds");
-                    if (Directory.Exists(buildsDirectory) && buildFolderCreated == true)
-                    {
-                        Directory.Delete(buildsDirectory, true);
-                    }
-
-                    //delete .git folder
-                    string gitDirectory = Path.Combine(localRepoPath, ".git");
-                    if (Directory.Exists(gitDirectory))
-                    {
-                        Directory.Delete(gitDirectory, true);
-                    }
-                }
-                catch (Exception delEx)
-                {
-                    throw new Exception(Resources.Resource1.AuthenticationErrorInit + Resources.Resource1.AdditionalErrorInCleanup);
-
-                }
+                CleanupFailedInit(localRepoPath, gitIgnoreAddedFlag, buildFolderCreated);
                 throw new Exception(Resources.Resource1.AuthenticationErrorInit);
-
             }
             catch (Exception ex) when (ex.Message.Contains("403"))
             {
-                try
-                {
-                    //delete gitIgnore
-                    string gitFile = Path.Combine(localRepoPath, ".gitignore");
-                    if (File.Exists(gitFile) && gitIgnoreAddedFlag == true)
-                    {
-
-                        File.Delete(gitFile);
-                    }
-                    //delete Builds folder
-                    string buildsDirectory = Path.Combine(localRepoPath, "Builds");
-                    if (Directory.Exists(buildsDirectory) && buildFolderCreated == true)
-                    {
-                        Directory.Delete(buildsDirectory, true);
-                    }
-
-                    //delete .git folder
-                    string gitDirectory = Path.Combine(localRepoPath, ".git");
-                    if (Directory.Exists(gitDirectory))
-                    {
-                        Directory.Delete(gitDirectory, true);
-                    }
-                }
-                catch (Exception delEx)
-                {
-                    throw new Exception(Resources.Resource1.AuthenticationError + Resources.Resource1.AdditionalErrorInCleanup);
-
-                }
+                CleanupFailedInit(localRepoPath, gitIgnoreAddedFlag, buildFolderCreated);
                 throw new Exception(Resources.Resource1.AuthenticationError);
-
             }
             catch (Exception ex) when (ex.Message.Contains("404"))
             {
-                try
-                {
-                    //delete gitIgnore
-                    string gitFile = Path.Combine(localRepoPath, ".gitignore");
-                    if (File.Exists(gitFile) && gitIgnoreAddedFlag == true)
-                    {
-
-                        File.Delete(gitFile);
-                    }
-                    //delete Builds folder
-                    string buildsDirectory = Path.Combine(localRepoPath, "Builds");
-                    if (Directory.Exists(buildsDirectory) && buildFolderCreated == true)
-                    {
-                        Directory.Delete(buildsDirectory, true);
-                    }
-
-                    //delete .git folder
-                    string gitDirectory = Path.Combine(localRepoPath, ".git");
-                    if (Directory.Exists(gitDirectory))
-                    {
-                        Directory.Delete(gitDirectory, true);
-                    }
-                }
-                catch (Exception delEx)
-                {
-                    throw new Exception(Resources.Resource1.RemoteRetrival + Resources.Resource1.AdditionalErrorInCleanup);
-
-                }
+                CleanupFailedInit(localRepoPath, gitIgnoreAddedFlag, buildFolderCreated);
                 throw new Exception(Resources.Resource1.RemoteRetrival);
             }
             catch (Exception ex) when (ex.Message.Contains("A .git repository already exists"))
             {
-                try
-                {
-                    //delete gitIgnore
-                    string gitFile = Path.Combine(localRepoPath, ".gitignore");
-                    if (File.Exists(gitFile) && gitIgnoreAddedFlag == true)
-                    {
-
-                        File.Delete(gitFile);
-                    }
-                    //delete Builds folder
-                    string buildsDirectory = Path.Combine(localRepoPath, "Builds");
-                    if (Directory.Exists(buildsDirectory) && buildFolderCreated == true)
-                    {
-                        Directory.Delete(buildsDirectory, true);
-                    }
-
-                    //delete .git folder
-                    string gitDirectory = Path.Combine(localRepoPath, ".git");
-                    if (Directory.Exists(gitDirectory))
-                    {
-                        Directory.Delete(gitDirectory, true);
-                    }
-                }
-                catch (Exception delEx)
-                {
-                    throw new Exception(Resources.Resource1.Initrepodetected + Resources.Resource1.AdditionalErrorInCleanup);
-
-                }
+                CleanupFailedInit(localRepoPath, gitIgnoreAddedFlag, buildFolderCreated);
                 throw new Exception(Resources.Resource1.Initrepodetected);
-
             }
             catch (Exception ex)
             {
-                throw new Exception("An Initialization Error Occured: " + ex.Message);
+                CleanupFailedInit(localRepoPath, gitIgnoreAddedFlag, buildFolderCreated);
+                throw new Exception("An Initialization Error Occurred: " + ex.Message);
             }
             try
             {
@@ -1271,27 +1150,10 @@ namespace GitFlow
             }
         }
 
-        public static bool git_dirty_internal(string localRepoPath, Repository repo)
+        public static bool git_dirty_internal(Repository repo)
         {
-            // Function to check if there are uncommitted changes in the local repository
-            // Parameters:
-            // localRepoPath: Path to the local Git repository
-
-            //NEEDS TO ME TESTED MORE
-
-
-            // Check if there are any changes in the repository
             var status = repo.RetrieveStatus();
-            if (status.IsDirty)
-            {
-
-                return true; // Return true if there are uncommitted changes
-            }
-            else
-            {
-
-                return false; // Return false if there are no uncommitted changes
-            }
+            return status.IsDirty;
         }
 
 
@@ -1490,46 +1352,9 @@ namespace GitFlow
         }
         */
 
-        //Create branch
-        /* TODO : Priority : 3 
-         * CREATE BRANCH
-         * check if name is in use
-         * if yes than false
-         * else:
-         * create local branch
-         * push to remote
-         * checkout branch
-         * not fully implimented yet
-         * not sent to remote yet
-        public static bool git_create_branch(string localRepoPath, string branchName)
-        {
-            using (var repo = new Repository(localRepoPath))
-            {
-                // Check if the branch already exists
-                if (repo.Branches[branchName] != null)
-                {
-                    Console.WriteLine($"Branch '{branchName}' already exists.");
-                    return false; // Return false if the branch already exists
-                }
-                // Create a new branch
-                var newBranch = repo.CreateBranch(branchName);
-                // Checkout the new branch
-                Commands.Checkout(repo, newBranch);
-                return true; // Return true if successful
-            }
-        }
-        */
-
-
-        //IM OKAY WITH THIS FUNCTION MINUS THE PAT HANDLING WHICH SHOULD HAS A SEPERATE FUNCTION TO STORE SECURLY
-        //SHOULD ALSO BE WRITABLE
-
-
-
 
         /*
-         * Functions to handle credential handshaking eventually needs some encryption and secure storage
-         * members: PrivateRepoCredentials, getPAT, setPAT, getUser, setUser
+         * Functions to handle credentials and permissions
          */
 
         public static int GetPermission(string localRepoPath)

@@ -39,6 +39,11 @@ namespace GitFlow
 
         public int PermissionLevel { get; set; } = 0; // Default to no access
 
+        /// <summary>
+        /// Full path to the .simproj file. Supports both root and subfolder layouts.
+        /// </summary>
+        public string ProjectFilePath { get; private set; }
+
         public SimioAPI.Extensions.IDesignContext simioContext { get; set; }
 
         /// <summary>
@@ -95,6 +100,14 @@ namespace GitFlow
                 throw new InvalidOperationException("GitContext is not initialized. Initialize before getting a signature.");
             }
             return new Signature(UserName, Email, DateTimeOffset.Now);
+        }
+
+        /// <summary>
+        /// Sets the full path to the .simproj project file.
+        /// </summary>
+        public void SetProjectFile(string projectFilePath)
+        {
+            ProjectFilePath = projectFilePath;
         }
 
         /// <summary>

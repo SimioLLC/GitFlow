@@ -47,13 +47,8 @@ namespace GitFlow
             }
             catch (Exception ex) when (ex.Message.Contains("conflicts prevent checkout"))
             {
-                // Handle the case where the branch does not exist
-                MessageBox.Show(this, Resources.Resource1.CheckoutWithUncommitedChanges, "Branch Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            catch (Exception ex) when (ex.Message.Contains("conflicts prevent checkout"))
-            {
-                // Handle the case where the branch does not exist
-                MessageBox.Show(this, Resources.Resource1.CheckoutWithUncommitedChanges, "Branch Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                // Handle the case where uncommitted changes prevent checkout
+                MessageBox.Show(this, Resources.Resource1.CheckoutWithUncommitedChanges, "Checkout Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {

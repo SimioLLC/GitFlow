@@ -103,7 +103,7 @@ namespace GitFlow
                 var cred = CredentialHandler.ReadCredential(_RepoPath);
                 if (cred == null)
                 {
-                    CredentialHandler.SaveCredential(_RepoPath, _username, _pat, _email, Meziantou.Framework.Win32.CredentialPersistence.LocalMachine);
+                    CredentialHandler.SaveCredential(_RepoPath, _username, _pat, _email, Meziantou.Framework.Win32.CredentialPersistence.Session);
                 }
                 else
                 {

@@ -260,10 +260,14 @@ namespace GitFlow
         {
             try
             {
-                string projectFileNameWithExtSimproj = GitContext.Instance.simioContext.ActiveProject.Name + ".simproj";
-                string fullPath = Path.Combine(GitContext.Instance.RepositoryPath, projectFileNameWithExtSimproj);
+                string projectFileName = GitContext.Instance.simioContext.ActiveProject.Name + ".simproj";
 
-                if(!File.Exists(fullPath))
+                // Search for .simproj in repo directory (supports both root and subfolder layouts)
+                string fullPath = Directory.EnumerateFiles(
+                    GitContext.Instance.RepositoryPath, projectFileName,
+                    SearchOption.AllDirectories).FirstOrDefault();
+
+                if (string.IsNullOrEmpty(fullPath) || !File.Exists(fullPath))
                 {
                     return false;
                 }
@@ -276,7 +280,7 @@ namespace GitFlow
             {
                 MessageBox.Show(Resources.Resource1.RefreshFail, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            return false; // Return 1 to indicate failure
+            return false;
         }
 
         public static void DeleteFileInGitRepository(string repositoryPath, string fileNameToDelete)

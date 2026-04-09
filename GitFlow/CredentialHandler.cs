@@ -37,7 +37,7 @@ namespace GitFlow
 
         public static void UpdateCredential(string RepoIdentifier, string newUserName, string newSecret, string newEmail)
         {
-            SaveCredential(RepoIdentifier, newUserName, newSecret, newEmail, CredentialPersistence.Session);
+            SaveCredential(RepoIdentifier, newUserName, newSecret, newEmail, CredentialPersistence.LocalMachine);
         }
 
 

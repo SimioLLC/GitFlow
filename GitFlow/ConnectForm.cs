@@ -555,7 +555,7 @@ namespace GitFlow
                     var existingCred = CredentialHandler.ReadCredential(repoPath);
                     if (existingCred == null)
                         CredentialHandler.SaveCredential(repoPath, username, pat, email,
-                            Meziantou.Framework.Win32.CredentialPersistence.Session);
+                            Meziantou.Framework.Win32.CredentialPersistence.LocalMachine);
                     else
                         CredentialHandler.UpdateCredential(repoPath, username, pat, email);
                 }
@@ -586,10 +586,32 @@ namespace GitFlow
 
                 if (permissionLevel == 0)
                 {
+                    // Gather diagnostic info
+                    string remoteName = "none";
+                    string remoteUrlActual = "none";
+                    try
+                    {
+                        using (var diagRepo = new Repository(repoPath))
+                        {
+                            var r = diagRepo.Network.Remotes["origin"]
+                                ?? diagRepo.Network.Remotes.FirstOrDefault();
+                            if (r != null) { remoteName = r.Name; remoteUrlActual = r.Url; }
+                        }
+                    }
+                    catch { }
+
+                    bool hasPat = !string.IsNullOrEmpty(pat);
+
                     MessageBox.Show(
                         "Could not verify permissions for this repository.\n\n" +
-                        "This usually means your authentication token is missing or invalid.\n" +
-                        "Please check your PAT or try signing in with GitHub.",
+                        "Please check the following:\n" +
+                        $"  Repository: {repoPath}\n" +
+                        $"  Remote: {remoteName} ({remoteUrlActual})\n" +
+                        $"  Token provided: {(hasPat ? "Yes" : "No")}\n\n" +
+                        "Common fixes:\n" +
+                        "- Make sure your Personal Access Token has 'repo' scope\n" +
+                        "- Check that the remote URL is correct\n" +
+                        "- Try generating a new token at github.com/settings/tokens",
                         "Permission Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }

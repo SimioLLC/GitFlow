@@ -81,6 +81,19 @@ namespace GitFlow
         }
 
 
+        /// <summary>
+        /// Gets the remote for a repository. Tries "origin" first,
+        /// then falls back to the first available remote.
+        /// Returns null if no remotes are configured.
+        /// </summary>
+        private static Remote GetRemote(Repository repo)
+        {
+            var origin = repo.Network.Remotes["origin"];
+            if (origin != null) return origin;
+            return repo.Network.Remotes.FirstOrDefault();
+        }
+
+
         /*
          * Common error handling helpers
          */
@@ -213,7 +226,7 @@ namespace GitFlow
                     // 5. Set upstream (tracking) for main
                     repo.Branches.Update(mainBranch, b => b.TrackedBranch = "refs/remotes/origin/main");
                     // 6. Push to origin main
-                    var remote = repo.Network.Remotes["origin"];
+                    var remote = GetRemote(repo);
                     repo.Network.Push(mainBranch, new PushOptions { CredentialsProvider = PrivateRepoCredentials });
                 }
 
@@ -438,7 +451,7 @@ namespace GitFlow
                 // Push changes to the remote repository
                 try
                 {
-                    Remote remote = repo.Network.Remotes["origin"];
+                    Remote remote = GetRemote(repo);
 
                     // Push to the remote repository
                     //FriendlyName gets the name of the current branch
@@ -488,7 +501,7 @@ namespace GitFlow
                 // Push changes to the remote repository
                 try
                 {
-                    Remote remote = repo.Network.Remotes["origin"];
+                    Remote remote = GetRemote(repo);
 
                     // Push to the remote repository
                     //FriendlyName gets the name of the current branch
@@ -542,7 +555,7 @@ namespace GitFlow
                 options.CredentialsProvider = PrivateRepoCredentials;
                 try
                 {
-                    var remote = repo.Network.Remotes["origin"];
+                    var remote = GetRemote(repo);
                     var refSpecs = remote.FetchRefSpecs.Select(x => x.Specification);
                     Commands.Fetch(repo, remote.Name, refSpecs, options, "");
 
@@ -625,7 +638,7 @@ namespace GitFlow
 
             using (var repo = new Repository(localRepoPath))
             {
-                var remote = repo.Network.Remotes["origin"];
+                var remote = GetRemote(repo);
 
 
                 // Use +refs/heads/branchName to force push
@@ -675,7 +688,7 @@ namespace GitFlow
                 try
                 {
                     // Fetch the latest changes from the remote repository
-                    var remote = repo.Network.Remotes["origin"];
+                    var remote = GetRemote(repo);
                     var refSpecs = remote.FetchRefSpecs.Select(x => x.Specification);
                     Commands.Fetch(repo, remote.Name, refSpecs, new FetchOptions { CredentialsProvider = PrivateRepoCredentials }, "");
                     // Reset the local branch to match the remote branch
@@ -752,7 +765,7 @@ namespace GitFlow
                     var newBranch = repo.CreateBranch(branchName);
                     Commands.Checkout(repo, newBranch);
                     // Push the new branch to the remote repository
-                    repo.Network.Push(repo.Network.Remotes["origin"], $"refs/heads/{branchName}", new PushOptions { CredentialsProvider = PrivateRepoCredentials });
+                    repo.Network.Push(GetRemote(repo), $"refs/heads/{branchName}", new PushOptions { CredentialsProvider = PrivateRepoCredentials });
                 }
             }
             catch (Exception ex) when (ex.Message.Contains("authentication replays"))
@@ -811,7 +824,7 @@ namespace GitFlow
                     repo.Branches.Remove(branchName);
 
                     //Delete branch remotely
-                    repo.Network.Push(repo.Network.Remotes["origin"], $":refs/heads/{branchName}", new PushOptions { CredentialsProvider = PrivateRepoCredentials });
+                    repo.Network.Push(GetRemote(repo), $":refs/heads/{branchName}", new PushOptions { CredentialsProvider = PrivateRepoCredentials });
                 }
             }
             catch (Exception ex) when (ex.Message.Contains("authentication replays"))
@@ -1080,7 +1093,7 @@ namespace GitFlow
                     repo.Refs.UpdateTarget(branch1Ref, branch2.Tip.Id);
                         
                     // 3. Push branch1 to remote (force)
-                    var remote = repo.Network.Remotes["origin"];
+                    var remote = GetRemote(repo);
                     string refSpec = $"+refs/heads/{branchToOverwrite}";
                     repo.Network.Push(remote, refSpec, new PushOptions { CredentialsProvider = PrivateRepoCredentials });
 
@@ -1269,7 +1282,7 @@ namespace GitFlow
                     // 2. Checkout the historical commit
                     //Commands.Checkout(repo, historicalCommit);
                     var newBranch = repo.CreateBranch(newBranchName, historicalCommit);
-                    var remote = repo.Network.Remotes["origin"];
+                    var remote = GetRemote(repo);
                     repo.Network.Push(remote, $"refs/heads/{newBranchName}", new PushOptions { CredentialsProvider = PrivateRepoCredentials });
 
 
@@ -1351,7 +1364,7 @@ namespace GitFlow
             {
                 try
                 {
-                    var remote = repo.Network.Remotes["origin"];
+                    var remote = GetRemote(repo);
                     // Reset the remote branch to the last commit
                     repo.Network.Push(remote, $":refs/heads/{branchName}", new PushOptions { CredentialsProvider = PrivateRepoCredentials });
                     Console.WriteLine($"Remote branch '{branchName}' has been reset to the last commit.");
@@ -1392,7 +1405,7 @@ namespace GitFlow
                 {
                     string tempBranchName = $"temp-permission-check-{Guid.NewGuid()}";
                     Branch newBranch;
-                    var remote = repo.Network.Remotes["origin"];
+                    var remote = GetRemote(repo);
                     if (remote == null)
                     {
                         return 0; // No remote configured, therefore no permissions.
@@ -1409,7 +1422,7 @@ namespace GitFlow
                         newBranch = repo.CreateBranch(tempBranchName);
                         //Commands.Checkout(repo, newBranch);
                         // Push the new branch to the remote repository
-                        repo.Network.Push(repo.Network.Remotes["origin"], $"refs/heads/{tempBranchName}", new PushOptions { CredentialsProvider = PrivateRepoCredentials });
+                        repo.Network.Push(GetRemote(repo), $"refs/heads/{tempBranchName}", new PushOptions { CredentialsProvider = PrivateRepoCredentials });
                     }
                     catch (LibGit2SharpException ex)
                     {
@@ -1461,7 +1474,7 @@ namespace GitFlow
                         repo.Branches.Remove(tempBranchName);
 
                         //Delete branch remotely
-                        repo.Network.Push(repo.Network.Remotes["origin"], $":refs/heads/{tempBranchName}", new PushOptions { CredentialsProvider = PrivateRepoCredentials });
+                        repo.Network.Push(GetRemote(repo), $":refs/heads/{tempBranchName}", new PushOptions { CredentialsProvider = PrivateRepoCredentials });
                     }
                     catch (Exception e)
                     {

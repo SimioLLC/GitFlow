@@ -474,6 +474,25 @@ namespace GitFlow
 
         private async void BtnSignInGitHub_Click(object sender, EventArgs e)
         {
+            if (!OAuthDeviceFlowHandler.IsConfigured)
+            {
+                MessageBox.Show(
+                    "GitHub sign-in is not yet configured for this installation.\n\n" +
+                    "To use this feature, a GitHub OAuth App must be registered\n" +
+                    "and its client_id set in OAuthDeviceFlowHandler.cs.\n\n" +
+                    "For now, please use a Personal Access Token (PAT) instead:\n" +
+                    "1. Go to github.com > Settings > Developer settings > Personal access tokens\n" +
+                    "2. Click 'Generate new token (classic)'\n" +
+                    "3. Select the 'repo' scope and generate\n" +
+                    "4. Copy the token and paste it in the field below",
+                    "GitHub Sign-in Not Configured", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Open the PAT creation page for convenience
+                try { Process.Start(new ProcessStartInfo("https://github.com/settings/tokens") { UseShellExecute = true }); }
+                catch { }
+                return;
+            }
+
             try
             {
                 btnSignInGitHub.Enabled = false;
@@ -491,8 +510,12 @@ namespace GitFlow
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Sign-in Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    "Could not sign in with GitHub.\n\n" +
+                    $"Error: {ex.Message}\n\n" +
+                    "Please use a Personal Access Token (PAT) instead.\n" +
+                    "Click 'How do I get a token?' for instructions.",
+                    "Sign-in Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             finally
             {

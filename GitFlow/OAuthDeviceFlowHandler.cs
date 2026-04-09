@@ -32,6 +32,8 @@ namespace GitFlow
         // For development/testing, register your own OAuth App.
         private const string GitHubClientId = "REPLACE_WITH_GITHUB_OAUTH_APP_CLIENT_ID";
 
+        public static bool IsConfigured => GitHubClientId != "REPLACE_WITH_GITHUB_OAUTH_APP_CLIENT_ID";
+
         private static readonly HttpClient _httpClient = new HttpClient();
 
         static OAuthDeviceFlowHandler()

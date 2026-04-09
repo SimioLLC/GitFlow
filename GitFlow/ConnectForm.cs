@@ -343,11 +343,16 @@ namespace GitFlow
                     txtRemoteUrl.Text = remoteUrl;
                 }
 
-                // Try to load stored credentials -- check repo root and browsed path
-                // (credentials may have been stored under either path)
+                // Try to load stored credentials:
+                // 1. By host (new, shared across repos)
+                // 2. By repo path (legacy, per-repo)
                 try
                 {
-                    var cred = CredentialHandler.ReadCredential(repoRoot);
+                    var cred = GitFlowConfig.ReadHostCredential(remoteUrl);
+
+                    // Fall back to legacy per-repo credential
+                    if (cred == null)
+                        cred = CredentialHandler.ReadCredential(repoRoot);
                     if (cred == null && path != repoRoot)
                         cred = CredentialHandler.ReadCredential(path);
 
@@ -359,6 +364,16 @@ namespace GitFlow
                             txtUsername.Text = cred.UserName;
                         if (!string.IsNullOrEmpty(cred.Comment) && string.IsNullOrEmpty(txtEmail.Text))
                             txtEmail.Text = cred.Comment;
+                    }
+
+                    // Also check config file for username/email
+                    var hostConfig = GitFlowConfig.GetHostConfig(remoteUrl);
+                    if (hostConfig != null)
+                    {
+                        if (!string.IsNullOrEmpty(hostConfig.Username) && string.IsNullOrEmpty(txtUsername.Text))
+                            txtUsername.Text = hostConfig.Username;
+                        if (!string.IsNullOrEmpty(hostConfig.Email) && string.IsNullOrEmpty(txtEmail.Text))
+                            txtEmail.Text = hostConfig.Email;
                     }
                 }
                 catch { }
@@ -602,15 +617,10 @@ namespace GitFlow
                     repoPath = _detectedRepoPath;
                 }
 
-                // Save/update credentials
-                if (!string.IsNullOrEmpty(pat))
+                // Save credentials by host (reusable across all repos on this host)
+                if (!string.IsNullOrEmpty(pat) && !string.IsNullOrEmpty(remoteUrl))
                 {
-                    var existingCred = CredentialHandler.ReadCredential(repoPath);
-                    if (existingCred == null)
-                        CredentialHandler.SaveCredential(repoPath, username, pat, email,
-                            Meziantou.Framework.Win32.CredentialPersistence.LocalMachine);
-                    else
-                        CredentialHandler.UpdateCredential(repoPath, username, pat, email);
+                    GitFlowConfig.SaveHostCredential(remoteUrl, username, pat, email);
                 }
 
                 // Initialize GitContext

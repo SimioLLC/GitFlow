@@ -95,10 +95,12 @@ namespace GitFlow
 
                 try
                 {
-                    var cred = CredentialHandler.ReadCredential(repoRoot);
+                    // Try host-based credential first (shared across repos)
+                    var cred = GitFlowConfig.ReadHostCredential(remoteUrl);
 
-                    // If not found by repo root, try the project directory
-                    // (credentials may have been stored under the subfolder path)
+                    // Fall back to legacy per-repo credentials
+                    if (cred == null)
+                        cred = CredentialHandler.ReadCredential(repoRoot);
                     if (cred == null && projectDir != repoRoot)
                         cred = CredentialHandler.ReadCredential(projectDir);
 
@@ -107,6 +109,14 @@ namespace GitFlow
                         pat = cred.Password ?? "";
                         username = cred.UserName ?? "DefaultUser";
                         email = cred.Comment ?? "DefaultUser@email.com";
+                    }
+
+                    // Also check config for username/email
+                    var hostConfig = GitFlowConfig.GetHostConfig(remoteUrl);
+                    if (hostConfig != null)
+                    {
+                        if (!string.IsNullOrEmpty(hostConfig.Username)) username = hostConfig.Username;
+                        if (!string.IsNullOrEmpty(hostConfig.Email)) email = hostConfig.Email;
                     }
                 }
                 catch { }

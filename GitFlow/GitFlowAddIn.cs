@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using DevExpress.CodeParser;
 
@@ -74,18 +75,11 @@ namespace GitFlow
         {
             try
             {
-                // Get project file path
-                string projectPath = null;
-                if (context?.ActiveProject != null)
-                {
-                    projectPath = SystemDirectoryHandler.GetStringProperty(
-                        context.ActiveProject, "FileName");
-                }
-
-                if (string.IsNullOrEmpty(projectPath))
+                // Get project directory -- try multiple approaches
+                string projectDir = FindActiveProjectDirectory(context);
+                if (string.IsNullOrEmpty(projectDir))
                     return false;
 
-                string projectDir = Path.GetDirectoryName(projectPath);
                 string repoRoot = LibgitFunctionClass.FindRepoRoot(projectDir);
                 if (repoRoot == null)
                     return false;
@@ -134,6 +128,54 @@ namespace GitFlow
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Tries multiple approaches to find the directory of the active Simio project.
+        /// </summary>
+        private static string FindActiveProjectDirectory(IDesignContext context)
+        {
+            if (context?.ActiveProject == null)
+                return null;
+
+            // Approach 1: Try reflection for "FileName" property
+            string fileName = SystemDirectoryHandler.GetStringProperty(context.ActiveProject, "FileName");
+            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
+                return Path.GetDirectoryName(fileName);
+
+            // Approach 2: Try "FilePath" property
+            string filePath = SystemDirectoryHandler.GetStringProperty(context.ActiveProject, "FilePath");
+            if (!string.IsNullOrEmpty(filePath) && (File.Exists(filePath) || Directory.Exists(filePath)))
+                return File.Exists(filePath) ? Path.GetDirectoryName(filePath) : filePath;
+
+            // Approach 3: Search common locations by project name
+            string projectName = context.ActiveProject.Name;
+            if (!string.IsNullOrEmpty(projectName))
+            {
+                string simprojName = projectName + ".simproj";
+                string[] searchRoots = new[]
+                {
+                    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Documents"),
+                    @"C:\Project Repos",
+                    @"C:\Projects",
+                    Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                };
+
+                foreach (var root in searchRoots)
+                {
+                    if (!Directory.Exists(root)) continue;
+                    try
+                    {
+                        var found = Directory.EnumerateFiles(root, simprojName, SearchOption.AllDirectories).FirstOrDefault();
+                        if (found != null)
+                            return Path.GetDirectoryName(found);
+                    }
+                    catch { }
+                }
+            }
+
+            return null;
         }
 
         private static bool CheckPermission(int requiredPermission)

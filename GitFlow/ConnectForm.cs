@@ -399,25 +399,19 @@ namespace GitFlow
         {
             try
             {
-                // Try to get the active project path from Simio context
-                string projectPath = null;
-                if (GitContext.Instance.simioContext?.ActiveProject != null)
-                {
-                    projectPath = SystemDirectoryHandler.GetStringProperty(
-                        GitContext.Instance.simioContext.ActiveProject, "FileName");
-                }
+                // Try to find the active project's location
+                string projectDir = FindActiveProjectDirectory();
 
-                if (!string.IsNullOrEmpty(projectPath))
+                if (!string.IsNullOrEmpty(projectDir))
                 {
-                    string projectDir = Path.GetDirectoryName(projectPath);
-
                     // Check for repo before setting path -- use repo root if found
                     string repoRoot = LibgitFunctionClass.FindRepoRoot(projectDir);
                     txtLocalPath.Text = repoRoot ?? projectDir; // This triggers TxtLocalPath_TextChanged
 
                     if (_detectedRepoPath != null)
                     {
-                        lblStatus.Text = "Your Simio project is already in a Git repository.\nFill in authentication below and click Connect.";
+                        lblStatus.Text = "Existing repository found! Fill in authentication and click Connect.";
+                        lblStatus.ForeColor = Color.FromArgb(0, 120, 0);
                     }
                     else
                     {
@@ -441,6 +435,58 @@ namespace GitFlow
             }
 
             UpdateAuthUI();
+        }
+
+        /// <summary>
+        /// Tries multiple approaches to find the directory of the active Simio project.
+        /// Returns null if no project is open or path cannot be determined.
+        /// </summary>
+        private string FindActiveProjectDirectory()
+        {
+            var context = GitContext.Instance.simioContext;
+            if (context?.ActiveProject == null)
+                return null;
+
+            // Approach 1: Try reflection for "FileName" property (full path)
+            string fileName = SystemDirectoryHandler.GetStringProperty(context.ActiveProject, "FileName");
+            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
+                return Path.GetDirectoryName(fileName);
+
+            // Approach 2: Try reflection for "FilePath" property
+            string filePath = SystemDirectoryHandler.GetStringProperty(context.ActiveProject, "FilePath");
+            if (!string.IsNullOrEmpty(filePath) && (File.Exists(filePath) || Directory.Exists(filePath)))
+                return File.Exists(filePath) ? Path.GetDirectoryName(filePath) : filePath;
+
+            // Approach 3: Use project Name to search common locations
+            string projectName = context.ActiveProject.Name;
+            if (!string.IsNullOrEmpty(projectName))
+            {
+                string simprojName = projectName + ".simproj";
+
+                // Search common Simio project locations
+                string[] searchRoots = new[]
+                {
+                    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Documents"),
+                    @"C:\Project Repos",
+                    @"C:\Projects",
+                    Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                };
+
+                foreach (var root in searchRoots)
+                {
+                    if (!Directory.Exists(root)) continue;
+                    try
+                    {
+                        var found = Directory.EnumerateFiles(root, simprojName, SearchOption.AllDirectories).FirstOrDefault();
+                        if (found != null)
+                            return Path.GetDirectoryName(found);
+                    }
+                    catch { } // Skip directories we can't access
+                }
+            }
+
+            return null;
         }
 
         private void SetMode(ConnectMode mode)

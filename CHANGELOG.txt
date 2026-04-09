@@ -1,0 +1,110 @@
+GitFlow Changelog
+=================
+
+V5.0 - 2026-04-09 (feature/ux-overhaul)
+----------------------------------------
+
+### Major Changes
+- Replaced Init/Clone/Open buttons with unified "Connect" button
+  - Auto-detects existing repos from open Simio project
+  - Step-by-step guided UI for first-time users
+  - Supports create new, clone, and connect to existing repo in one dialog
+- Added "Create Branch" as a dedicated ribbon button
+- Auto-connect: click any action button and GitFlow connects automatically
+  using stored credentials (no need to click Connect first)
+- Host-based credential storage: authenticate once per host (e.g. GitHub)
+  and it works across all repos on that host
+- GitHub OAuth Device Flow sign-in (requires OAuth App registration)
+
+### Ribbon Layout
+  Repo Actions:    Connect
+  Actions:         Commit & Push, Pull, Reset
+  Branching:       Create Branch, Select Branch, Promote to Main, Remove Branch
+
+### UX Improvements
+- Confirmation dialogs on all actions (create branch, commit, switch, delete)
+- Friendly messages explaining what happened and what to do next
+- "No changes detected" message instead of cryptic errors on empty commit
+- Unsaved changes warning before switching branches
+- Destructive action warnings (delete branch, force merge)
+- Current branch shown in branch select/delete dialogs
+- Better error messages with diagnostics (repo path, remote, token status)
+- PAT input fields masked in all forms
+
+### Bug Fixes
+- Fixed critical merge logic bug in Promote to Main (operator precedence
+  caused warning to show at wrong time)
+- Fixed OpenRepoForm not reading remote URL from git config
+- Fixed CloneRepoForm setting dummy "DefaultPAT" causing confusing errors
+- Fixed duplicate catch block in BranchSelectForm
+- Fixed active project detection (SimioAPI doesn't expose FileName property)
+- Fixed auth failure with GitHub Desktop repos (hardcoded "origin" remote)
+- Fixed credential lookup for subfolder project layouts
+- Fixed remote URL not auto-filling in ConnectForm
+
+### Security
+- PAT fields use UseSystemPasswordChar in all forms
+- Removed debug Console.WriteLine from credential handler
+- Credentials stored in Windows Credential Manager (LocalMachine persistence)
+
+### Code Quality
+- Extracted AddInHelper.EnsureConnected() -- replaces duplicated init-check
+  blocks in every action button
+- Extracted GetRemote(repo) -- handles repos with non-standard remote names
+- Extracted CleanupFailedInit() -- replaces 5x copy-pasted cleanup blocks
+- Extracted TranslateGitException() -- common auth/remote error handling
+- Removed dead code (commit_and_push_maybe_branch_handler, commented blocks)
+- Removed unused git_dirty_internal parameter
+- Cleaned up .csproj (removed hardcoded output path, updated dependencies)
+
+### Build & Deploy
+- Added deploy.ps1 script (builds + copies to SimioUserExtensions folder)
+- Removed legacy DLL Release Holder/ and dllOutput/ from repo
+- Updated .gitignore for Simio-specific patterns
+- Added CLAUDE.md development guide
+- Updated System.Drawing.Common to v10 (matches SimioAPI.Extensions)
+
+### New Files
+- ConnectForm.cs - Unified connect dialog
+- GitFlowConfig.cs - Host-based credential and config storage
+- GitHostDetector.cs - Git host auto-detection (GitHub/Azure DevOps/Bitbucket)
+- OAuthDeviceFlowHandler.cs - GitHub OAuth 2.0 Device Flow
+- OAuthProgressForm.cs - OAuth authorization progress dialog
+- deploy.ps1 - Build and deploy script
+- CLAUDE.md - Development guide
+- CHANGELOG.txt - This file
+
+
+V4.0 - 2024
+------------
+- Added merge conflict detection before Promote to Main
+- Conflict warning dialog with destructive action notice
+- Main branch push protections (prompt to create branch instead)
+
+
+V3.0 - 2024
+------------
+- Credential management via Windows Credential Manager
+- Permission level checking (no access / read-only / read-write)
+- Temporary branch push test for write permission verification
+- Credential save/read/update/delete operations
+
+
+V2.0 - 2024
+------------
+- Branch management (create, switch, delete)
+- Safe push with pull-before-push conflict detection
+- Safe pull with fast-forward-only merge strategy
+- Force pull option when conflicts detected
+- Force push for branch overwrite operations
+- Branch merge (overwrite target branch with source)
+
+
+V1.0 - 2024
+------------
+- Initial release
+- Git init, clone, commit, push, pull
+- Basic WinForms dialogs for all operations
+- LibGit2Sharp integration
+- Simio ribbon integration via IDesignAddIn
+- .gitignore template for Simio projects

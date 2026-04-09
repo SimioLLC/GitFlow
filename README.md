@@ -4,21 +4,42 @@ A Simio design-time add-in that brings Git version control directly into the Sim
 
 ## Features
 
-- **One-click Connect** - Smart auto-detection of existing repos, or create/clone with a single dialog
-- **GitHub OAuth sign-in** - No need to manually create tokens for GitHub repos
+- **Auto-connect** - Open your project and start working. GitFlow detects the repo and connects automatically using stored credentials.
+- **One-click Connect** - Smart auto-detection of existing repos, or create/clone with a guided step-by-step dialog
+- **Authenticate once** - Enter your GitHub PAT once and it works across all your GitHub repos. Credentials stored securely in Windows Credential Manager.
+- **GitHub OAuth sign-in** - Sign in with GitHub directly (requires OAuth App registration, see below)
 - **PAT support** - Personal Access Tokens for GitHub, Azure DevOps, and Bitbucket
-- **Commit & Push** - Save and share model changes with commit messages
+- **Commit & Push** - Save and share model changes with confirmation dialogs and clear messages
 - **Pull** - Get the latest changes from your team (safe fast-forward with conflict detection)
-- **Branch management** - Create, switch, and delete branches for parallel development
+- **Branch management** - Create, switch, and delete branches with confirmations and current branch indicators
 - **Promote to Main** - Merge your branch into main with conflict detection and warnings
 - **Local Reset** - Revert uncommitted changes to the last committed state
+- **Subfolder support** - Your .simproj can live in a subfolder of the repo
 
 ## Quick Start
 
+### If your project is already in a Git repo (cloned via GitHub Desktop, etc.)
+
 1. **Install**: Copy the GitFlow folder to your `Documents/SimioUserExtensions/` directory
-2. **Open Simio**: The "Version Control" tab appears in the ribbon
-3. **Click Connect**: The add-in auto-detects if your project is already in a Git repo
-4. **Start working**: Commit, push, pull, and branch directly from Simio
+2. **Open Simio** and open your project
+3. **Click any action** (Commit & Push, Pull, Create Branch, etc.) - GitFlow auto-detects the repo
+4. **Enter your PAT once** when prompted - it's saved for all future repos on that host
+
+### Starting fresh
+
+1. **Install** the add-in
+2. **Open Simio** - the "Version Control" tab appears in the ribbon
+3. **Click Connect** - browse to your folder, enter the remote URL, authenticate
+4. **Start working** - commit, push, pull, and branch directly from Simio
+
+## Ribbon Layout
+
+| Repo Actions | Actions | Branching Actions |
+|---|---|---|
+| Connect | Commit & Push | Create Branch |
+| | Pull | Select Branch |
+| | Reset | Promote to Main |
+| | | Remove Branch |
 
 ## Build & Deploy
 
@@ -41,39 +62,18 @@ dotnet build GitFlow/GitFlow.csproj -c Release
 
 ## Authentication
 
-- **GitHub**: Click "Sign in with GitHub" for OAuth device flow (no token needed)
-- **Azure DevOps / Bitbucket**: Enter a Personal Access Token (links to token creation pages provided in the UI)
-- Credentials are stored securely in Windows Credential Manager
+- **First time**: Click Connect (or any action), enter your Personal Access Token
+- **After that**: Credentials are stored per-host (e.g. all GitHub repos share one token). Auto-connect handles the rest.
+- **GitHub OAuth** (optional): Register a GitHub OAuth App and set the client_id in `OAuthDeviceFlowHandler.cs` for browser-based sign-in
+- **Supported hosts**: GitHub, Azure DevOps, Bitbucket
+
+Credentials are stored in:
+- **Windows Credential Manager** - PATs (secure, keyed by host like `GitFlow:github.com`)
+- **gitflow-config.json** - Username and email only (in the UserExtensions/GitFlow folder)
 
 ## Version History
 
-### V5 (Current - feature/ux-overhaul)
-- Unified "Connect" button replaces Init/Clone/Open -- auto-detects existing repos
-- GitHub OAuth Device Flow sign-in
-- Git host auto-detection (GitHub, Azure DevOps, Bitbucket)
-- PAT fields masked in all forms
-- Fixed critical merge logic bug in Promote to Main
-- Subfolder support -- .simproj files no longer need to be at the repo root
-- Expanded .gitignore template for Simio projects
-- Credential storage hardened (session scope)
-- Major code cleanup -- extracted helpers, removed dead code
-- Current branch indicator in branch selection/deletion dialogs
-- Modern build/deploy script (`deploy.ps1`)
-
-### V4
-- Added merge conflict detection and warnings
-- Main branch push protections
-
-### V3
-- Credential management via Windows Credential Manager
-- Permission level checking (read-only vs read/write)
-
-### V2
-- Branch management (create, switch, delete)
-- Safe push/pull with conflict detection
-
-### V1
-- Initial release with basic init, clone, commit, push, pull
+See [CHANGELOG.txt](CHANGELOG.txt) for detailed version history.
 
 ## License
 

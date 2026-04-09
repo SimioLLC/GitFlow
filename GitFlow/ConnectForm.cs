@@ -343,10 +343,14 @@ namespace GitFlow
                     txtRemoteUrl.Text = remoteUrl;
                 }
 
-                // Try to load stored credentials
+                // Try to load stored credentials -- check repo root and browsed path
+                // (credentials may have been stored under either path)
                 try
                 {
                     var cred = CredentialHandler.ReadCredential(repoRoot);
+                    if (cred == null && path != repoRoot)
+                        cred = CredentialHandler.ReadCredential(path);
+
                     if (cred != null)
                     {
                         if (!string.IsNullOrEmpty(cred.Password) && string.IsNullOrEmpty(txtPat.Text))
@@ -406,7 +410,10 @@ namespace GitFlow
                 if (!string.IsNullOrEmpty(projectPath))
                 {
                     string projectDir = Path.GetDirectoryName(projectPath);
-                    txtLocalPath.Text = projectDir; // This triggers TxtLocalPath_TextChanged
+
+                    // Check for repo before setting path -- use repo root if found
+                    string repoRoot = LibgitFunctionClass.FindRepoRoot(projectDir);
+                    txtLocalPath.Text = repoRoot ?? projectDir; // This triggers TxtLocalPath_TextChanged
 
                     if (_detectedRepoPath != null)
                     {

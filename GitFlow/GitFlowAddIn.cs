@@ -93,7 +93,8 @@ namespace GitFlow
                 // Found a repo -- read remote URL
                 string remoteUrl = LibgitFunctionClass.ReadRemoteUrl(repoRoot);
 
-                // Try to load stored credentials
+                // Try to load stored credentials -- check repo root first,
+                // then project directory (credentials may be stored under either path)
                 string pat = "";
                 string username = "DefaultUser";
                 string email = "DefaultUser@email.com";
@@ -101,6 +102,12 @@ namespace GitFlow
                 try
                 {
                     var cred = CredentialHandler.ReadCredential(repoRoot);
+
+                    // If not found by repo root, try the project directory
+                    // (credentials may have been stored under the subfolder path)
+                    if (cred == null && projectDir != repoRoot)
+                        cred = CredentialHandler.ReadCredential(projectDir);
+
                     if (cred != null)
                     {
                         pat = cred.Password ?? "";

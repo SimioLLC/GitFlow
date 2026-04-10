@@ -59,7 +59,12 @@ namespace GitFlow
 
             response.EnsureSuccessStatusCode();
             var json = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<DeviceCodeResponse>(json);
+            var deviceCode = JsonSerializer.Deserialize<DeviceCodeResponse>(json);
+            if (deviceCode == null || string.IsNullOrEmpty(deviceCode.device_code))
+            {
+                throw new Exception("Invalid device code response from GitHub.");
+            }
+            return deviceCode;
         }
 
         /// <summary>
@@ -89,8 +94,30 @@ namespace GitFlow
                 var response = await _httpClient.PostAsync(
                     "https://github.com/login/oauth/access_token", content, cancellationToken);
 
+                // Per RFC 8628, the polling endpoint can legitimately return 4xx with an
+                // OAuth error code in the body (authorization_pending, slow_down, etc.),
+                // so we don't call EnsureSuccessStatusCode here. We do reject 5xx responses
+                // and any unparseable body to avoid acting on garbage.
+                if ((int)response.StatusCode >= 500)
+                {
+                    throw new Exception(
+                        $"GitHub OAuth server error: {(int)response.StatusCode} {response.ReasonPhrase}");
+                }
+
                 var json = await response.Content.ReadAsStringAsync();
-                var tokenResponse = JsonSerializer.Deserialize<OAuthTokenResponse>(json);
+                OAuthTokenResponse tokenResponse;
+                try
+                {
+                    tokenResponse = JsonSerializer.Deserialize<OAuthTokenResponse>(json);
+                }
+                catch (JsonException ex)
+                {
+                    throw new Exception("Unexpected response from GitHub OAuth endpoint.", ex);
+                }
+                if (tokenResponse == null)
+                {
+                    throw new Exception("Empty response from GitHub OAuth endpoint.");
+                }
 
                 if (!string.IsNullOrEmpty(tokenResponse.access_token))
                 {

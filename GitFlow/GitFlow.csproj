@@ -8,6 +8,13 @@
 <PropertyGroup>
 	<TargetFramework>net9.0-windows7.0</TargetFramework>
 	<UseWindowsForms>true</UseWindowsForms>
+	<!--
+	  Class libraries don't copy NuGet package DLLs to the output directory by
+	  default. We need them in the output so the Simio add-in deployment picks
+	  up LibGit2Sharp and Meziantou.* from the verified NuGet packages instead
+	  of from checked-in binaries.
+	-->
+	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 </PropertyGroup>
 
   <ItemGroup>
@@ -42,19 +49,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<!-- Template .gitignore shipped with the add-in for use inside Simio repos. -->
 		<None Include="BuildItems\.gitignore">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<Link>.gitignore</Link>
 		</None>
-		<Content Include="BuildItems\LibGit2Sharp.dll">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<Link>LibGit2Sharp.dll</Link>
-		</Content>
-		
-		<Content Include="BuildItems\Meziantou.Framework.Win32.CredentialManager.dll">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<Link>Meziantou.Framework.Win32.CredentialManager.dll</Link>
-		</Content>
+		<!--
+		  LibGit2Sharp.dll and Meziantou.Framework.Win32.CredentialManager.dll are
+		  intentionally NOT included from BuildItems. They are provided by their
+		  PackageReference entries above and copied to the output directory by
+		  NuGet. Including checked-in copies here would override the verified
+		  NuGet versions and create a supply-chain risk.
+		-->
 	</ItemGroup>
 
 

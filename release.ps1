@@ -93,15 +93,30 @@ if (-not $existingTag) {
     Write-Host "Tag $Tag already exists." -ForegroundColor DarkGray
 }
 
+# --- Validate version format to prevent injection via tag ---
+if ($Version -notmatch '^[\w.\-+]+$') {
+    Write-Host "Invalid version format: $Version" -ForegroundColor Red
+    Write-Host "Version may only contain letters, digits, dots, dashes, underscores, and plus signs." -ForegroundColor Yellow
+    exit 1
+}
+
 # --- Create GitHub Release ---
 Write-Host "Creating GitHub Release $Tag..." -ForegroundColor Cyan
 
-$ghArgs = @("release", "create", $Tag, $ZipPath, "--title", "GitFlow $Tag", "--notes", $Notes)
+# Build argument list for safe invocation (no Invoke-Expression -- avoids
+# command injection via $Notes containing backticks or PowerShell metacharacters).
+$ghArgs = @(
+    "release", "create",
+    $Tag,
+    $ZipPath,
+    "--title", "GitFlow $Tag",
+    "--notes", $Notes
+)
 if ($Draft) {
     $ghArgs += "--draft"
 }
 
-gh @ghArgs
+& gh @ghArgs
 
 if ($LASTEXITCODE -eq 0) {
     Write-Host ""

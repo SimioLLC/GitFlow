@@ -1,5 +1,16 @@
+# Simio temp and backup files
 *.log
-
 *.backup
-
 *_ModelViewInfo.xml
+
+# Simio build outputs
+Builds/
+
+# Common IDE/OS artifacts
+.vs/
+bin/
+obj/
+*.user
+*.suo
+Thumbs.db
+.DS_Store

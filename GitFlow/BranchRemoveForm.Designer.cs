@@ -68,9 +68,21 @@ namespace GitFlow
             // 
             // BranchRemoveForm
             // 
+            //
+            // lblCurrentBranch
+            //
+            lblCurrentBranch = new Label();
+            lblCurrentBranch.Location = new Point(28, 90);
+            lblCurrentBranch.Size = new Size(336, 18);
+            lblCurrentBranch.ForeColor = System.Drawing.Color.Gray;
+            lblCurrentBranch.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Italic);
+            //
+            // BranchRemoveForm
+            //
             AutoScaleDimensions = new SizeF(7F, 16F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(382, 94);
+            ClientSize = new Size(382, 116);
+            Controls.Add(lblCurrentBranch);
             Controls.Add(simpleButton2);
             Controls.Add(simpleButton1);
             Controls.Add(mruEdit1);
@@ -81,9 +93,17 @@ namespace GitFlow
             ((System.ComponentModel.ISupportInitialize)mruEdit1.Properties).EndInit();
             ResumeLayout(false);
 
+            string currentBranch = LibgitFunctionClass.git_current_branch(GitContext.Instance.RepositoryPath);
+            lblCurrentBranch.Text = $"Current branch: {currentBranch}";
+
             List<string> branches = LibgitFunctionClass.git_get_branches(GitContext.Instance.RepositoryPath);
-            //get rid of main in branches
             branches.Remove("main");
+            // Mark current branch in the list
+            for (int i = 0; i < branches.Count; i++)
+            {
+                if (branches[i] == currentBranch)
+                    branches[i] = branches[i] + " (current)";
+            }
             mruEdit1.Properties.Items.AddRange(branches.ToArray<string>());
 
         }
@@ -98,5 +118,6 @@ namespace GitFlow
         private DevExpress.XtraEditors.MRUEdit mruEdit1;
         private DevExpress.XtraEditors.SimpleButton simpleButton1;
         private DevExpress.XtraEditors.SimpleButton simpleButton2;
+        private Label lblCurrentBranch;
     }
 }

@@ -3,6 +3,16 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Legacy release artifacts (use GitHub Releases instead)
+DLL Release Holder/
+dllOutput/
+
+# Build output
+dist/
+
+# Skill packages (binary archives)
+*.skill
+
 # User-specific files
 *.rsuser
 *.suo

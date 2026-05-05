@@ -72,10 +72,11 @@
             textBox3.PlaceholderText = "Personal Access Token (If needed)";
             textBox3.Size = new Size(436, 23);
             textBox3.TabIndex = 3;
+            textBox3.UseSystemPasswordChar = true;
             textBox3.TextChanged += textBox3_TextChanged;
-            // 
+            //
             // simpleButton2
-            // 
+            //
             simpleButton2.Location = new Point(435, 254);
             simpleButton2.Name = "simpleButton2";
             simpleButton2.Size = new Size(60, 26);

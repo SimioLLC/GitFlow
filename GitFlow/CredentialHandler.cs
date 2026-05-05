@@ -24,28 +24,15 @@ namespace GitFlow
             var credential = CredentialManager.ReadCredential(RepoIdentifier);
             if (credential == null)
             {
-                Console.WriteLine("No credential found.");
                 return null;
             }
-
-            //Console.WriteLine($"UserName: {credential.UserName}");
-            //Console.WriteLine($"Secret: {credential.Password}");
-            //Console.WriteLine($"email: {credential.Comment}");
 
             return credential;
         }
 
         public static void DeleteCredential(string RepoIdentifier)
         {
-            try
-            {
-                CredentialManager.DeleteCredential(RepoIdentifier);
-                Console.WriteLine("Credential deleted successfully.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error deleting credential: {ex.Message}");
-            }
+            CredentialManager.DeleteCredential(RepoIdentifier);
         }
 
         public static void UpdateCredential(string RepoIdentifier, string newUserName, string newSecret, string newEmail)

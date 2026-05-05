@@ -68,9 +68,21 @@ namespace GitFlow
             // 
             // BranchSelectForm
             // 
+            //
+            // lblCurrentBranch
+            //
+            lblCurrentBranch = new Label();
+            lblCurrentBranch.Location = new Point(28, 90);
+            lblCurrentBranch.Size = new Size(336, 18);
+            lblCurrentBranch.ForeColor = System.Drawing.Color.Gray;
+            lblCurrentBranch.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Italic);
+            //
+            // BranchSelectForm
+            //
             AutoScaleDimensions = new SizeF(7F, 16F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(382, 94);
+            ClientSize = new Size(382, 116);
+            Controls.Add(lblCurrentBranch);
             Controls.Add(simpleButton2);
             Controls.Add(simpleButton1);
             Controls.Add(mruEdit1);
@@ -85,6 +97,9 @@ namespace GitFlow
             List<string> branches = LibgitFunctionClass.git_get_branches(GitContext.Instance.RepositoryPath);
             mruEdit1.Properties.Items.AddRange(branches.ToArray<string>());
 
+            string currentBranch = LibgitFunctionClass.git_current_branch(GitContext.Instance.RepositoryPath);
+            lblCurrentBranch.Text = $"Current branch: {currentBranch}";
+
         }
 
         private void BranchSelectForm_Load(object sender, EventArgs e)
@@ -97,5 +112,6 @@ namespace GitFlow
         private DevExpress.XtraEditors.MRUEdit mruEdit1;
         private DevExpress.XtraEditors.SimpleButton simpleButton1;
         private DevExpress.XtraEditors.SimpleButton simpleButton2;
+        private Label lblCurrentBranch;
     }
 }

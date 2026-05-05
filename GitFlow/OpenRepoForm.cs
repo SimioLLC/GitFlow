@@ -13,6 +13,7 @@ using DevExpress.CodeParser;
 using DevExpress.DirectX.Common.Direct2D;
 using DevExpress.Pdf.Xmp;
 using DevExpress.XtraEditors;
+using LibGit2Sharp;
 
 namespace GitFlow
 {
@@ -92,6 +93,14 @@ namespace GitFlow
                 {
                     throw new Exception(Resources.Resource1.GitOpenNoGitDetected + " " + _RepoPath);
 
+                }
+
+                // Read remote URL from existing git config
+                using (var repo = new Repository(_RepoPath))
+                {
+                    var origin = repo.Network.Remotes["origin"];
+                    if (origin != null)
+                        _remoteURL = origin.Url;
                 }
                 // defaultize other strings to defaults instead of empty strings
                 if (string.IsNullOrEmpty(_username))

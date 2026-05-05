@@ -84,10 +84,7 @@ namespace GitFlow
                     throw new Exception(Resources.Resource1.FieldFillURL);
                 }
                 // Attempt to set the Git context
-                if (string.IsNullOrEmpty(_pat))
-                {
-                    _pat = "DefaultPAT"; // Set a default PAT if not provided
-                }
+                // PAT may be empty for public repos -- leave it empty and let auth fail with a clear message if needed
                 if (string.IsNullOrEmpty(_username))
                 {
                     _username = "DefaultUser"; // Set a default username if not provided

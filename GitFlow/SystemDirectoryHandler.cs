@@ -13,8 +13,6 @@ namespace GitFlow
     using System.Diagnostics;
     using System.IO;
     using System.Reflection;
-    using System.Runtime.Versioning;
-    using System.Security.Policy;
     using DevExpress.DataProcessing.InMemoryDataProcessor;
     using LibGit2Sharp;
     using SimioAPI;
@@ -22,37 +20,6 @@ namespace GitFlow
 
     internal class SystemDirectoryHandler
     {
-
-        public static string GetTargetFrameworkForExecutable(string assemblyPath)
-        {
-            if (!File.Exists(assemblyPath))
-            {
-                return $"Please provide the path to the assembly. {assemblyPath} doesn't work.";
-            }
-
-            try
-            {
-                Assembly assembly = Assembly.LoadFrom(assemblyPath);
-                var targetFrameworkAttribute = assembly
-                    .GetCustomAttribute<TargetFrameworkAttribute>();
-
-                if (targetFrameworkAttribute != null)
-                {
-                    return $"{targetFrameworkAttribute.FrameworkName}";
-                }
-                else
-                {
-                    return $"?Target Framework attribute not found: {assemblyPath}";
-                }
-            }
-            catch (Exception ex)
-            {
-                return $"?Exception:{ex.Message}";
-            }
-        }
-
-
-
 
         /// <summary>
         /// Prompt the user to select a parent folder for the repository.
@@ -260,10 +227,14 @@ namespace GitFlow
         {
             try
             {
-                string projectFileNameWithExtSimproj = GitContext.Instance.simioContext.ActiveProject.Name + ".simproj";
-                string fullPath = Path.Combine(GitContext.Instance.RepositoryPath, projectFileNameWithExtSimproj);
+                string projectFileName = GitContext.Instance.simioContext.ActiveProject.Name + ".simproj";
 
-                if(!File.Exists(fullPath))
+                // Search for .simproj in repo directory (supports both root and subfolder layouts)
+                string fullPath = Directory.EnumerateFiles(
+                    GitContext.Instance.RepositoryPath, projectFileName,
+                    SearchOption.AllDirectories).FirstOrDefault();
+
+                if (string.IsNullOrEmpty(fullPath) || !File.Exists(fullPath))
                 {
                     return false;
                 }
@@ -276,7 +247,7 @@ namespace GitFlow
             {
                 MessageBox.Show(Resources.Resource1.RefreshFail, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            return false; // Return 1 to indicate failure
+            return false;
         }
 
         public static void DeleteFileInGitRepository(string repositoryPath, string fileNameToDelete)
